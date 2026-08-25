@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Trading Academy</title>
+    <link rel="shortcut icon" type="image/jpg" href="FAVICON.png">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background: #0b0b0f;
+
+            color: white;
+        }
+
+
+        /* ==========================================
+           HEADER
+        ========================================== */
+
+        header {
+
+            background: #15151c;
+
+            border-bottom: 1px solid #292934;
+
+            padding: 20px 35px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        header h1 {
+
+            font-size: 22px;
+
+        }
+
+
+        #logoutButton {
+
+            padding: 10px 18px;
+
+            border: 1px solid #33333f;
+
+            border-radius: 8px;
+
+            background: #0f0f14;
+
+            color: white;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        #logoutButton:hover {
+
+            border-color: #6c63ff;
+
+            background: #15151c;
+
+        }
+
+
+        /* ==========================================
+           MAIN CONTENT
+        ========================================== */
+
+        main {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 40px 25px;
+
+        }
+
+
+        /* ==========================================
+           LOADING
+        ========================================== */
+
+        #loading {
+
+            text-align: center;
+
+            color: #999;
+
+            padding: 60px;
+
+        }
+
+
+        /* ==========================================
+           DASHBOARD
+        ========================================== */
+
+        .welcome {
+
+            background: #15151c;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            border: 1px solid #292934;
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .welcome h2 {
+
+            font-size: 28px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .welcome p {
+
+            color: #999;
+
+        }
+
+
+        #role {
+
+            color: #8b8bff;
+
+        }
+
+
+        /* ==========================================
+           SECTION TITLES
+        ========================================== */
+
+        .section-title {
+
+            font-size: 22px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        /* ==========================================
+           CARDS
+        ========================================== */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(230px, 1fr));
+
+            gap: 20px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .card {
+
+            background: #15151c;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            border: 1px solid #292934;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+            transition: 0.2s;
+
+        }
+
+
+        .card:hover {
+
+            border-color: #6c63ff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .card h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .card p {
+
+            color: #999;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        /* ==========================================
+           CARD BUTTONS
+        ========================================== */
+
+        .card button {
+
+            padding: 10px 16px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #6c63ff;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .card button:hover {
+
+            background: #7c74ff;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* ==========================================
+           ADMIN SECTION
+        ========================================== */
+
+        #admin-section {
+
+            display: none;
+
+        }
+
+
+        #admin-section .section-title {
+
+            margin-top: 10px;
+
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 600px) {
+
+            header {
+
+                padding: 18px 20px;
+
+            }
+
+
+            header h1 {
+
+                font-size: 18px;
+
+            }
+
+
+            main {
+
+                padding: 25px 15px;
+
+            }
+
+
+            .welcome {
+
+                padding: 25px 20px;
+
+            }
+
+
+            .welcome h2 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+        /* ==========================================
+   CUSTOMER MANAGEMENT
+========================================== */
+
+#customer-management {
+    margin-top: 30px;
+}
+
+
+#customer-management .card {
+    max-width: 700px;
+}
+
+
+#customer-management form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+#customer-management input,
+#customer-management select {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    background: #0f0f14;
+
+    color: white;
+
+    border: 1px solid #292934;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+#customer-management input:focus,
+#customer-management select:focus {
+    border-color: #6c63ff;
+
+    box-shadow:
+        0 0 0 3px rgba(108, 99, 255, 0.12);
+}
+
+
+#customer-management select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+#customer-management button {
+    width: fit-content;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #6c63ff;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+#customer-management button:hover {
+    background: #7c74ff;
+
+    transform: translateY(-1px);
+}
+
+
+#customerMessage {
+    margin-top: 15px;
+
+    color: #8b8bff;
+
+    font-size: 14px;
+}
+
+  /* ==========================================
+   CUSTOMER LIST
+========================================== */
+
+.customer-list-card {
+    margin-top: 20px;
+}
+
+
+#customerList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+
+.customer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 18px;
+
+    background: #0F151C;
+
+    border: 1px solid #292934;
+
+    border-radius: 12px;
+
+    transition: 0.2s;
+}
+
+
+.customer-item:hover {
+    border-color: #6c63ff;
+    transform: translateY(-2px);
+}
+
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.customer-username {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+.customer-package {
+    color: #999;
+    font-size: 13px;
+}
+
+
+.customer-status {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.customer-active {
+    background: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+
+.customer-inactive {
+    background: rgba(192, 57, 43, 0.15);
+    color: #e74c3c;
+}
+
+
+.view-user-button {
+    padding: 9px 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #6c63ff;
+    color: white;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.view-user-button:hover {
+    background: #7c74ff;
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   COURSE MANAGEMENT
+========================================== */
+
+#course-management {
+    margin-top: 30px;
+}
+
+
+#course-management .card {
+    max-width: 700px;
+    margin-bottom: 20px;
+}
+
+
+#course-management form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+#course-management input,
+#course-management textarea {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    background: #0f0f14;
+
+    color: white;
+
+    border: 1px solid #292934;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+#course-management textarea {
+
+    min-height: 110px;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+}
+
+
+#course-management input:focus,
+#course-management textarea:focus {
+
+    border-color: #6c63ff;
+
+    box-shadow:
+        0 0 0 3px rgba(108, 99, 255, 0.12);
+
+}
+
+
+#course-management button {
+
+    width: fit-content;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #6c63ff;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+#course-management button:hover {
+
+    background: #7c74ff;
+
+    transform: translateY(-1px);
+
+}
+
+
+#courseMessage {
+
+    margin-top: 15px;
+
+    color: #8b8bff;
+
+    font-size: 14px;
+
+}
+
+
+.course-management-item {
+
+    padding: 16px 18px;
+
+    margin-top: 12px;
+
+    background: #0F151C;
+
+    border: 1px solid #292934;
+
+    border-radius: 12px;
+
+}
+
+
+.course-management-item h4 {
+
+    margin-bottom: 6px;
+
+}
+
+
+.course-management-item p {
+
+    color: #999;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+.manage-lessons-button {
+
+    margin-top: 15px;
+
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #6c63ff;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+.manage-lessons-button:hover {
+
+    background: #7c74ff;
+
+    transform: translateY(-1px);
+
+}
+
+/* ==========================================
+   PASSWORD REQUESTS
+========================================== */
+
+#password-request-management {
+    margin-top: 30px;
+}
+
+
+#password-request-management .card {
+    max-width: 800px;
+}
+
+
+#passwordRequestList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+.password-request-item {
+
+    padding: 18px;
+
+    background: #0F151C;
+
+    border: 1px solid #292934;
+
+    border-radius: 12px;
+
+    transition: 0.2s;
+}
+
+
+.password-request-item:hover {
+
+    border-color: #6c63ff;
+
+    transform: translateY(-2px);
+
+}
+
+
+.password-request-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+}
+
+
+.password-request-username {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+
+
+.password-request-date {
+
+    color: #777;
+
+    font-size: 12px;
+
+}
+
+
+.password-request-message {
+
+    color: #aaa;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+
+}
+
+
+.password-request-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.reset-password-button {
+
+    padding: 9px 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #6c63ff;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.reset-password-button:hover {
+
+    background: #7c74ff;
+
+    transform: translateY(-1px);
+
+}
+
+
+.dismiss-password-button {
+
+    padding: 9px 15px;
+
+    border: 1px solid #33333f;
+
+    border-radius: 8px;
+
+    background: #15151c;
+
+    color: #aaa;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.dismiss-password-button:hover {
+
+    border-color: #e74c3c;
+
+    color: #e74c3c;
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
+
+    <header>
+
+        <h1>
+          <span style="font-size: 35px; color: #e0b84f;">TenzorEdge</span><br><span style="font-size: 20px; display:block; margin-top: 10px; margin-left: 40px;">Trading Academy</span></h1><img src="LOGO3.jpeg" alt="logo" style="margin-right: 170px; object-fit: contain; width: 120px;">
+
+        <button id="logoutButton">
+            Log Out
+        </button>
+
+    </header>
+
+
+    <main>
+
+
+        <div id="loading">
+            Loading dashboard...
+        </div>
+
+
+        <div id="dashboard" style="display: none;">
+
+
+            <!-- ==================================
+                 WELCOME
+            ================================== -->
+
+            <div class="welcome">
+
+                <h2>
+                    Welcome, <span id="username"></span>!
+                </h2>
+
+                <p>
+                    Account type:
+                    <strong id="role"></strong>
+                </p>
+
+            </div>
+
+
+            <!-- ==================================
+                 ADMIN
+            ================================== -->
+
+            <div id="admin-section">
+
+
+                <h2 class="section-title">
+                    Administration
+                </h2>
+
+
+                <div class="cards">
+
+
+                    <div class="card">
+
+                      <h3>👥 Users</h3>
+
+                      <p>
+                         Manage customer accounts, packages and permissions.
+                      </p>
+
+                      <button id="manageUsersButton">
+                        Manage Users
+                      </button>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>📚 Courses</h3>
+
+                        <p>
+                            Create, edit and manage trading
+                            courses.
+                        </p>
+
+                        <button id="manageCoursesButton">
+                          Manage Courses
+                        </button>
+
+                    </div>
+
+
+                    
+                    <div class="card">
+
+    <h3>🔐 Password Requests</h3>
+
+    <p>
+        View customer password reset requests
+        and securely reset their passwords.
+    </p>
+
+    <button id="managePasswordRequestsButton">
+        Manage Requests
+    </button>
+
+</div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+    <!-- ==========================================
+     COURSE MANAGEMENT
+========================================== -->
+
+<section id="course-management" style="display: none;">
+
+    <h2 class="section-title">
+        Course Management
+    </h2>
+
+    <div class="card">
+
+    <h3>📚 Academy Courses</h3>
+
+    <p>
+        Select a course to manage its lessons and videos.
+    </p>
+
+    <div class="fixed-course-list">
+
+        <div class="fixed-course-item">
+
+            <div>
+                <h4>📈 Basic Trading</h4>
+
+                <p>
+                    Trading fundamentals and core market knowledge.
+                </p>
+            </div>
+
+            <button
+                class="manage-lessons-button"
+                onclick="manageLessons(1)"
+            >
+                Manage Lessons →
+            </button>
+
+        </div>
+
+
+        <div class="fixed-course-item">
+
+            <div>
+                <h4>💰 Smart Money Concepts</h4>
+
+                <p>
+                    Learn market structure, liquidity and institutional concepts.
+                </p>
+            </div>
+
+            <button
+                class="manage-lessons-button"
+                onclick="manageLessons(2)"
+            >
+                Manage Lessons →
+            </button>
+
+        </div>
+
+
+        <div class="fixed-course-item">
+
+            <div>
+                <h4>🌊 Elliot Wave</h4>
+
+                <p>
+                    Learn the principles and structure of Elliott Wave analysis.
+                </p>
+            </div>
+
+            <button
+                class="manage-lessons-button"
+                onclick="manageLessons(3)"
+            >
+                Manage Lessons →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+        
+    <!-- ==========================================
+     ADD LESSON
+========================================== -->
+
+<div class="card">
+
+    <h3>🎥 Add Lesson</h3>
+
+    <p>
+        Add a video lesson to one of your courses.
+    </p>
+
+    <form id="createLessonForm">
+
+        <select id="lessonCourse" required>
+
+            <option value="">
+                Select Course
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="lessonTitle"
+            placeholder="Lesson Title"
+            required
+        >
+
+
+        <input
+            type="text"
+            id="lessonVideo"
+            placeholder="Video URL"
+        >
+
+
+        <input
+            type="number"
+            id="lessonOrder"
+            placeholder="Lesson Number"
+            min="1"
+            value="1"
+            required
+        >
+
+
+        <button type="submit">
+            Add Lesson
+        </button>
+
+    </form>
+
+
+    <p id="lessonMessage"></p>
+
+</div>
+
+
+    <!-- EXISTING COURSES -->
+
+    <div class="card course-list-card">
+
+        <h3>📚 Existing Courses</h3>
+
+        <p>
+            Courses currently available in the academy.
+        </p>
+
+
+        <div id="courseManagementList">
+
+            Loading courses...
+
+        </div>
+
+    </div>
+
+</section>
+
+    
+
+    <!-- ==========================================
+     CUSTOMER MANAGEMENT
+========================================== -->
+
+<section id="customer-management" style="display: none;">
+
+    <h2 class="section-title">
+        Customer Management
+    </h2>
+
+    <div class="card">
+
+        <h3>Create Customer Account</d>
+
+        <p>
+            Create a customer account and assign their
+            learning package.
+        </p>
+
+        <form id="createCustomerForm">
+
+            <input
+                type="text"
+                id="customerUsername"
+                placeholder="Username"
+                required
+            >
+
+            <input
+                type="password"
+                id="customerPassword"
+                placeholder="Password"
+                required
+            >
+
+            <select id="customerPackage" required>
+
+                <option value="">
+                    Select Package
+                </option>
+
+                <option value="basic">
+                    Basic
+                </option>
+
+                <option value="smc">
+                    Smart Money Concepts
+                </option>
+
+                <option value="elliot_wave">
+                    Elliot Wave
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Create Customer
+            </button>
+
+        </form>
+
+        <p id="customerMessage"></p>
+
+</div>
+
+
+<!-- ==========================================
+     CUSTOMER LIST
+========================================== -->
+
+<div class="card customer-list-card">
+
+    <h3>👥 Existing Customers</h3>
+
+    <p>
+        View and manage existing customer accounts.
+    </p>
+
+    <div id="customerList">
+        Loading customers...
+    </div>
+
+</div>
+
+</section>
+
+</section>
+
+<!-- ==========================================
+     PASSWORD REQUEST MANAGEMENT
+========================================== -->
+
+<section id="password-request-management" style="display: none;">
+
+    <h2 class="section-title">
+        Password Requests
+    </h2>
+
+    <div class="card">
+
+        <h3>🔐 Customer Password Requests</h3>
+
+        <p>
+            Customers who have requested a password reset
+            will appear here.
+        </p>
+
+        <div id="passwordRequestList">
+
+            Loading password requests...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <script>
+
+
+        // ==========================================
+        // LOAD USER
+        // ==========================================
+
+        async function loadDashboard() {
+
+            try {
+
+                const response =
+                    await fetch("/api/me");
+
+
+                if (!response.ok) {
+
+                    window.location.href = "/";
+
+                    return;
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById("loading")
+                    .style.display = "none";
+
+
+                document.getElementById("dashboard")
+                    .style.display = "block";
+
+
+                document.getElementById("username")
+                    .textContent =
+                    data.user.username;
+
+
+                document.getElementById("role")
+                    .textContent =
+                    data.user.role;
+
+
+                // Show admin controls only
+                // when logged in as an admin
+
+                if (data.user.role === "admin") {
+
+                    document.getElementById("admin-section")
+                        .style.display = "block";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                document.getElementById("loading")
+                    .textContent =
+                    "Could not connect to the server.";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOGOUT
+        // ==========================================
+
+        document.getElementById("logoutButton")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    try {
+
+                        await fetch(
+                            "/api/logout",
+                            {
+                                method: "POST"
+                            }
+                        );
+
+                    } finally {
+
+                        window.location.href = "/";
+
+                    }
+
+                }
+            );
+
+
+        // ==========================================
+// CREATE CUSTOMER
+// ==========================================
+
+document.getElementById("createCustomerForm")
+    .addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document.getElementById(
+                    "customerUsername"
+                ).value.trim();
+
+
+            const password =
+                document.getElementById(
+                    "customerPassword"
+                ).value;
+
+
+            const customerPackage =
+                document.getElementById(
+                    "customerPackage"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "customerMessage"
+                );
+
+
+            message.textContent =
+                "Creating customer...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/admin/create-customer",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                username: username,
+
+                                password: password,
+
+                                package:
+                                    customerPackage
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Customer account created successfully!";
+
+                    document.getElementById(
+                        "createCustomerForm"
+                    ).reset();
+
+                } else {
+
+                    message.textContent =
+                        data.message ||
+                        "Could not create customer.";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Could not connect to the server.";
+
+            }
+
+        }
+    );
+
+    // ==========================================
+// MANAGE USERS BUTTON
+// ==========================================
+
+document.getElementById("manageUsersButton")
+    .addEventListener("click", function () {
+
+        const customerManagement =
+            document.getElementById(
+                "customer-management"
+            );
+
+        if (
+            customerManagement.style.display === "none"
+        ) {
+
+            customerManagement.style.display =
+                "block";
+
+            customerManagement.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        } else {
+
+            customerManagement.style.display =
+                "none";
+
+        }
+
+    });
+
+    // ==========================================
+// MANAGE COURSES BUTTON
+// ==========================================
+
+document.getElementById("manageCoursesButton")
+    .addEventListener("click", function () {
+
+        const courseManagement =
+            document.getElementById(
+                "course-management"
+            );
+
+
+        if (
+            courseManagement.style.display === "none"
+        ) {
+
+            courseManagement.style.display =
+                "block";
+
+            courseManagement.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        } else {
+
+            courseManagement.style.display =
+                "none";
+
+        }
+
+    });
+
+    // ==========================================
+// LOAD CUSTOMERS
+// ==========================================
+
+async function loadCustomers() {
+
+    const customerList =
+        document.getElementById("customerList");
+
+
+    customerList.innerHTML =
+        "Loading customers...";
+
+
+    try {
+
+        const response =
+            await fetch("/api/admin/customers");
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            customerList.innerHTML =
+                data.message ||
+                "Could not load customers.";
+
+            return;
+
+        }
+
+
+        const customers =
+            data.customers;
+
+
+        if (customers.length === 0) {
+
+            customerList.innerHTML =
+                "No customers have been created yet.";
+
+            return;
+
+        }
+
+
+        customerList.innerHTML = "";
+
+
+        customers.forEach(customer => {
+
+            const customerItem =
+                document.createElement("div");
+
+
+            customerItem.className =
+                "customer-item";
+
+
+            const packageName =
+                customer.package
+                    ? customer.package
+                    : "No package";
+
+
+            const statusClass =
+                customer.active
+                    ? "customer-active"
+                    : "customer-inactive";
+
+
+            const statusText =
+                customer.active
+                    ? "● Active"
+                    : "● Suspended";
+
+
+            customerItem.innerHTML = `
+
+                <div class="customer-info">
+
+                    <span class="customer-username">
+                        👤 ${customer.username}
+                    </span>
+
+                    <span class="customer-package">
+                        ${packageName}
+                    </span>
+
+                </div>
+
+
+                <span class="customer-status ${statusClass}">
+                    ${statusText}
+                </span>
+
+
+                <button
+                    class="view-user-button"
+                    onclick="viewUser(${customer.id})"
+                >
+                    View User →
+                </button>
+
+            `;
+
+
+            customerList.appendChild(
+                customerItem
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        customerList.innerHTML =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+
+// ==========================================
+// OPEN USER DETAILS
+// ==========================================
+
+function viewUser(userId) {
+
+    window.location.href =
+        `user-details.html?id=${userId}`;
+
+}
+
+
+// ==========================================
+// LOAD LESSONS FOR A COURSE
+// ==========================================
+
+async function loadLessonsForCourse(courseId, container) {
+
+    container.textContent = "Loading lessons...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/courses/${courseId}/lessons`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            container.textContent =
+                data.message ||
+                "Could not load lessons.";
+
+            return;
+
+        }
+
+
+        if (data.lessons.length === 0) {
+
+            container.textContent =
+                "No lessons added yet.";
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.lessons.forEach(lesson => {
+
+            const lessonItem =
+                document.createElement("div");
+
+
+            lessonItem.style.padding =
+                "10px 0";
+
+
+            lessonItem.style.borderBottom =
+                "1px solid #292934";
+
+
+            lessonItem.innerHTML = `
+                <strong>
+                    🎥 Lesson ${lesson.lesson_order}:
+                    ${lesson.title}
+                </strong>
+            `;
+
+
+            container.appendChild(
+                lessonItem
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.textContent =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+// ==========================================
+// LOAD COURSES INTO LESSON DROPDOWN
+// ==========================================
+
+async function loadLessonCourses() {
+
+    const select =
+        document.getElementById("lessonCourse");
+
+    select.innerHTML = `
+        <option value="">
+            Select Course
+        </option>
+
+        <option value="1">
+            📈 Basic Trading
+        </option>
+
+        <option value="2">
+            💰 Smart Money Concepts
+        </option>
+
+        <option value="3">
+            🌊 Elliot Wave
+        </option>
+    `;
+
+}
+
+
+    // ==========================================
+// MANAGE LESSONS
+// ==========================================
+
+function manageLessons(courseId) {
+
+    window.location.href =
+        `course-lessons.html?id=${courseId}`;
+
+}
+
+// ==========================================
+// CREATE LESSON
+// ==========================================
+
+document.getElementById("createLessonForm")
+    .addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const courseId =
+                document.getElementById(
+                    "lessonCourse"
+                ).value;
+
+
+            const title =
+                document.getElementById(
+                    "lessonTitle"
+                ).value.trim();
+
+
+            const videoUrl =
+                document.getElementById(
+                    "lessonVideo"
+                ).value.trim();
+
+
+            const lessonOrder =
+                document.getElementById(
+                    "lessonOrder"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "lessonMessage"
+                );
+
+
+            message.textContent =
+                "Creating lesson...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/admin/lessons",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                course_id:
+                                    courseId,
+
+                                title:
+                                    title,
+
+                                video_url:
+                                    videoUrl,
+
+                                lesson_order:
+                                    Number(lessonOrder)
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Lesson created successfully!";
+
+
+                    document.getElementById(
+                        "createLessonForm"
+                    ).reset();
+
+
+                    // Put the lesson number back to 1
+
+                    document.getElementById(
+                        "lessonOrder"
+                    ).value = 1;
+
+
+                } else {
+
+                    message.textContent =
+                        data.message ||
+                        "Could not create lesson.";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Could not connect to the server.";
+
+            }
+
+        }
+    );
+
+    // ==========================================
+// PASSWORD REQUEST MANAGEMENT BUTTON
+// ==========================================
+
+document.getElementById("managePasswordRequestsButton")
+    .addEventListener("click", function () {
+
+        const passwordManagement =
+            document.getElementById(
+                "password-request-management"
+            );
+
+
+        if (
+            passwordManagement.style.display === "none"
+        ) {
+
+            passwordManagement.style.display =
+                "block";
+
+            loadPasswordRequests();
+
+            passwordManagement.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        } else {
+
+            passwordManagement.style.display =
+                "none";
+
+        }
+
+    });
+
+
+// ==========================================
+// LOAD PASSWORD REQUESTS
+// ==========================================
+
+async function loadPasswordRequests() {
+
+    const requestList =
+        document.getElementById(
+            "passwordRequestList"
+        );
+
+
+    requestList.innerHTML =
+        "Loading password requests...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/password-requests"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            requestList.innerHTML =
+                data.message ||
+                "Could not load password requests.";
+
+            return;
+
+        }
+
+
+        const requests =
+            data.requests;
+
+
+        if (requests.length === 0) {
+
+            requestList.innerHTML =
+                "✅ No pending password requests.";
+
+            return;
+
+        }
+
+
+        requestList.innerHTML = "";
+
+
+        requests.forEach(request => {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "password-request-item";
+
+
+            const date =
+                new Date(
+                    request.created_at
+                ).toLocaleString();
+
+
+            item.innerHTML = `
+
+                <div class="password-request-header">
+
+                    <span class="password-request-username">
+                        👤 ${request.username}
+                    </span>
+
+                    <span class="password-request-date">
+                        ${date}
+                    </span>
+
+                </div>
+
+
+                <div class="password-request-message">
+
+                    <strong>Message:</strong>
+
+                    ${
+                        request.message
+                            ? request.message
+                            : "No message provided."
+                    }
+
+                </div>
+
+
+                <div class="password-request-actions">
+
+                    <button
+                        class="reset-password-button"
+                        onclick="resetPassword(${request.id}, '${request.username.replace(/'/g, "\\'")}')"
+                    >
+                        🔑 Reset Password
+                    </button>
+
+
+                    <button
+                        class="dismiss-password-button"
+                        onclick="dismissPasswordRequest(${request.id})"
+                    >
+                        Dismiss
+                    </button>
+
+                </div>
+
+            `;
+
+
+            requestList.appendChild(item);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        requestList.innerHTML =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+
+// ==========================================
+// DISMISS PASSWORD REQUEST
+// ==========================================
+
+async function dismissPasswordRequest(requestId) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to dismiss this password request?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/password-requests/${requestId}/dismiss`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not dismiss request."
+            );
+
+            return;
+
+        }
+
+
+        loadPasswordRequests();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// RESET PASSWORD
+// ==========================================
+
+async function resetPassword(requestId, username) {
+
+    const newPassword =
+        prompt(
+            `Enter a new password for ${username}:`
+        );
+
+
+    if (newPassword === null) {
+
+        return;
+
+    }
+
+
+    if (!newPassword) {
+
+        alert(
+            "Password cannot be empty."
+        );
+
+        return;
+
+    }
+
+
+    if (newPassword.length < 6) {
+
+        alert(
+            "Password must be at least 6 characters."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Reset ${username}'s password?`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/password-requests/${requestId}/reset`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        password:
+                            newPassword
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not reset password."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            `Password for ${username} has been reset successfully.`
+        );
+
+
+        loadPasswordRequests();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
+
+
+loadDashboard();
+loadCustomers();
+loadLessonCourses();
+loadPasswordRequests();
+
+    </script>
+
+
+</body>
+
+</html>

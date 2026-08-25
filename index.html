@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Trading Academy</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="java.js">
+    <link rel="shortcut icon" type="image/jpg" href="FAVICON.png">
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+
+            <div class="brand">
+                <img src="final logo.jpeg" alt="logo"><!--<span>TENZOR</span>-->
+                <!-- ****ME THIYENNE LOGO EKE WADE EKA CODE EKEN KARANA AMARU PATAK THIYENN EMN BALANNAM LOGO EKA EDIT KARALA EKE NAMA ISSARAHATA DANNA ARA WEBSITE EKE WAGE**** 
+                 <h1 style="padding-top: 50px; color: aliceblue; font-size: 13px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; padding-right: 100px;">Future Finance and Training</h1>-->
+            </div>
+
+            <h2 style="padding-top: 10px;">Welcome Back!</h2>
+            <p class="subtitle">Log in to access your courses</p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <div class="login-options">
+
+                    <label class="remember">
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+
+                    <a href="forgot-password.html">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+                <button type="submit" class="login-button">
+                    Log In
+                </button>
+
+                <p id="error-message" class="error-message"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+</html>
