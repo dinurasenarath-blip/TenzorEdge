@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Account | TenzorEdge Trading Academy</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="customer-page">
+
+
+<div class="customer-dashboard">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="customer-sidebar">
+
+        <div class="customer-logo">
+
+            <img
+                src="final logo.jpeg"
+                alt="TenzorEdge"
+            >
+
+        </div>
+
+
+        <nav>
+
+            <a href="customer-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="my-courses.html">
+                My Courses
+            </a>
+
+            <a href="progress.html">
+                Progress
+            </a>
+
+            <a
+                href="account.html"
+                class="active"
+            >
+                Account
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="customer-main">
+
+
+        <!-- HEADER -->
+
+        <header class="customer-header account-header">
+
+            <div>
+
+                <div class="course-label">
+                    ACCOUNT SETTINGS
+                </div>
+
+                <h1>
+                    My Account
+                </h1>
+
+                <p>
+                    Manage your account and track your learning.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==========================================
+             ACCOUNT INFORMATION
+        ========================================== -->
+
+        <section class="account-section">
+
+            <div class="account-section-header">
+
+                <div>
+
+                    <h2>
+                        Profile Information
+                    </h2>
+
+                    <p>
+                        Your account details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="account-details">
+
+
+                <div class="account-detail">
+
+                    <span>
+                        NAME
+                    </span>
+
+                    <strong id="accountName">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="account-detail">
+
+                    <span>
+                        EMAIL
+                    </span>
+
+                    <strong id="accountEmail">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="account-detail">
+
+                    <span>
+                        ACCOUNT TYPE
+                    </span>
+
+                    <strong id="accountRole">
+                        Student
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             LEARNING STATISTICS
+        ========================================== -->
+
+        <section class="account-section">
+
+            <div class="account-section-header">
+
+                <div>
+
+                    <h2>
+                        Learning Statistics
+                    </h2>
+
+                    <p>
+                        Your progress across the academy.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="account-stats">
+
+
+                <div class="account-stat">
+
+                    <span>
+                        COURSES
+                    </span>
+
+                    <strong id="accountCourseCount">
+                        0
+                    </strong>
+
+                    <p>
+                        Enrolled courses
+                    </p>
+
+                </div>
+
+
+                <div class="account-stat">
+
+                    <span>
+                        COMPLETED
+                    </span>
+
+                    <strong id="accountCompletedLessons">
+                        0
+                    </strong>
+
+                    <p>
+                        Lessons completed
+                    </p>
+
+                </div>
+
+
+                <div class="account-stat">
+
+                    <span>
+                        OVERALL PROGRESS
+                    </span>
+
+                    <strong id="accountOverallProgress">
+                        0%
+                    </strong>
+
+                    <p>
+                        Across all courses
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             ACCOUNT ACTIONS
+        ========================================== -->
+
+        <section class="account-section">
+
+            <div class="account-section-header">
+
+                <div>
+
+                    <h2>
+                        Account Actions
+                    </h2>
+
+                    <p>
+                        Manage your account access.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="account-actions">
+<button
+    class="account-action-button"
+    id="changePasswordButton"
+>
+    🔐 Request New Password
+</button>
+
+
+                <button
+                    class="account-action-button logout-button"
+                    id="logoutButton"
+                >
+                    Log Out →
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+<!-- ==========================================
+     PASSWORD REQUEST MODAL
+========================================== -->
+
+<div
+    id="passwordModal"
+    class="password-modal"
+>
+
+    <div class="password-modal-content">
+
+        <button
+            class="password-modal-close"
+            id="closePasswordModal"
+        >
+            ×
+        </button>
+
+
+        <div class="course-label">
+            ACCOUNT SECURITY
+        </div>
+
+
+        <h2>
+            Request New Password
+        </h2>
+
+
+        <p class="password-modal-description">
+            Send a request to an administrator to reset
+            your account password.
+        </p>
+
+
+        <form id="changePasswordForm">
+
+            <div class="password-input-group">
+
+                <label for="passwordRequestMessage">
+                    Message
+                </label>
+
+                <textarea
+                    id="passwordRequestMessage"
+                    placeholder="Optional message for the administrator..."
+                    rows="4"
+                ></textarea>
+
+            </div>
+
+
+            <p
+                id="passwordMessage"
+                class="password-message"
+            ></p>
+
+
+            <button
+                type="submit"
+                class="password-submit-button"
+            >
+                Send Request
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// LOAD ACCOUNT INFORMATION
+// ==========================================
+
+async function loadAccount() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/account"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            console.error(
+                data.message ||
+                "Could not load account."
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            data.user;
+
+
+        document.getElementById(
+            "accountName"
+        ).textContent =
+            user.name || "Not available";
+
+
+        document.getElementById(
+            "accountEmail"
+        ).textContent =
+            user.email || "Not available";
+
+
+        document.getElementById(
+            "accountRole"
+        ).textContent =
+            user.role === "admin"
+                ? "Administrator"
+                : "Student";
+
+
+    } catch (error) {
+
+        console.error(
+            "Account loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// LOAD LEARNING STATISTICS
+// ==========================================
+
+async function loadAccountStats() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/all-courses"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            return;
+
+        }
+
+
+        const courses =
+            data.courses || [];
+
+
+        document.getElementById(
+            "accountCourseCount"
+        ).textContent =
+            courses.length;
+
+
+        let totalProgress = 0;
+
+        let totalCompleted = 0;
+
+
+        for (const course of courses) {
+
+            totalProgress +=
+                Number(course.progress) || 0;
+
+
+            try {
+
+                const lessonResponse =
+                    await fetch(
+                        `/api/customer/courses/${course.id}/lessons`
+                    );
+
+
+                const lessonData =
+                    await lessonResponse.json();
+
+
+                if (lessonResponse.ok) {
+
+                    const lessons =
+                        lessonData.lessons || [];
+
+
+                    totalCompleted +=
+                        lessons.filter(
+                            lesson =>
+                                Number(
+                                    lesson.completed
+                                ) === 1
+                        ).length;
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Could not load lessons:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        document.getElementById(
+            "accountCompletedLessons"
+        ).textContent =
+            totalCompleted;
+
+
+        const overall =
+            courses.length > 0
+                ? Math.round(
+                    totalProgress /
+                    courses.length
+                )
+                : 0;
+
+
+        document.getElementById(
+            "accountOverallProgress"
+        ).textContent =
+            `${overall}%`;
+
+
+    } catch (error) {
+
+        console.error(
+            "Statistics loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    async function () {
+
+        try {
+
+            await fetch(
+                "/api/logout",
+                {
+                    method: "POST"
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+        }
+
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+
+// ==========================================
+// CHANGE PASSWORD MODAL
+// ==========================================
+
+const passwordModal =
+    document.getElementById(
+        "passwordModal"
+    );
+
+
+const changePasswordButton =
+    document.getElementById(
+        "changePasswordButton"
+    );
+
+
+const closePasswordModal =
+    document.getElementById(
+        "closePasswordModal"
+    );
+
+
+const changePasswordForm =
+    document.getElementById(
+        "changePasswordForm"
+    );
+
+
+const passwordMessage =
+    document.getElementById(
+        "passwordMessage"
+    );
+
+
+// Open modal
+
+changePasswordButton.addEventListener(
+    "click",
+    function () {
+
+        passwordModal.classList.add(
+            "active"
+        );
+
+    }
+);
+
+
+// Close modal
+
+closePasswordModal.addEventListener(
+    "click",
+    function () {
+
+        passwordModal.classList.remove(
+            "active"
+        );
+
+        changePasswordForm.reset();
+
+        passwordMessage.textContent =
+            "";
+
+    }
+);
+
+
+// Close when clicking outside
+
+passwordModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            passwordModal
+        ) {
+
+            passwordModal.classList.remove(
+                "active"
+            );
+
+            changePasswordForm.reset();
+
+            passwordMessage.textContent =
+                "";
+
+        }
+
+    }
+);
+
+
+
+
+// ==========================================
+// SEND PASSWORD RESET REQUEST
+// ==========================================
+
+changePasswordForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const requestMessage =
+            document.getElementById(
+                "passwordRequestMessage"
+            ).value;
+
+
+        passwordMessage.textContent =
+            "Sending request...";
+
+
+        passwordMessage.style.color =
+            "#9f9cff";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/customer/request-password-reset",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            message:
+                                requestMessage
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                passwordMessage.style.color =
+                    "#ff6b6b";
+
+
+                passwordMessage.textContent =
+                    data.message ||
+                    "Could not send request.";
+
+                return;
+
+            }
+
+
+            passwordMessage.style.color =
+                "#7dffb2";
+
+
+            passwordMessage.textContent =
+                data.message ||
+                "Password request sent successfully.";
+
+
+            changePasswordForm.reset();
+
+
+            // Close modal after a short delay
+
+            setTimeout(
+                function () {
+
+                    passwordModal.classList.remove(
+                        "active"
+                    );
+
+                    passwordMessage.textContent =
+                        "";
+
+                },
+                2000
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Password request error:",
+                error
+            );
+
+
+            passwordMessage.style.color =
+                "#ff6b6b";
+
+
+            passwordMessage.textContent =
+                "Could not connect to the server.";
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadAccount();
+
+loadAccountStats();
+
+
+</script>
+
+
+</body>
+
+</html>

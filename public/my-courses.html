@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Courses | TenzorEdge Trading Academy</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="customer-page">
+
+
+<div class="customer-dashboard">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="customer-sidebar">
+
+        <div class="customer-logo">
+
+            <img
+                src="final logo.jpeg"
+                alt="TenzorEdge"
+            >
+
+        </div>
+
+
+        <nav>
+
+            <a href="customer-dashboard.html">
+                Dashboard
+            </a>
+
+            <a
+                href="my-courses.html"
+                class="active"
+            >
+                My Courses
+            </a>
+
+            <a href="progress.html">
+                Progress
+            </a>
+
+            <a href="account.html">
+                Account
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="customer-main">
+
+
+        <!-- HEADER -->
+
+        <header class="customer-header">
+
+            <div>
+
+                <div class="course-label">
+                    MY LEARNING
+                </div>
+
+                <h1>
+                    My Courses
+                </h1>
+
+                <p>
+                    View your courses, track your progress,
+                    and continue learning.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==========================================
+             COURSE SUMMARY
+        ========================================== -->
+
+        <section class="my-courses-summary">
+
+            <div>
+
+                <span>
+                    ENROLLED COURSES
+                </span>
+
+                <strong id="myCourseCount">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             COURSES
+        ========================================== -->
+
+        <section class="my-courses-section">
+
+            <div class="my-courses-header">
+
+                <div>
+
+                    <h2>
+                        Your Courses
+                    </h2>
+
+                    <p>
+                        Continue where you left off.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="myCoursesGrid"
+                class="my-courses-grid"
+            >
+
+                <div class="my-courses-loading">
+                    Loading your courses...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// LOAD CUSTOMER COURSES
+// ==========================================
+
+async function loadMyCourses() {
+
+    const grid =
+        document.getElementById(
+            "myCoursesGrid"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/all-courses"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            grid.innerHTML = `
+
+                <div class="my-courses-empty">
+
+                    <h3>
+                        Could not load courses
+                    </h3>
+
+                    <p>
+                        ${
+                            data.message ||
+                            "Please try again later."
+                        }
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const courses =
+            data.courses || [];
+
+
+        // Update course count
+
+        document.getElementById(
+            "myCourseCount"
+        ).textContent =
+            courses.length;
+
+
+        // ==========================================
+        // NO COURSES
+        // ==========================================
+
+        if (courses.length === 0) {
+
+            grid.innerHTML = `
+
+                <div class="my-courses-empty">
+
+                    <h3>
+                        No courses yet
+                    </h3>
+
+                    <p>
+                        You don't have any courses
+                        assigned yet.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        grid.innerHTML = "";
+
+
+        // ==========================================
+        // CREATE COURSE CARDS
+        // ==========================================
+
+        courses.forEach(course => {
+
+            const progress =
+                Math.min(
+                    Math.max(
+                        Number(course.progress) || 0,
+                        0
+                    ),
+                    100
+                );
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "my-course-card";
+
+
+            card.innerHTML = `
+
+                <div class="my-course-image">
+
+                    <div class="my-course-image-placeholder">
+
+                        ${
+                            course.title
+                                .toUpperCase()
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="my-course-content">
+
+                    <span class="course-label">
+                        TRADING COURSE
+                    </span>
+
+
+                    <h3>
+                        ${course.title}
+                    </h3>
+
+
+                    <p>
+                        ${
+                            course.description ||
+                            "Continue learning and build your trading knowledge."
+                        }
+                    </p>
+
+
+                    <!-- PROGRESS -->
+
+                    <div class="my-course-progress">
+
+                        <div class="my-course-progress-info">
+
+                            <span>
+                                Course Progress
+                            </span>
+
+                            <strong>
+                                ${progress}%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="my-course-progress-bar">
+
+                            <div
+                                class="my-course-progress-fill"
+                                style="width: ${progress}%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        class="course-button my-course-button"
+                        onclick="openCourse(${course.id})"
+                    >
+
+                        ${
+                            progress > 0
+                                ? "Continue Course →"
+                                : "Start Course →"
+                        }
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "My courses loading error:",
+            error
+        );
+
+
+        grid.innerHTML = `
+
+            <div class="my-courses-empty">
+
+                <h3>
+                    Something went wrong
+                </h3>
+
+                <p>
+                    Could not connect to the server.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==========================================
+// OPEN COURSE
+// ==========================================
+
+function openCourse(courseId) {
+
+    window.location.href =
+        `courses.html?id=${courseId}`;
+
+}
+
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadMyCourses();
+
+</script>
+
+
+</body>
+
+</html>
+

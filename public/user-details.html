@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Details</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* User Details Page */
+
+        .user-details-page {
+            padding: 30px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            color: inherit;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            opacity: 0.7;
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .user-header-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .user-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .user-header h1 {
+            margin: 0 0 5px;
+        }
+
+        .user-email {
+            margin: 0;
+            opacity: 0.7;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+        }
+
+        .edit-user-button {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Statistics */
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            opacity: 0.7;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        /* Main content */
+
+        .user-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .user-section {
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .user-section p {
+    line-height: 1.7;
+    margin: 18px 0;
+}
+
+        .user-section h2 {
+            margin-top: 0;
+        }
+
+        /* Courses */
+
+        .course-item {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .course-name {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(128, 128, 128, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .course-progress {
+            margin-top: 7px;
+            font-size: 13px;
+            opacity: 0.65;
+        }
+
+        /* Activity */
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+        }
+
+        .activity-icon {
+            font-size: 18px;
+        }
+
+        .activity-text {
+            margin: 0;
+        }
+
+        .activity-time {
+            margin: 3px 0 0;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        /* Account */
+
+        .account-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+
+    background: var(--accent-color);
+    color: white;
+
+    transition: 0.2s ease;
+}
+
+.account-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+        .danger-button {
+            color: #c0392b;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 800px) {
+            .user-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .user-content {
+                grid-template-columns: 1fr;
+            }
+
+            .user-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+
+        .user-header,
+.stat-card,
+.user-section {
+    border: 1px solid rgba(128, 128, 128, 0.18) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+      .stat-card,
+.user-section {
+    transition: 0.2s ease;
+}
+
+.stat-card:hover,
+.user-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+    .user-header,
+.stat-card,
+.user-section {
+    background: #0F151C !important;
+    border: 1px solid rgba(128, 128, 128, 0.18) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ==========================================
+   ASSIGN COURSE
+========================================== */
+
+.assign-course {
+
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(128, 128, 128, 0.2);
+
+}
+
+
+.assign-course h3 {
+
+    margin-bottom: 15px;
+
+}
+
+
+.assign-course select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 10px;
+
+    border-radius: 9px;
+
+    border:
+        1px solid rgba(128, 128, 128, 0.3);
+
+    background: #0F151C;
+
+    color: white;
+
+    font-size: 14px;
+
+}
+
+
+.assign-course button {
+
+    padding: 11px 18px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--accent-color);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.assign-course button:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+#assignCourseMessage {
+
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    opacity: 0.8;
+
+}
+    </style>
+</head>
+
+<body>
+
+    <main class="user-details-page">
+
+        <!-- Back -->
+
+        <a href="index.html" class="back-button">
+            ← Back to Users
+        </a>
+
+
+        <!-- User Header -->
+
+        <section class="user-header">
+
+            <div class="user-header-left">
+
+                <div class="user-avatar">
+                    👤
+                </div>
+
+                <div>
+                    <h1>John Smith</h1>
+
+                    <p class="user-email">
+                        john.smith@email.com
+                    </p>
+
+                    <span class="status status-active">
+                        ● Active
+                    </span>
+                </div>
+
+            </div>
+
+            <button class="edit-user-button">
+                ✏️ Edit User
+            </button>
+
+        </section>
+
+
+        <!-- Statistics -->
+
+        <section class="user-stats">
+
+            <div class="stat-card">
+                <h3>🎓 Courses Enrolled</h3>
+                <div class="stat-number">3</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>📈 Overall Progress</h3>
+                <div class="stat-number">68%</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>✅ Courses Completed</h3>
+                <div class="stat-number">1</div>
+            </div>
+
+        </section>
+
+
+        <!-- Main Content -->
+
+        <div class="user-content">
+
+            <!-- LEFT COLUMN -->
+
+            <div>
+
+                <!-- Courses -->
+
+                <section class="user-section">
+
+    <h2>🎓 Courses</h2>
+
+    <div id="courseList">
+        Loading courses...
+    </div>
+
+
+    <!-- Assign Course -->
+
+    <div class="assign-course">
+
+        <h3>➕ Assign Course</h3>
+
+        <select id="courseSelect">
+
+            <option value="">
+                Select a course
+            </option>
+
+        </select>
+
+        <button id="assignCourseButton">
+            Assign Course
+        </button>
+
+        <p id="assignCourseMessage"></p>
+
+    </div>
+
+</section>
+
+</section>
+
+                    <div class="course-item">
+
+                        <div class="course-top">
+                            <span class="course-name">
+                                Technical Analysis
+                            </span>
+
+                            <span>52%</span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                style="width: 52%;">
+                            </div>
+                        </div>
+
+                        <div class="course-progress">
+                            13 / 25 lessons completed
+                        </div>
+
+                    </div>
+
+
+                    <div class="course-item">
+
+                        <div class="course-top">
+                            <span class="course-name">
+                                Risk Management
+                            </span>
+
+                            <span>90%</span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                style="width: 90%;">
+                            </div>
+                        </div>
+
+                        <div class="course-progress">
+                            18 / 20 lessons completed
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Activity -->
+
+                <section class="user-section">
+
+                    <h2>🕐 Recent Activity</h2>
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">✅</div>
+
+                        <div>
+                            <p class="activity-text">
+                                Completed "Candlestick Patterns"
+                            </p>
+
+                            <p class="activity-time">
+                                2 hours ago
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">▶️</div>
+
+                        <div>
+                            <p class="activity-text">
+                                Started Technical Analysis
+                            </p>
+
+                            <p class="activity-time">
+                                Yesterday
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">🔐</div>
+
+                        <div>
+                            <p class="activity-text">
+                                Logged into account
+                            </p>
+
+                            <p class="activity-time">
+                                Yesterday
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div>
+
+                <!-- Account -->
+
+                <section class="user-section">
+
+                    <h2>⚙️ Account</h2>
+
+                    <button class="account-button">
+                        ✏️ Edit User Details
+                    </button>
+
+                    <button class="account-button">
+                        🔑 Change Password
+                    </button>
+
+                    <button class="account-button">
+                        🔄 Reset Course Progress
+                    </button>
+
+                    <button class="account-button danger-button">
+                        🚫 Suspend Account
+                    </button>
+
+                </section>
+
+
+                <!-- User Information -->
+
+                <section class="user-section">
+
+                    <h2>👤 Information</h2>
+
+                    <p>
+                        <strong>Email</strong><br>
+                        john.smith@email.com
+                    </p>
+
+                    <p>
+                        <strong>Joined</strong><br>
+                        20 August 2026
+                    </p>
+
+                    <p>
+                        <strong>Last Login</strong><br>
+                        Today
+                    </p>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+
+    // ==========================================
+    // LOAD USER DETAILS
+    // ==========================================
+
+    async function loadUser() {
+
+        // Get the user ID from the URL
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const userId = params.get("id");
+
+
+        // Make sure a user ID was provided
+
+        if (!userId) {
+
+            alert("No user was selected.");
+
+            window.location.href = "index.html";
+
+            return;
+
+        }
+
+
+        try {
+
+            // Ask the server for this user's information
+
+            const response = await fetch(
+                `/api/admin/users/${userId}`
+            );
+
+
+            const data = await response.json();
+
+
+            // Check for an error
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not load user."
+                );
+
+                return;
+
+            }
+
+
+            const user = data.user;
+            const courses = data.courses;
+
+
+            // ==========================================
+            // USER INFORMATION
+            // ==========================================
+
+            document.querySelector(
+                ".user-header h1"
+            ).textContent = user.username;
+
+
+            document.querySelector(
+                ".user-email"
+            ).textContent = user.username;
+
+
+            // Account status
+
+            const statusElement =
+                document.querySelector(".status");
+
+
+            if (user.active) {
+
+                statusElement.textContent =
+                    "● Active";
+
+                statusElement.className =
+                    "status status-active";
+
+            } else {
+
+                statusElement.textContent =
+                    "● Suspended";
+
+                statusElement.className =
+                    "status";
+
+            }
+
+
+            // ==========================================
+            // COURSE STATISTICS
+            // ==========================================
+
+            const totalCourses =
+                courses.length;
+
+
+            const completedCourses =
+                courses.filter(
+                    course => course.progress >= 100
+                ).length;
+
+
+            let overallProgress = 0;
+
+
+            if (totalCourses > 0) {
+
+                overallProgress =
+                    Math.round(
+                        courses.reduce(
+                            (total, course) =>
+                                total + course.progress,
+                            0
+                        ) / totalCourses
+                    );
+
+            }
+
+
+            const statCards =
+                document.querySelectorAll(
+                    ".stat-number"
+                );
+
+
+            statCards[0].textContent =
+                totalCourses;
+
+
+            statCards[1].textContent =
+                `${overallProgress}%`;
+
+
+            statCards[2].textContent =
+                completedCourses;
+
+
+            // ==========================================
+// DISPLAY COURSES
+// ==========================================
+
+const courseList =
+    document.getElementById("courseList");
+
+
+if (courses.length === 0) {
+
+    courseList.innerHTML = `
+        <p style="opacity: 0.6;">
+            This user is not enrolled in any courses yet.
+        </p>
+    `;
+
+} else {
+
+    courseList.innerHTML = "";
+
+
+    courses.forEach(course => {
+
+        const progress =
+            course.progress || 0;
+
+
+        const courseItem =
+            document.createElement("div");
+
+
+        courseItem.className =
+            "course-item";
+
+
+        courseItem.innerHTML = `
+
+            <div class="course-top">
+
+                <span class="course-name">
+                    ${course.title}
+                </span>
+
+                <span>
+                    ${progress}%
+                </span>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    style="width: ${progress}%;">
+                </div>
+
+            </div>
+
+
+            <div class="course-progress">
+
+                ${progress >= 100
+                    ? "Course completed"
+                    : `${progress}% complete`}
+
+            </div>
+
+        `;
+
+
+        courseList.appendChild(
+            courseItem
+        );
+
+    });
+
+}
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Something went wrong while loading the user."
+            );
+
+        }
+
+    }
+
+
+    // Load the user when the page opens
+
+    // ==========================================
+// LOAD AVAILABLE COURSES
+// ==========================================
+
+async function loadAvailableCourses() {
+
+    const courseSelect =
+        document.getElementById("courseSelect");
+
+
+    try {
+
+        const response =
+            await fetch("/api/admin/courses");
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            console.error(
+                data.message ||
+                "Could not load courses."
+            );
+
+            return;
+
+        }
+
+
+        data.courses.forEach(course => {
+
+            const option =
+                document.createElement("option");
+
+
+            option.value =
+                course.id;
+
+
+            option.textContent =
+                course.title;
+
+
+            courseSelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load courses:",
+            error
+        );
+
+    }
+
+}
+
+// ==========================================
+// ASSIGN COURSE
+// ==========================================
+
+document.getElementById("assignCourseButton")
+    .addEventListener(
+        "click",
+        async function () {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const userId =
+                params.get("id");
+
+
+            const courseId =
+                document.getElementById(
+                    "courseSelect"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "assignCourseMessage"
+                );
+
+
+            if (!courseId) {
+
+                message.textContent =
+                    "Please select a course.";
+
+                return;
+
+            }
+
+
+            message.textContent =
+                "Assigning course...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/admin/users/${userId}/courses`,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                courseId: courseId
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (response.ok) {
+
+                    message.textContent =
+                        "Course assigned successfully!";
+
+                    
+                    // Reload the page so the new
+                    // course appears in the list
+
+                    setTimeout(function () {
+
+                        window.location.reload();
+
+                    }, 700);
+
+                } else {
+
+                    message.textContent =
+                        data.message ||
+                        "Could not assign course.";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Could not connect to the server.";
+
+            }
+
+        }
+    );
+
+    // Load page data
+
+      loadUser();
+      loadAvailableCourses();
+
+</script>
+</body>
+</html>

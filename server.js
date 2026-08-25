@@ -2713,10 +2713,8 @@ app.post("/api/logout", (req, res) => {
 // START SERVER
 // ==========================================
 
-app.listen(PORT, () => {
-
+app.listen(PORT, "0.0.0.0", () => {
     console.log(
-        `Website running at http://localhost:${PORT}`
+        `Website running on port ${PORT}`
     );
-
 });

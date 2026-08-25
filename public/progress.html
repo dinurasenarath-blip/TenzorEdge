@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Progress | TenzorEdge Trading Academy</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="customer-page">
+
+
+<div class="customer-dashboard">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="customer-sidebar">
+
+        <div class="customer-logo">
+
+            <img
+                src="final logo.jpeg"
+                alt="TenzorEdge"
+            >
+
+        </div>
+
+
+        <nav>
+
+            <a href="customer-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="my-courses.html">
+                My Courses
+            </a>
+
+            <a
+                href="progress.html"
+                class="active"
+            >
+                Progress
+            </a>
+
+            <a href="account.html">
+                Account
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="customer-main">
+
+
+        <!-- HEADER -->
+
+        <header class="customer-header">
+
+            <div>
+
+                <div class="course-label">
+                    LEARNING PROGRESS
+                </div>
+
+                <h1>
+                    Your Progress
+                </h1>
+
+                <p>
+                    Track your learning progress and
+                    continue where you left off.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- SUMMARY -->
+
+        <section class="progress-summary">
+
+
+            <div class="progress-stat">
+
+                <span class="progress-stat-label">
+                    COURSES
+                </span>
+
+                <strong id="totalCourses">
+                    0
+                </strong>
+
+                <p>
+                    Enrolled courses
+                </p>
+
+            </div>
+
+
+
+            <div class="progress-stat">
+
+                <span class="progress-stat-label">
+                    COMPLETED
+                </span>
+
+                <strong id="completedLessons">
+                    0
+                </strong>
+
+                <p>
+                    Lessons completed
+                </p>
+
+            </div>
+
+
+
+            <div class="progress-stat">
+
+                <span class="progress-stat-label">
+                    REMAINING
+                </span>
+
+                <strong id="remainingLessons">
+                    0
+                </strong>
+
+                <p>
+                    Lessons remaining
+                </p>
+
+            </div>
+
+
+
+            <div class="progress-stat">
+
+                <span class="progress-stat-label">
+                    OVERALL
+                </span>
+
+                <strong id="overallProgress">
+                    0%
+                </strong>
+
+                <p>
+                    Overall progress
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- COURSE PROGRESS -->
+
+        <section class="progress-courses">
+
+            <div class="progress-section-header">
+
+                <div>
+
+                    <h2>
+                        Course Progress
+                    </h2>
+
+                    <p>
+                        Keep going — you're making progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="progressCourseList"
+                class="progress-course-list"
+            >
+
+                <div class="progress-loading">
+                    Loading your progress...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// LOAD PROGRESS
+// ==========================================
+
+async function loadProgress() {
+
+    const courseList =
+        document.getElementById(
+            "progressCourseList"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/all-courses"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            courseList.innerHTML = `
+
+                <div class="progress-empty">
+
+                    <h3>
+                        Could not load progress
+                    </h3>
+
+                    <p>
+                        ${data.message || "Please try again."}
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const courses =
+            data.courses || [];
+
+
+        document.getElementById(
+            "totalCourses"
+        ).textContent =
+            courses.length;
+
+
+        if (courses.length === 0) {
+
+            courseList.innerHTML = `
+
+                <div class="progress-empty">
+
+                    <h3>
+                        No courses yet
+                    </h3>
+
+                    <p>
+                        You don't have any courses assigned yet.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        courseList.innerHTML = "";
+
+
+        let totalProgress = 0;
+
+
+        for (const course of courses) {
+
+            const progress =
+                Number(course.progress) || 0;
+
+
+            totalProgress += progress;
+
+
+            // Get lessons
+
+            let lessons = [];
+
+
+            try {
+
+                const lessonResponse =
+                    await fetch(
+                        `/api/customer/courses/${course.id}/lessons`
+                    );
+
+
+                const lessonData =
+                    await lessonResponse.json();
+
+
+                if (lessonResponse.ok) {
+
+                    lessons =
+                        lessonData.lessons || [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Could not load lessons:",
+                    error
+                );
+
+            }
+
+
+            const totalLessons =
+                lessons.length;
+
+
+            const completed =
+                lessons.filter(
+                    lesson =>
+                        Number(lesson.completed) === 1
+                ).length;
+
+
+            const remaining =
+                Math.max(
+                    totalLessons - completed,
+                    0
+                );
+
+
+            // Create card
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "progress-course-card";
+
+
+            card.innerHTML = `
+
+                <div class="progress-course-top">
+
+                    <div>
+
+                        <span class="course-label">
+                            COURSE
+                        </span>
+
+                        <h3>
+                            ${course.title}
+                        </h3>
+
+                        <p>
+                            ${course.description || "Continue learning this course."}
+                        </p>
+
+                    </div>
+
+
+                    <div class="progress-percentage">
+
+                        <strong>
+                            ${progress}%
+                        </strong>
+
+                        <span>
+                            Complete
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-fill"
+                        style="width: ${progress}%"
+                    ></div>
+
+                </div>
+
+
+                <div class="progress-course-bottom">
+
+                    <div class="progress-lesson-count">
+
+                        <span>
+                            ✓ ${completed} completed
+                        </span>
+
+                        <span>
+                            ${remaining} remaining
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="course-button"
+                        onclick="continueCourse(${course.id})"
+                    >
+
+                        ${
+                            progress > 0
+                                ? "Continue Course →"
+                                : "Start Course →"
+                        }
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            courseList.appendChild(card);
+
+
+            // Update summary
+
+            const totalCompleted =
+                Number(
+                    document.getElementById(
+                        "completedLessons"
+                    ).textContent
+                ) + completed;
+
+
+            const totalRemaining =
+                Number(
+                    document.getElementById(
+                        "remainingLessons"
+                    ).textContent
+                ) + remaining;
+
+
+            document.getElementById(
+                "completedLessons"
+            ).textContent =
+                totalCompleted;
+
+
+            document.getElementById(
+                "remainingLessons"
+            ).textContent =
+                totalRemaining;
+
+        }
+
+
+        // Overall progress
+
+        const overall =
+            courses.length > 0
+                ? Math.round(
+                    totalProgress /
+                    courses.length
+                )
+                : 0;
+
+
+        document.getElementById(
+            "overallProgress"
+        ).textContent =
+            `${overall}%`;
+
+
+    } catch (error) {
+
+        console.error(
+            "Progress loading error:",
+            error
+        );
+
+
+        courseList.innerHTML = `
+
+            <div class="progress-empty">
+
+                <h3>
+                    Something went wrong
+                </h3>
+
+                <p>
+                    Could not connect to the server.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==========================================
+// CONTINUE COURSE
+// ==========================================
+
+function continueCourse(courseId) {
+
+    window.location.href =
+        `course.html?id=${courseId}`;
+
+}
+
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadProgress();
+
+</script>
+
+
+</body>
+
+</html>

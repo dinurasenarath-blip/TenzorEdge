@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lesson</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="customer-page">
+
+
+    <div class="customer-dashboard">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="customer-sidebar">
+
+            <div class="customer-logo">
+
+                <img
+                    src="final logo.jpeg"
+                    alt="Logo"
+                >
+
+            </div>
+
+
+            <nav>
+
+                <a href="customer-dashboard.html">
+    Dashboard
+</a>
+
+<a href="my-courses.html">
+    My Courses
+</a>
+
+<a href="progress.html">
+    Progress
+</a>
+
+<a href="account.html">
+    Account
+</a>
+
+            </nav>
+
+        </aside>
+
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="customer-main">
+
+
+            <!-- HEADER -->
+
+            <header class="customer-header">
+
+                <div>
+
+                    <a
+                        href="#"
+                        id="backToCourse"
+                        class="lesson-back"
+                    >
+                        ← Back to Course
+                    </a>
+
+
+                    <p id="courseName">
+                        Loading course...
+                    </p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- LESSON -->
+
+            <section class="lesson-page">
+
+
+                <div class="lesson-header">
+
+                    <div>
+
+                        <span
+                            class="lesson-label"
+                            id="lessonNumber"
+                        >
+                            LESSON
+                        </span>
+
+
+                        <h1 id="lessonTitle">
+                            Loading lesson...
+                        </h1>
+
+
+                        <p id="lessonDescription">
+                            Loading lesson information...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VIDEO -->
+
+                <div class="lesson-video-container">
+
+                    <video
+                        id="lessonVideo"
+                        controls
+                        controlsList="nodownload"
+                    >
+
+                        <source
+                            id="videoSource"
+                            src=""
+                            type="video/mp4"
+                        >
+
+                        Your browser does not support
+                        video playback.
+
+                    </video>
+
+
+                    <div
+                        id="noVideo"
+                        class="no-video"
+                        style="display: none;"
+                    >
+
+                        <h3>
+                            Video coming soon
+                        </h3>
+
+                        <p>
+                            This lesson does not have a video
+                            uploaded yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LESSON CONTROLS -->
+
+                <div class="lesson-controls">
+
+
+                    <button
+                        id="previousLesson"
+                        class="lesson-button secondary"
+                    >
+
+                        ← Previous Lesson
+
+                    </button>
+
+
+
+                    <button
+                        id="completeLesson"
+                        class="lesson-button"
+                    >
+
+                        Mark as Complete ✓
+
+                    </button>
+
+
+
+                    <button
+                        id="nextLesson"
+                        class="lesson-button"
+                    >
+
+                        Next Lesson →
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- LESSON LIST -->
+
+                <div class="lesson-list-section">
+
+                    <h2>
+                        Course Lessons
+                    </h2>
+
+
+                    <div
+                        id="lessonList"
+                        class="lesson-list"
+                    >
+
+                        Loading lessons...
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+<script>
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const courseId =
+    params.get("course");
+
+
+const lessonId =
+    params.get("lesson");
+
+
+
+let lessons = [];
+
+let currentLessonIndex = -1;
+
+
+
+// ==========================================
+// CHECK URL
+// ==========================================
+
+if (!courseId || !lessonId) {
+
+    alert(
+        "This lesson could not be loaded."
+    );
+
+}
+
+
+
+// ==========================================
+// LOAD COURSE + LESSONS
+// ==========================================
+
+async function loadLesson() {
+
+    try {
+
+        // Get course information
+
+        const courseResponse =
+            await fetch(
+                `/api/customer/courses/${courseId}`
+            );
+
+
+        const courseData =
+            await courseResponse.json();
+
+
+        if (!courseResponse.ok) {
+
+            alert(
+                courseData.message ||
+                "Could not load course."
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("courseName")
+            .textContent =
+                courseData.course.title;
+
+
+
+        // Get lessons
+
+        const lessonsResponse =
+            await fetch(
+                `/api/customer/courses/${courseId}/lessons`
+            );
+
+
+        const lessonsData =
+            await lessonsResponse.json();
+
+
+        if (!lessonsResponse.ok) {
+
+            alert(
+                lessonsData.message ||
+                "Could not load lessons."
+            );
+
+            return;
+
+        }
+
+
+        lessons =
+            lessonsData.lessons;
+
+
+
+        // Find current lesson
+
+        currentLessonIndex =
+            lessons.findIndex(
+                lesson =>
+                    String(lesson.id) ===
+                    String(lessonId)
+            );
+
+
+        if (currentLessonIndex === -1) {
+
+            alert(
+                "Lesson not found."
+            );
+
+            return;
+
+        }
+
+
+        displayLesson();
+
+        displayLessonList();
+
+        setupNavigation();
+
+
+    } catch (error) {
+
+        console.error(
+            "Lesson loading error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// ==========================================
+// DISPLAY CURRENT LESSON
+// ==========================================
+
+function displayLesson() {
+
+    const lesson =
+        lessons[currentLessonIndex];
+
+    const completeButton =
+    document.getElementById("completeLesson");
+
+
+if (Number(lesson.completed) === 1) {
+
+    completeButton.textContent =
+        "Completed ✓";
+
+    completeButton.classList.add(
+        "completed"
+    );
+
+    completeButton.disabled = true;
+
+} else {
+
+    completeButton.textContent =
+        "Mark as Complete ✓";
+
+    completeButton.classList.remove(
+        "completed"
+    );
+
+    completeButton.disabled = false;
+
+}
+
+    
+
+
+    document
+        .getElementById("lessonNumber")
+        .textContent =
+            `LESSON ${currentLessonIndex + 1}`;
+
+
+    document
+        .getElementById("lessonTitle")
+        .textContent =
+            lesson.title;
+
+
+    document
+        .getElementById("lessonDescription")
+        .textContent =
+            lesson.description || "";
+
+
+
+    const video =
+        document.getElementById(
+            "lessonVideo"
+        );
+
+
+    const source =
+        document.getElementById(
+            "videoSource"
+        );
+
+
+    const noVideo =
+        document.getElementById(
+            "noVideo"
+        );
+
+
+    if (lesson.video_url) {
+
+        video.style.display =
+            "block";
+
+        noVideo.style.display =
+            "none";
+
+        source.src =
+            lesson.video_url;
+
+        video.load();
+
+    } else {
+
+        video.style.display =
+            "none";
+
+        noVideo.style.display =
+            "flex";
+
+    }
+
+
+
+}
+
+
+
+// ==========================================
+// LESSON LIST
+// ==========================================
+
+function displayLessonList() {
+
+    const lessonList =
+        document.getElementById(
+            "lessonList"
+        );
+
+
+    lessonList.innerHTML = "";
+
+
+    lessons.forEach(
+        (lesson, index) => {
+
+            const item =
+                document.createElement(
+                    "button"
+                );
+
+
+            item.className =
+                "lesson-list-item";
+
+
+            if (
+                index ===
+                currentLessonIndex
+            ) {
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            item.innerHTML = `
+
+    <span>
+        Lesson ${index + 1}
+    </span>
+
+    <strong>
+        ${lesson.title}
+    </strong>
+
+    ${
+        lesson.completed
+            ? `<span class="lesson-completed">Completed ✓</span>`
+            : `<span class="lesson-not-completed">Not completed</span>`
+    }
+
+`;
+
+
+            item.onclick = function () {
+
+                window.location.href =
+                    `lesson.html?course=${courseId}&lesson=${lesson.id}`;
+
+            };
+
+
+            lessonList.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+
+function setupNavigation() {
+
+    const previousButton =
+        document.getElementById(
+            "previousLesson"
+        );
+
+
+    const nextButton =
+        document.getElementById(
+            "nextLesson"
+        );
+
+
+    // Previous
+
+    if (currentLessonIndex > 0) {
+
+        previousButton.disabled =
+            false;
+
+        previousButton.onclick =
+            function () {
+
+                const previousLesson =
+                    lessons[
+                        currentLessonIndex - 1
+                    ];
+
+                window.location.href =
+                    `lesson.html?course=${courseId}&lesson=${previousLesson.id}`;
+
+            };
+
+    } else {
+
+        previousButton.disabled =
+            true;
+
+    }
+
+
+
+    // Next
+
+    if (
+        currentLessonIndex <
+        lessons.length - 1
+    ) {
+
+        nextButton.disabled =
+            false;
+
+        nextButton.onclick =
+            function () {
+
+                const nextLesson =
+                    lessons[
+                        currentLessonIndex + 1
+                    ];
+
+                window.location.href =
+                    `lesson.html?course=${courseId}&lesson=${nextLesson.id}`;
+
+            };
+
+    } else {
+
+        nextButton.disabled =
+            true;
+
+    }
+
+
+
+    // Back to course
+
+    document
+        .getElementById("backToCourse")
+        .onclick =
+            function (event) {
+
+                event.preventDefault();
+
+                window.location.href =
+                    `course.html?id=${courseId}`;
+
+            };
+
+}
+
+
+
+// ==========================================
+// MARK LESSON COMPLETE
+// ==========================================
+
+document
+    .getElementById("completeLesson")
+    .onclick = async function () {
+
+        const button =
+            document.getElementById(
+                "completeLesson"
+            );
+
+        const lesson =
+            lessons[currentLessonIndex];
+
+        if (!lesson) {
+            return;
+        }
+
+        try {
+
+            button.disabled = true;
+
+            button.textContent =
+                "Saving...";
+
+
+            const response =
+                await fetch(
+                    `/api/customer/lessons/${lesson.id}/complete`,
+                    {
+                        method: "POST"
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not save progress."
+                );
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Mark as Complete ✓";
+
+                return;
+
+            }
+
+
+            // Update the lesson locally
+
+            lesson.completed = 1;
+
+
+            // Update button
+
+            button.textContent =
+                "Completed ✓";
+
+            button.classList.add(
+                "completed"
+            );
+
+            button.disabled = true;
+
+
+            // Refresh lesson list
+
+            displayLessonList();
+
+
+            console.log(
+                "Lesson completed."
+            );
+
+            console.log(
+                "Course progress:",
+                data.progress + "%"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Progress error:",
+                error
+            );
+
+            alert(
+                "Could not connect to the server."
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "Mark as Complete ✓";
+
+        }
+
+    };
+
+// ==========================================
+// START
+// ==========================================
+
+loadLesson();
+
+</script>
+
+
+</body>
+
+</html>

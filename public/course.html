@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Course | TenzorEdge Trading Academy</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body class="customer-page">
+
+    <div class="customer-dashboard">
+
+
+        <!-- ==========================================
+             SIDEBAR
+        ========================================== -->
+
+        <aside class="customer-sidebar">
+
+            <div class="customer-logo">
+
+                <img
+                    src="final logo.jpeg"
+                    alt="TenzorEdge"
+                >
+
+            </div>
+
+
+            <nav>
+
+                <a href="customer-dashboard.html">
+                   Dashboard
+                </a>
+
+                <a href="my-courses.html">
+                    My Courses
+                </a>
+
+                <a href="progress.html">
+                    Progress
+                </a>
+
+                <a href="account.html">
+                    Account
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+
+        <!-- ==========================================
+             MAIN CONTENT
+        ========================================== -->
+
+        <main class="customer-main">
+
+
+            <!-- BACK BUTTON -->
+
+            <button
+                class="course-back-button"
+                onclick="window.location.href='customer-dashboard.html'"
+            >
+                ← Back to Dashboard
+            </button>
+
+
+
+            <!-- COURSE HEADER -->
+
+            <section class="course-page-header">
+
+                <div>
+
+                    <div class="course-label">
+                        TRADING COURSE
+                    </div>
+
+
+                    <h1 id="courseTitle">
+                        Loading course...
+                    </h1>
+
+
+                    <p id="courseDescription">
+                        Loading course information...
+                    </p>
+
+                </div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="course-page-progress">
+
+                    <span>
+                        Course Progress
+                    </span>
+
+
+                    <strong id="courseProgress">
+                        0%
+                    </strong>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            id="courseProgressFill"
+                            class="progress-fill"
+                            style="width: 0%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 LESSONS
+            ========================================== -->
+
+            <section class="course-lessons">
+
+                <h2>
+                    Course Lessons
+                </h2>
+
+
+                <div id="lessonList">
+
+                    Loading lessons...
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <script>
+
+
+        // ==========================================
+        // GET COURSE ID
+        // ==========================================
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const courseId =
+            params.get("id");
+
+
+        if (!courseId) {
+
+            window.location.href =
+                "customer-dashboard.html";
+
+        }
+
+
+
+        // ==========================================
+        // LOAD COURSE
+        // ==========================================
+
+        async function loadCourse() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/customer/courses/${courseId}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    document.getElementById(
+                        "courseTitle"
+                    ).textContent =
+                        "Course unavailable";
+
+
+                    document.getElementById(
+                        "courseDescription"
+                    ).textContent =
+                        data.message ||
+                        "This course could not be loaded.";
+
+
+                    return;
+
+                }
+
+
+                const course =
+                    data.course;
+
+
+                document.getElementById(
+                    "courseTitle"
+                ).textContent =
+                    course.title;
+
+
+                document.getElementById(
+                    "courseDescription"
+                ).textContent =
+                    course.description ||
+                    "No description available.";
+
+
+                // ==========================================
+// UPDATE COURSE PROGRESS
+// ==========================================
+
+const progress =
+    Number(course.progress) || 0;
+
+
+document.getElementById(
+    "courseProgress"
+).textContent =
+    `${progress}%`;
+
+
+document.getElementById(
+    "courseProgressFill"
+).style.width =
+    `${progress}%`;
+
+
+                loadLessons();
+
+            } catch (error) {
+
+                console.error(error);
+
+                document.getElementById(
+                    "courseTitle"
+                ).textContent =
+                    "Could not load course.";
+
+            }
+
+        }
+
+
+
+        // ==========================================
+// LOAD LESSONS
+// ==========================================
+
+async function loadLessons() {
+
+    const lessonList =
+        document.getElementById("lessonList");
+
+    try {
+
+        console.log("Loading lessons for course:", courseId);
+
+        const response =
+            await fetch(
+                `/api/customer/courses/${courseId}/lessons`
+            );
+
+        const data =
+            await response.json();
+
+        console.log("LESSON API RESPONSE:", data);
+
+        if (!response.ok) {
+
+            lessonList.innerHTML = `
+                <div class="lesson-empty">
+
+                    <h3>
+                        Could not load lessons
+                    </h3>
+
+                    <p>
+                        ${data.message || "Something went wrong."}
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+        const lessons =
+            Array.isArray(data.lessons)
+                ? data.lessons
+                : [];
+
+
+        // ==========================================
+        // NO LESSONS
+        // ==========================================
+
+        if (lessons.length === 0) {
+
+            lessonList.innerHTML = `
+
+                <div class="lesson-empty">
+
+                    <h3>
+                        No lessons yet
+                    </h3>
+
+                    <p>
+                        Lessons for this course
+                        haven't been added yet.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        // ==========================================
+        // DISPLAY LESSONS
+        // ==========================================
+
+        lessonList.innerHTML = "";
+
+
+        lessons.forEach((lesson, index) => {
+
+            const lessonCard =
+                document.createElement("div");
+
+            lessonCard.className =
+                "customer-lesson";
+
+
+            const isCompleted =
+                Number(lesson.completed) === 1;
+
+
+            lessonCard.innerHTML = `
+
+                <div class="lesson-number">
+                    ${index + 1}
+                </div>
+
+
+                <div class="lesson-info">
+
+                    <h3>
+                        ${lesson.title}
+                    </h3>
+
+                    <p>
+                        ${lesson.description || "Lesson"}
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="lesson-button ${isCompleted ? "completed" : ""}"
+                    onclick="openLesson(${lesson.id})"
+                >
+
+                    ${
+                        isCompleted
+                            ? "Completed ✓"
+                            : "Watch Lesson →"
+                    }
+
+                </button>
+
+            `;
+
+
+            lessonList.appendChild(
+                lessonCard
+            );
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Lesson loading error:",
+            error
+        );
+
+        lessonList.innerHTML = `
+
+            <div class="lesson-empty">
+
+                <h3>
+                    Could not load lessons
+                </h3>
+
+                <p>
+                    There was a problem connecting
+                    to the server.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+        // ==========================================
+        // OPEN LESSON
+        // ==========================================
+
+        function openLesson(lessonId) {
+
+    window.location.href =
+        `lesson.html?course=${courseId}&lesson=${lessonId}`;
+
+}
+
+
+
+        // ==========================================
+        // START
+        // ==========================================
+
+        loadCourse();
+
+    </script>
+
+
+</body>
+
+</html>

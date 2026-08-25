@@ -1,6 +1,9 @@
 {
   "name": "trading-web",
   "version": "1.0.0",
+  "engines": {
+  "node": "20.x"
+},
   "description": "",
   "main": "java.js",
   "scripts": {
