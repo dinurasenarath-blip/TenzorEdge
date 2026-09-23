@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reviews | TenzorEdge Trading Academy</title>
+
+    <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/lucide@latest"></script>
+
+
+</head>
+
+
+<body class="customer-page">
+
+
+<div class="customer-dashboard">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="customer-sidebar">
+
+
+        <div class="customer-logo">
+
+            <img
+                src="final logo.jpeg"
+                alt="Logo"
+            >
+
+        </div>
+
+
+        <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+        >
+            ◀
+        </button>
+
+
+            <nav>
+
+    <a href="customer-dashboard.html">
+        <span class="nav-icon">
+            <i data-lucide="house"></i>
+        </span>
+        <span class="nav-text">Dashboard</span>
+    </a>
+
+
+    <a href="my-courses.html" >
+        <span class="nav-icon">
+            <i data-lucide="book-open"></i>
+        </span>
+        <span class="nav-text">My Courses</span>
+    </a>
+
+
+    <a href="progress.html">
+        <span class="nav-icon">
+            <i data-lucide="chart-no-axes-column-increasing"></i>
+        </span>
+        <span class="nav-text">Progress</span>
+    </a>
+
+
+    <a href="account.html" >
+        <span class="nav-icon">
+            <i data-lucide="user-round"></i>
+        </span>
+        <span class="nav-text">Account</span>
+    </a>
+
+
+    <a href="reviews.html" class="active">
+        <span class="nav-icon">
+            <i data-lucide="star"></i>
+        </span>
+        <span class="nav-text">Reviews</span>
+    </a>
+
+</nav>
+
+
+
+    </aside>
+
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="customer-main">
+
+
+        <header class="customer-header">
+
+            <div>
+
+                <h1>
+                    Reviews
+                </h1>
+
+                <p>
+                    Share your experience with TenzorEdge
+                    Trading Academy.
+                </p>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ==========================================
+             REVIEW SECTION
+        ========================================== -->
+
+        <section class="reviews-page">
+
+
+            <div class="reviews-intro">
+
+                <span class="course-label">
+                    YOUR FEEDBACK
+                </span>
+
+
+                <h2>
+                    How are you finding the academy?
+                </h2>
+
+
+                <p>
+                    Your feedback helps us improve the
+                    learning experience for everyone.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 REVIEW FORM
+            ========================================== -->
+
+            <div class="review-card">
+
+
+                <h3>
+                    ⭐ Leave a Review
+                </h3>
+
+
+                <p class="review-description">
+                    Tell us what you think about your
+                    experience with the academy.
+                </p>
+
+
+
+                <!-- RATING -->
+
+                <div class="rating-section">
+
+                    <label>
+                        Your Rating
+                    </label>
+
+
+                    <div
+                        class="star-rating"
+                        id="starRating"
+                    >
+
+                        <button
+                            type="button"
+                            data-rating="1"
+                        >
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            data-rating="2"
+                        >
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            data-rating="3"
+                        >
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            data-rating="4"
+                        >
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            data-rating="5"
+                        >
+                            ★
+                        </button>
+
+                    </div>
+
+
+                    <span
+                        id="ratingText"
+                        class="rating-text"
+                    >
+                        Select a rating
+                    </span>
+
+                </div>
+
+
+
+                <!-- REVIEW -->
+
+                <div class="review-input-section">
+
+                    <label for="reviewText">
+                        Your Review
+                    </label>
+
+
+                    <textarea
+                        id="reviewText"
+                        placeholder="Write your review here..."
+                        maxlength="1000"
+                    ></textarea>
+
+
+                    <div class="character-count">
+
+                        <span id="characterCount">
+                            0
+                        </span>
+
+                        / 1000
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    id="submitReviewButton"
+                    class="review-submit-button"
+                >
+                    Submit Review
+                </button>
+
+
+                <p
+                    id="reviewMessage"
+                    class="review-message"
+                ></p>
+
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 PREVIOUS REVIEW
+            ========================================== -->
+
+            <div
+                class="review-card previous-review-card"
+                id="previousReview"
+            >
+
+                <h3>
+                    Your Previous Review
+                </h3>
+
+
+                <p class="no-review-message">
+                    You haven't submitted a review yet.
+                </p>
+
+            </div>
+
+            <!-- ==========================================
+     APPROVED CUSTOMER REVIEWS
+========================================== -->
+
+<section class="reviews-display">
+
+    <h2>⭐ What Our Students Say</h2>
+
+    <div id="approvedReviews">
+        Loading reviews...
+    </div>
+
+</section>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+
+
+// ==========================================
+// SIDEBAR
+// ==========================================
+
+const sidebar =
+    document.querySelector(".customer-sidebar");
+
+const sidebarToggle =
+    document.getElementById("sidebarToggle");
+
+
+if (sidebar && sidebarToggle) {
+
+
+    const sidebarCollapsed =
+        localStorage.getItem(
+            "sidebarCollapsed"
+        ) === "true";
+
+
+    if (sidebarCollapsed) {
+
+        sidebar.classList.add("collapsed");
+
+        sidebarToggle.textContent =
+            "▶";
+
+    } else {
+
+        sidebarToggle.textContent =
+            "◀";
+
+    }
+
+
+    sidebarToggle.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle(
+                "collapsed"
+            );
+
+
+            const isCollapsed =
+                sidebar.classList.contains(
+                    "collapsed"
+                );
+
+
+            localStorage.setItem(
+                "sidebarCollapsed",
+                isCollapsed
+            );
+
+
+            sidebarToggle.textContent =
+                isCollapsed
+                    ? "▶"
+                    : "◀";
+
+        }
+    );
+
+}
+
+
+
+// ==========================================
+// STAR RATING
+// ==========================================
+
+const stars =
+    document.querySelectorAll(
+        "#starRating button"
+    );
+
+
+const ratingText =
+    document.getElementById(
+        "ratingText"
+    );
+
+
+let selectedRating = 0;
+
+
+const ratingLabels = {
+
+    1: "Very poor",
+
+    2: "Needs improvement",
+
+    3: "It's okay",
+
+    4: "Good",
+
+    5: "Excellent"
+
+};
+
+
+stars.forEach(star => {
+
+
+    star.addEventListener(
+        "click",
+        () => {
+
+            selectedRating =
+                Number(
+                    star.dataset.rating
+                );
+
+
+            stars.forEach(
+                currentStar => {
+
+                    const rating =
+                        Number(
+                            currentStar.dataset.rating
+                        );
+
+
+                    currentStar.classList.toggle(
+                        "selected",
+                        rating <= selectedRating
+                    );
+
+                }
+            );
+
+
+            ratingText.textContent =
+                ratingLabels[selectedRating];
+
+        }
+    );
+
+
+    star.addEventListener(
+        "mouseenter",
+        () => {
+
+            const hoverRating =
+                Number(
+                    star.dataset.rating
+                );
+
+
+            stars.forEach(
+                currentStar => {
+
+                    const rating =
+                        Number(
+                            currentStar.dataset.rating
+                        );
+
+
+                    currentStar.classList.toggle(
+                        "hover",
+                        rating <= hoverRating
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    star.addEventListener(
+        "mouseleave",
+        () => {
+
+            stars.forEach(
+                currentStar => {
+
+                    currentStar.classList.remove(
+                        "hover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+});
+
+
+
+// ==========================================
+// CHARACTER COUNTER
+// ==========================================
+
+const reviewText =
+    document.getElementById(
+        "reviewText"
+    );
+
+
+const characterCount =
+    document.getElementById(
+        "characterCount"
+    );
+
+
+reviewText.addEventListener(
+    "input",
+    () => {
+
+        characterCount.textContent =
+            reviewText.value.length;
+
+    }
+);
+
+
+
+// ==========================================
+// SUBMIT REVIEW
+// ==========================================
+
+const submitButton =
+    document.getElementById(
+        "submitReviewButton"
+    );
+
+const reviewMessage =
+    document.getElementById(
+        "reviewMessage"
+    );
+
+
+// ==========================================
+// UPDATE STARS
+// ==========================================
+
+function updateStars(rating) {
+
+    stars.forEach(currentStar => {
+
+        const currentRating =
+            Number(currentStar.dataset.rating);
+
+        currentStar.classList.toggle(
+            "selected",
+            currentRating <= rating
+        );
+
+    });
+
+    if (rating > 0) {
+
+        ratingText.textContent =
+            ratingLabels[rating];
+
+    } else {
+
+        ratingText.textContent =
+            "Select a rating";
+
+    }
+
+}
+
+
+// ==========================================
+// SUBMIT REVIEW
+// ==========================================
+
+submitButton.addEventListener(
+    "click",
+    async () => {
+
+        const review =
+            reviewText.value.trim();
+
+
+        if (!selectedRating) {
+
+            reviewMessage.textContent =
+                "Please select a rating.";
+
+            return;
+
+        }
+
+
+        if (!review) {
+
+            reviewMessage.textContent =
+                "Please write a review.";
+
+            return;
+
+        }
+
+
+        submitButton.disabled = true;
+
+        reviewMessage.textContent =
+            "Submitting your review...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/customer/review",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            rating:
+                                selectedRating,
+
+                            review:
+                                review
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                reviewMessage.textContent =
+                    data.message ||
+                    "Could not submit your review.";
+
+                submitButton.disabled =
+                    false;
+
+                return;
+
+            }
+
+
+            reviewMessage.textContent =
+                data.message ||
+                "Your review has been submitted.";
+
+
+            submitButton.disabled =
+                false;
+
+
+            loadExistingReview();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            reviewMessage.textContent =
+                "Could not connect to the server.";
+
+            submitButton.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+
+// ==========================================
+// LOAD EXISTING REVIEW
+// ==========================================
+
+async function loadExistingReview() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/review"
+            );
+
+        if (!response.ok) {
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        const previousReview =
+            document.getElementById(
+                "previousReview"
+            );
+
+
+        // ==========================================
+        // NO REVIEW
+        // ==========================================
+
+        if (!data.review) {
+
+            previousReview.innerHTML = `
+
+                <h3>
+                    Your Previous Review
+                </h3>
+
+                <p class="no-review-message">
+                    You haven't submitted a review yet.
+                </p>
+
+            `;
+
+            return;
+        }
+
+
+        const existingReview =
+            data.review;
+
+
+        // ==========================================
+        // LOAD REVIEW INTO FORM
+        // ==========================================
+
+        selectedRating =
+            Number(
+                existingReview.rating
+            );
+
+        reviewText.value =
+            existingReview.review;
+
+        updateStars(
+            selectedRating
+        );
+
+        characterCount.textContent =
+            reviewText.value.length;
+
+
+        // ==========================================
+        // STATUS MESSAGE
+        // ==========================================
+
+        if (
+            existingReview.status ===
+            "pending"
+        ) {
+
+            reviewMessage.textContent =
+                "Your review has been submitted and is awaiting approval.";
+
+        }
+
+        else if (
+            existingReview.status ===
+            "approved"
+        ) {
+
+            reviewMessage.textContent =
+                "Your review has been approved.";
+
+        }
+
+        else {
+
+            reviewMessage.textContent =
+                "Your previous review has been loaded.";
+
+        }
+
+
+        // ==========================================
+        // DISPLAY PREVIOUS REVIEW CARD
+        // ==========================================
+
+        const starsDisplay =
+            "★".repeat(
+                existingReview.rating
+            ) +
+            "☆".repeat(
+                5 - existingReview.rating
+            );
+
+
+        let statusText =
+            "Pending";
+
+
+        if (
+            existingReview.status ===
+            "approved"
+        ) {
+
+            statusText =
+                "Approved";
+
+        }
+
+        else if (
+            existingReview.status ===
+            "rejected"
+        ) {
+
+            statusText =
+                "Rejected";
+
+        }
+
+
+        previousReview.innerHTML = `
+
+            <h3>
+                Your Previous Review
+            </h3>
+
+            <div class="previous-review-content">
+
+                <div class="previous-review-stars">
+                    ${starsDisplay}
+                </div>
+
+                <p class="previous-review-text">
+                    ${existingReview.review}
+                </p>
+
+                <span class="previous-review-status">
+                    ${statusText}
+                </span>
+
+                <button
+                    type="button"
+                    id="deleteReviewButton"
+                >
+                    Delete My Review
+                </button>
+
+            </div>
+
+        `;
+
+
+        // ==========================================
+        // DELETE BUTTON
+        // ==========================================
+
+        const deleteButton =
+            document.getElementById(
+                "deleteReviewButton"
+            );
+
+
+        deleteButton.addEventListener(
+            "click",
+            deleteMyReview
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Could not load existing review:",
+            error
+        );
+
+    }
+
+}
+
+
+
+
+// ==========================================
+// DELETE MY REVIEW
+// ==========================================
+
+async function deleteMyReview() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete your review?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const deleteButton =
+        document.getElementById(
+            "deleteReviewButton"
+        );
+
+
+    if (deleteButton) {
+        deleteButton.disabled = true;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/review",
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not delete your review."
+            );
+
+            if (deleteButton) {
+                deleteButton.disabled = false;
+            }
+
+            return;
+        }
+
+
+        // ==========================================
+        // RESET REVIEW FORM
+        // ==========================================
+
+        reviewText.value =
+            "";
+
+        characterCount.textContent =
+            "0";
+
+        selectedRating =
+            0;
+
+        updateStars(0);
+
+
+        reviewMessage.textContent =
+            "Your review has been deleted.";
+
+
+        // ==========================================
+        // RESET PREVIOUS REVIEW CARD
+        // ==========================================
+
+        const previousReview =
+            document.getElementById(
+                "previousReview"
+            );
+
+
+        previousReview.innerHTML = `
+
+            <h3>
+                Your Previous Review
+            </h3>
+
+            <p class="no-review-message">
+                You haven't submitted a review yet.
+            </p>
+
+        `;
+
+
+        // ==========================================
+        // REFRESH APPROVED REVIEWS
+        // ==========================================
+
+        loadApprovedReviews();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+        if (deleteButton) {
+            deleteButton.disabled = false;
+        }
+
+    }
+
+}
+
+
+// ==========================================
+// LOAD REVIEW WHEN PAGE OPENS
+// ==========================================
+
+loadExistingReview();
+
+// ==========================================
+// LOAD APPROVED REVIEWS
+// ==========================================
+
+async function loadApprovedReviews() {
+
+    try {
+
+        const response =
+            await fetch("/api/customer/approved-reviews");
+
+        const data =
+            await response.json();
+
+        const container =
+            document.getElementById("approvedReviews");
+
+        if (!response.ok) {
+
+            container.innerHTML =
+                "<p>Could not load reviews.</p>";
+
+            return;
+        }
+
+        if (!data.reviews || data.reviews.length === 0) {
+
+            container.innerHTML =
+                "<p>No approved reviews yet.</p>";
+
+            return;
+        }
+
+        container.innerHTML =
+            data.reviews.map(review => {
+
+                const stars =
+                    "★".repeat(review.rating) +
+                    "☆".repeat(5 - review.rating);
+
+                const name =
+                    review.name ||
+                    review.username;
+
+                return `
+                    <div class="approved-review">
+
+                        <div class="review-header">
+
+                            <strong>${name}</strong>
+
+                            <span class="review-stars">
+                                ${stars}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            ${review.review}
+                        </p>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("approvedReviews").innerHTML =
+            "<p>Could not connect to the server.</p>";
+    }
+}
+
+loadApprovedReviews();
+
+// ==========================================
+// INITIALIZE SIDEBAR ICONS
+// ==========================================
+
+lucide.createIcons();
+
+</script>
+
+
+<script src="theme.js"></script>
+
+
+</body>
+
+</html>

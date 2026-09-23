@@ -13,7 +13,21 @@ body {
     justify-content: center;
     align-items: center;
 
-    background: #0b0b0f;
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(30, 90, 180, 0.45),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(20, 70, 160, 0.35),
+            transparent 42%
+        ),
+        #05060a;
+
+    background-attachment: fixed;
+
     color: white;
 }
 
@@ -3647,4 +3661,2651 @@ body.customer-page {
         padding: 25px 20px;
     }
 
+}
+
+.delete-button {
+    background: #c0392b;
+    color: white;
+    margin-top: 18px;
+}
+
+.delete-button:hover {
+    background: #a93226;
+}
+
+/* =========================================
+   THEME TOGGLE
+========================================= */
+
+.theme-toggle {
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid #30303c;
+
+    background: #15151c;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: #1d1d27;
+
+    border-color: #6c63ff;
+
+    transform: translateY(-1px);
+}
+
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+html.light-mode body.customer-page {
+    background: #f4f5f8;
+    color: #17171c;
+}
+
+/* Main customer area */
+
+html.light-mode .customer-main {
+    background: #f4f5f8;
+}
+
+/* Sidebar */
+
+html.light-mode .customer-sidebar {
+    background: #ffffff;
+    border-right: 1px solid #e1e2e7;
+}
+
+html.light-mode .customer-sidebar a {
+    color: #5f626b;
+}
+
+html.light-mode .customer-sidebar a:hover,
+html.light-mode .customer-sidebar a.active {
+    background: #f0efff;
+    color: #5c55d9;
+}
+
+/* Header */
+
+html.light-mode .customer-header h1 {
+    color: #17171c;
+}
+
+html.light-mode .customer-header p {
+    color: #686b74;
+}
+
+/* Theme button */
+
+html.light-mode .theme-toggle {
+    background: #ffffff;
+    color: #30313a;
+    border-color: #d9dae0;
+}
+
+html.light-mode .theme-toggle:hover {
+    background: #f5f5f8;
+    border-color: #6c63ff;
+}
+
+/* Learning statistics */
+
+html.light-mode .learning-summary {
+    background: #ffffff;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .learning-stat {
+    border-color: #e5e6eb;
+}
+
+html.light-mode .learning-stat-label {
+    color: #777a83;
+}
+
+html.light-mode .learning-stat strong {
+    color: #17171c;
+}
+
+/* Continue Learning */
+
+html.light-mode .continue-learning {
+    background: #ffffff;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .continue-learning h2 {
+    color: #17171c;
+}
+
+html.light-mode .continue-learning p {
+    color: #686b74;
+}
+
+html.light-mode .continue-progress-info {
+    color: #686b74;
+}
+
+html.light-mode .continue-progress-info strong {
+    color: #17171c;
+}
+
+html.light-mode .progress-bar {
+    background: #e5e6eb;
+}
+
+/* Course section */
+
+html.light-mode .customer-courses h2 {
+    color: #17171c;
+}
+
+/* Course cards */
+
+html.light-mode .course-card {
+    background: #ffffff;
+    border-color: #e1e2e7;
+    box-shadow: 0 8px 25px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .course-card:hover {
+    border-color: #6c63ff;
+    box-shadow: 0 12px 30px rgba(30, 35, 50, 0.10);
+}
+
+html.light-mode .course-content h3 {
+    color: #17171c;
+}
+
+html.light-mode .course-content p {
+    color: #686b74;
+}
+
+/* Course labels */
+
+html.light-mode .course-label {
+    color: #6c63ff;
+}
+
+/* Course topics */
+
+html.light-mode .course-topics span {
+    background: #f3f3f7;
+    border-color: #e1e2e7;
+    color: #555861;
+}
+
+/* Course image */
+
+html.light-mode .course-image {
+    background: #f0f1f5;
+}
+
+html.light-mode .course-image-placeholder {
+    color: #555861;
+}
+
+/* Buttons */
+
+html.light-mode .course-button {
+    background: #6c63ff;
+    color: white;
+}
+
+html.light-mode .course-button:hover {
+    background: #5c55d9;
+}
+
+/* Progress */
+
+html.light-mode .progress-fill {
+    background: #6c63ff;
+}
+
+/* =========================================
+   LIGHT MODE - LEARNING SUMMARY FIX
+========================================= */
+
+html.light-mode .learning-summary {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .learning-stat {
+    background: #ffffff !important;
+    border-color: #e5e6eb !important;
+}
+
+html.light-mode .learning-stat-label {
+    color: #686b74 !important;
+}
+
+html.light-mode .learning-stat strong {
+    color: #17171c !important;
+}
+
+/* =========================================
+   LIGHT MODE - CONTINUE LEARNING FIX
+========================================= */
+
+html.light-mode .continue-learning {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .continue-learning-header h2,
+html.light-mode #continueCourseTitle {
+    color: #17171c !important;
+}
+
+html.light-mode #continueLessonTitle {
+    color: #686b74 !important;
+}
+
+html.light-mode .continue-progress-info {
+    color: #686b74 !important;
+}
+
+html.light-mode #continueProgress {
+    color: #17171c !important;
+}
+
+/* =========================================
+   LIGHT MODE - HEADER TEXT
+========================================= */
+
+html.light-mode .customer-header h1 {
+    color: #17171c !important;
+}
+
+html.light-mode .customer-header p {
+    color: #686b74 !important;
+}
+
+/* =========================================
+   COLLAPSIBLE CUSTOMER SIDEBAR
+========================================= */
+
+.customer-sidebar {
+    position: relative;
+
+    transition:
+        width 0.3s ease,
+        padding 0.3s ease;
+}
+
+
+/* Toggle button */
+
+.sidebar-toggle {
+    position: absolute;
+
+    top: 20px;
+    right: -14px;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    border: 1px solid #292934;
+
+    background: #15151c;
+
+    color: #aaa;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+
+    z-index: 10;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sidebar-toggle:hover {
+    background: #6c63ff;
+
+    color: white;
+
+    border-color: #6c63ff;
+
+    transform: scale(1.08);
+}
+
+
+/* Navigation icons */
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.nav-icon svg {
+    width: 25px;
+    height: 25px;
+
+    stroke-width: 2;
+}
+
+
+.nav-text {
+    transition:
+        opacity 0.2s ease,
+        width 0.3s ease;
+}
+
+
+/* Navigation links */
+
+.customer-sidebar nav a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =========================================
+   COLLAPSED SIDEBAR
+========================================= */
+
+.customer-sidebar.collapsed {
+    width: 76px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+.customer-sidebar.collapsed .customer-logo img {
+    width: 45px;
+}
+
+
+.customer-sidebar.collapsed .customer-logo {
+    margin-bottom: 40px;
+}
+
+
+.customer-sidebar.collapsed nav a {
+    justify-content: center;
+
+    padding: 13px 10px;
+}
+
+
+.customer-sidebar.collapsed .nav-text {
+    display: none;
+}
+
+
+.customer-sidebar.collapsed .nav-icon {
+    width: 100%;
+
+    font-size: 18px;
+}
+
+
+.customer-sidebar.collapsed .sidebar-toggle {
+    right: -14px;
+}
+
+
+/* =========================================
+   SIDEBAR MOBILE
+========================================= */
+
+@media (max-width: 550px) {
+
+    .customer-sidebar.collapsed {
+        width: 100%;
+    }
+
+    .customer-sidebar.collapsed .customer-logo img {
+        width: 100px;
+    }
+
+    .customer-sidebar.collapsed .nav-text {
+        display: inline;
+    }
+
+    .customer-sidebar.collapsed nav a {
+        justify-content: flex-start;
+    }
+
+    .sidebar-toggle {
+        display: none;
+    }
+
+}
+/* =========================================
+   ASSIGNED COURSE BUTTON
+========================================= */
+
+.course-button.assigned-course-button {
+
+    background: rgba(247, 182, 18, 0.199);
+
+    color: var(--accent-color);
+
+    border: 1px solid rgba(224, 184, 79, 0.28);
+
+    box-shadow: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.course-button.assigned-course-button:hover {
+
+    background: rgba(255, 183, 2, 0.356);
+
+    border-color: rgba(224, 184, 79, 0.50);
+
+    color: var(--accent-color);
+
+    box-shadow:
+        0 5px 18px rgba(224, 184, 79, 0.12);
+
+    transform: translateY(-2px);
+
+}
+
+html {
+    background: #05060a;
+}
+
+/* =========================================
+   CUSTOMER PAGE BACKGROUND
+========================================= */
+
+.customer-sidebar ~ * {
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(30, 90, 180, 0.35),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(20, 60, 130, 0.18),
+            transparent 70%
+        ),
+        #05060a;
+}
+
+/* ==========================================
+   REVIEWS PAGE
+========================================== */
+
+.reviews-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+.reviews-intro {
+    margin-bottom: 25px;
+}
+
+
+.reviews-intro h2 {
+    font-size: 28px;
+    margin: 8px 0 10px;
+}
+
+
+.reviews-intro p {
+    color: #999;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   REVIEW CARD
+========================================== */
+
+.review-card {
+    background: #15151c;
+
+    border: 1px solid #292934;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+.review-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+
+.review-description {
+    color: #999;
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+}
+
+
+/* ==========================================
+   RATING
+========================================== */
+
+.rating-section {
+    margin-bottom: 25px;
+}
+
+
+.rating-section label,
+.review-input-section label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+.star-rating {
+    display: flex;
+
+    gap: 5px;
+}
+
+
+.star-rating button {
+    background: none;
+
+    border: none;
+
+    color: #555;
+
+    font-size: 34px;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    transition: 0.15s;
+}
+
+
+.star-rating button:hover,
+.star-rating button.hover,
+.star-rating button.selected {
+    color: #e0b84f;
+
+    transform: scale(1.08);
+}
+
+
+.rating-text {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #999;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   REVIEW TEXTAREA
+========================================== */
+
+.review-input-section {
+    position: relative;
+
+    margin-bottom: 20px;
+}
+
+
+.review-input-section textarea {
+    width: 100%;
+
+    min-height: 150px;
+
+    padding: 15px;
+
+    resize: vertical;
+
+    background: #0f0f14;
+
+    color: white;
+
+    border: 1px solid #292934;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.review-input-section textarea:focus {
+    border-color: #6c63ff;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            108,
+            99,
+            255,
+            0.12
+        );
+}
+
+
+.character-count {
+    text-align: right;
+
+    color: #666;
+
+    font-size: 12px;
+
+    margin-top: 6px;
+}
+
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.review-submit-button {
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #6c63ff;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.review-submit-button:hover {
+    background: #7c74ff;
+
+    transform: translateY(-1px);
+}
+
+
+.review-submit-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.review-message {
+    margin-top: 15px;
+
+    color: #8b8bff;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   PREVIOUS REVIEW
+========================================== */
+
+.previous-review-card {
+    margin-top: 20px;
+}
+
+
+.no-review-message {
+    color: #777;
+
+    font-size: 14px;
+
+    margin-top: 10px;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .reviews-page {
+        padding: 0 5px;
+    }
+
+
+    .review-card {
+        padding: 22px;
+    }
+
+
+    .reviews-intro h2 {
+        font-size: 23px;
+    }
+
+
+    .star-rating button {
+        font-size: 30px;
+    }
+
+}
+
+/* ==========================================
+   PREVIOUS REVIEW
+========================================== */
+
+.previous-review-card {
+    margin-top: 24px;
+}
+
+.previous-review-content {
+    margin-top: 20px;
+    padding: 22px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(224, 184, 79, 0.18);
+}
+
+.previous-review-stars {
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: #e0b84f;
+    margin-bottom: 14px;
+}
+
+.previous-review-text {
+    color: #e8e8ec;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+    word-break: break-word;
+}
+
+.previous-review-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(224, 184, 79, 0.10);
+    border: 1px solid rgba(224, 184, 79, 0.25);
+    color: #e0b84f;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   DELETE REVIEW BUTTON
+========================================== */
+
+#deleteReviewButton {
+    display: block;
+    width: 100%;
+    max-width: 190px;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(255, 90, 90, 0.35);
+    border-radius: 10px;
+
+    background: rgba(255, 70, 70, 0.07);
+    color: #ff8c8c;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#deleteReviewButton:hover {
+    background: rgba(255, 70, 70, 0.14);
+    border-color: rgba(255, 90, 90, 0.65);
+    color: #ffb0b0;
+    transform: translateY(-1px);
+}
+
+#deleteReviewButton:active {
+    transform: translateY(0);
+}
+
+#deleteReviewButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* ==========================================
+   NO PREVIOUS REVIEW
+========================================== */
+
+.no-review-message {
+    color: #8f9099;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+/* ==========================================
+   APPROVED REVIEWS / STUDENT TESTIMONIALS
+========================================== */
+
+.reviews-display {
+    margin-top: 30px;
+    padding: 28px;
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(108, 99, 255, 0.08),
+            rgba(21, 21, 28, 0.96)
+        );
+
+    border: 1px solid rgba(108, 99, 255, 0.18);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.reviews-display h2 {
+    margin: 0 0 22px;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+/* ==========================================
+   INDIVIDUAL APPROVED REVIEW
+========================================== */
+
+.approved-review {
+    position: relative;
+
+    padding: 20px 22px;
+    margin-bottom: 14px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.approved-review:last-child {
+    margin-bottom: 0;
+}
+
+.approved-review:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border-color: rgba(224, 184, 79, 0.22);
+}
+
+/* ==========================================
+   REVIEW HEADER
+========================================== */
+
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 12px;
+}
+
+.review-header strong {
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.review-stars {
+    color: #e0b84f;
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+}
+
+/* ==========================================
+   REVIEW TEXT
+========================================== */
+
+.approved-review p {
+    margin: 0;
+
+    color: #b8b9c2;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    word-break: break-word;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .reviews-display {
+        padding: 20px;
+    }
+
+    .review-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .approved-review {
+        padding: 17px;
+    }
+
+}
+
+/* =========================================
+   SIDEBAR ICON HOVER EFFECT
+========================================= */
+
+.customer-sidebar nav a {
+    position: relative;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Icon container */
+
+.customer-sidebar .nav-icon {
+    border-radius: 10px;
+
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Icon itself */
+
+.customer-sidebar .nav-icon svg {
+    transition:
+        stroke 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.customer-sidebar nav a:hover .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.20),
+            rgba(108, 99, 255, 0.18)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(224, 184, 79, 0.18),
+        0 6px 18px rgba(108, 99, 255, 0.18);
+
+    transform: translateY(-1px);
+}
+
+
+.customer-sidebar nav a:hover .nav-icon svg {
+    stroke: #e0b84f;
+
+    transform: scale(1.08);
+}
+
+/* =========================================
+   SIDEBAR HOVER EFFECT
+========================================= */
+
+.customer-sidebar nav a:hover .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(108, 99, 255, 0.24),
+            rgba(139, 92, 246, 0.18)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(139, 92, 246, 0.20),
+        0 6px 18px rgba(108, 99, 255, 0.20);
+
+    transform: translateY(-1px);
+}
+
+
+.customer-sidebar nav a:hover .nav-icon svg {
+    stroke: #a78bfa;
+
+    transform: scale(1.08);
+}
+
+
+/* =========================================
+   HOVER NAV ITEM
+========================================= */
+
+.customer-sidebar nav a:hover {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(108, 99, 255, 0.09),
+            rgba(139, 92, 246, 0.06)
+        );
+
+    border-radius: 12px;
+}
+
+/* =========================================
+   ACTIVE SIDEBAR PAGE
+========================================= */
+
+.customer-sidebar nav a.active {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(224, 184, 79, 0.14),
+            rgba(108, 99, 255, 0.10)
+        );
+
+    border-radius: 12px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(224, 184, 79, 0.12);
+}
+
+
+/* Active icon */
+
+.customer-sidebar nav a.active .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.24),
+            rgba(108, 99, 255, 0.20)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(224, 184, 79, 0.18),
+        0 6px 18px rgba(108, 99, 255, 0.16);
+}
+
+
+/* Active icon colour */
+
+.customer-sidebar nav a.active .nav-icon svg {
+    stroke: #e0b84f;
+}
+
+
+/* Active text */
+
+.customer-sidebar nav a.active .nav-text {
+    color: #e0b84f;
+}
+
+/* =========================================
+   THEME TOGGLE ICON
+========================================= */
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.theme-icon {
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.theme-icon svg {
+    width: 18px;
+    height: 18px;
+
+    stroke-width: 2;
+}
+
+/* =========================================
+   GLOBAL CUSTOMER LIGHT MODE
+   Applies to ALL customer pages
+========================================= */
+
+/* Main page backgrounds */
+
+html.light-mode {
+    background: #f4f5f8;
+}
+
+html.light-mode body.customer-page {
+    background: #f4f5f8;
+    color: #17171c;
+}
+
+html.light-mode .customer-dashboard {
+    background: #f4f5f8;
+}
+
+html.light-mode .customer-main {
+    background: #f4f5f8;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+html.light-mode .customer-sidebar {
+    background: #ffffff;
+    border-right-color: #e1e2e7;
+}
+
+html.light-mode .customer-sidebar nav a {
+    color: #5f626b;
+}
+
+html.light-mode .customer-sidebar nav a:hover {
+    background: #f5f4ff;
+    color: #4f49c7;
+}
+
+html.light-mode .customer-sidebar nav a.active {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(108, 99, 255, 0.10),
+            rgba(224, 184, 79, 0.08)
+        );
+
+    color: #4f49c7;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-text {
+    color: #5c55d9;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-icon svg {
+    stroke: #6c63ff;
+}
+
+html.light-mode .sidebar-toggle {
+    background: #ffffff;
+    border-color: #d9dae0;
+    color: #686b74;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+html.light-mode .customer-header {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .customer-header h1 {
+    color: #17171c !important;
+}
+
+html.light-mode .customer-header p {
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   GENERIC TEXT
+========================================= */
+
+html.light-mode .course-card h3,
+html.light-mode .course-card .course-content h3,
+html.light-mode .customer-courses h2 {
+    color: #17171c;
+}
+
+html.light-mode .course-card p,
+html.light-mode .course-content p {
+    color: #686b74;
+}
+
+
+/* =========================================
+   DASHBOARD LEARNING SUMMARY
+========================================= */
+
+html.light-mode .learning-stat {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+
+    box-shadow:
+        0 8px 25px rgba(30, 35, 50, 0.05);
+}
+
+html.light-mode .learning-stat-label {
+    color: #686b74 !important;
+}
+
+html.light-mode .learning-stat strong {
+    color: #17171c !important;
+}
+
+
+/* =========================================
+   CONTINUE LEARNING
+========================================= */
+
+html.light-mode .continue-learning {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafaff
+        ) !important;
+
+    border-color: #e1e2e7 !important;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .continue-learning-header h2,
+html.light-mode #continueCourseTitle {
+    color: #17171c !important;
+}
+
+html.light-mode .continue-learning-header p,
+html.light-mode #continueLessonTitle {
+    color: #686b74 !important;
+}
+
+html.light-mode .continue-progress {
+    border-top-color: #e5e6eb;
+}
+
+html.light-mode .continue-progress-info span {
+    color: #686b74 !important;
+}
+
+html.light-mode .continue-progress-info strong,
+html.light-mode #continueProgress {
+    color: #17171c !important;
+}
+
+
+/* =========================================
+   COURSE CARDS
+========================================= */
+
+html.light-mode .course-card {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+
+    box-shadow:
+        0 8px 25px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .course-card:hover {
+    border-color: #6c63ff !important;
+}
+
+html.light-mode .course-image {
+    background: #f0f1f5;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .course-image-placeholder {
+    color: #6c63ff;
+}
+
+html.light-mode .course-topics span {
+    background: #f3f3f7;
+    border-color: #e1e2e7;
+    color: #555861;
+}
+
+
+/* =========================================
+   PROGRESS BARS
+========================================= */
+
+html.light-mode .progress-bar,
+html.light-mode .continue-progress .progress-bar,
+html.light-mode .dashboard-progress-bar,
+html.light-mode .progress-track,
+html.light-mode .my-course-progress-bar {
+    background: #e5e6eb;
+    border-color: #d9dae0;
+}
+
+html.light-mode .progress-info {
+    color: #686b74;
+}
+
+html.light-mode .progress-info span:last-child {
+    color: #30313a;
+}
+
+
+/* =========================================
+   COURSE PAGE
+========================================= */
+
+html.light-mode .course-back-button {
+    background: #ffffff;
+    color: #555861;
+    border-color: #d9dae0;
+}
+
+html.light-mode .course-back-button:hover {
+    background: #f5f5f8;
+    color: #17171c;
+}
+
+html.light-mode .course-page-header {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .course-page-header h1 {
+    color: #17171c;
+}
+
+html.light-mode .course-page-header p {
+    color: #686b74;
+}
+
+html.light-mode .course-page-progress {
+    background: #f7f7fa;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .course-page-progress span {
+    color: #686b74;
+}
+
+html.light-mode .course-page-progress strong {
+    color: #17171c;
+}
+
+
+/* =========================================
+   COURSE LESSONS
+========================================= */
+
+html.light-mode .course-lessons {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.05);
+}
+
+html.light-mode .course-lessons h2 {
+    color: #17171c;
+}
+
+html.light-mode .customer-lesson {
+    background: #f7f7fa;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .customer-lesson:hover {
+    background: #f2f1ff;
+    border-color: #6c63ff;
+}
+
+html.light-mode .lesson-info h3 {
+    color: #17171c;
+}
+
+html.light-mode .lesson-info p {
+    color: #686b74;
+}
+
+html.light-mode .lesson-empty {
+    background: #f7f7fa;
+    border-color: #d9dae0;
+}
+
+html.light-mode .lesson-empty h3 {
+    color: #17171c;
+}
+
+html.light-mode .lesson-empty p {
+    color: #686b74;
+}
+
+
+/* =========================================
+   LESSON PAGE
+========================================= */
+
+html.light-mode .lesson-back {
+    color: #686b74;
+}
+
+html.light-mode .lesson-back:hover {
+    color: #17171c;
+}
+
+html.light-mode .lesson-label {
+    color: #6c63ff;
+}
+
+html.light-mode .lesson-header h1 {
+    color: #17171c !important;
+}
+
+html.light-mode .lesson-header p {
+    color: #686b74 !important;
+}
+
+html.light-mode .lesson-video-container {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .no-video h3 {
+    color: #17171c;
+}
+
+html.light-mode .no-video p {
+    color: #686b74;
+}
+
+
+/* Lesson controls */
+
+html.light-mode .lesson-button.secondary {
+    background: #f1f1f5;
+    color: #30313a;
+    border-color: #d9dae0;
+}
+
+html.light-mode .lesson-button.secondary:hover {
+    background: #e7e7ed;
+}
+
+
+/* Lesson list */
+
+html.light-mode .lesson-list-section h2 {
+    color: #17171c;
+}
+
+html.light-mode .lesson-list-item {
+    background: #ffffff;
+    border-color: #e1e2e7;
+    color: #686b74;
+}
+
+html.light-mode .lesson-list-item:hover {
+    background: #f5f4ff;
+    border-color: #cfcdf2;
+}
+
+html.light-mode .lesson-list-item span {
+    color: #777a83;
+}
+
+html.light-mode .lesson-list-item strong {
+    color: #30313a;
+}
+
+html.light-mode .lesson-list-item.active {
+    background: #f0efff;
+    border-color: #bdb9ef;
+}
+
+html.light-mode .lesson-list-item.active span,
+html.light-mode .lesson-list-item.active strong {
+    color: #4f49c7;
+}
+
+
+/* =========================================
+   PROGRESS PAGE
+========================================= */
+
+html.light-mode .progress-stat {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 8px 25px rgba(30, 35, 50, 0.05);
+}
+
+html.light-mode .progress-stat-label {
+    color: #6c63ff;
+}
+
+html.light-mode .progress-stat strong {
+    color: #17171c;
+}
+
+html.light-mode .progress-stat p {
+    color: #686b74;
+}
+
+html.light-mode .progress-courses {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafaff
+        );
+
+    border-color: #e1e2e7;
+}
+
+html.light-mode .progress-section-header h2 {
+    color: #17171c;
+}
+
+html.light-mode .progress-section-header p {
+    color: #686b74;
+}
+
+html.light-mode .progress-course-card {
+    background: #ffffff;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .progress-course-card:hover {
+    border-color: #bdb9ef;
+    box-shadow:
+        0 10px 25px rgba(30, 35, 50, 0.07);
+}
+
+html.light-mode .progress-course-top h3 {
+    color: #17171c;
+}
+
+html.light-mode .progress-course-top p {
+    color: #686b74;
+}
+
+html.light-mode .progress-percentage strong {
+    color: #17171c;
+}
+
+html.light-mode .progress-percentage span,
+html.light-mode .progress-lesson-count span {
+    color: #686b74;
+}
+
+html.light-mode .progress-lesson-count span:first-child {
+    color: #555861;
+}
+
+html.light-mode .progress-loading,
+html.light-mode .progress-empty {
+    background: #ffffff;
+    border-color: #d9dae0;
+}
+
+html.light-mode .progress-loading {
+    color: #686b74;
+}
+
+html.light-mode .progress-empty h3 {
+    color: #17171c;
+}
+
+html.light-mode .progress-empty p {
+    color: #686b74;
+}
+
+
+/* =========================================
+   MY COURSES PAGE
+========================================= */
+
+html.light-mode .my-courses-summary {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafaff
+        );
+
+    border-color: #e1e2e7;
+}
+
+html.light-mode .my-courses-summary span {
+    color: #686b74;
+}
+
+html.light-mode .my-courses-summary strong {
+    color: #17171c;
+}
+
+html.light-mode .my-courses-section {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafaff
+        );
+
+    border-color: #e1e2e7;
+}
+
+html.light-mode .my-courses-header h2 {
+    color: #17171c;
+}
+
+html.light-mode .my-courses-header p {
+    color: #686b74;
+}
+
+html.light-mode .my-course-card {
+    background: #ffffff;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .my-course-card:hover {
+    border-color: #bdb9ef;
+    box-shadow:
+        0 12px 30px rgba(30, 35, 50, 0.08);
+}
+
+html.light-mode .my-course-image {
+    background: #f0f1f5;
+    border-bottom-color: #e1e2e7;
+}
+
+html.light-mode .my-course-image-placeholder {
+    color: #6c63ff;
+}
+
+html.light-mode .my-course-content h3 {
+    color: #17171c;
+}
+
+html.light-mode .my-course-content > p {
+    color: #686b74;
+}
+
+html.light-mode .my-course-progress-info span {
+    color: #686b74;
+}
+
+html.light-mode .my-course-progress-info strong {
+    color: #30313a;
+}
+
+html.light-mode .my-courses-loading,
+html.light-mode .my-courses-empty {
+    background: #ffffff;
+    border-color: #d9dae0;
+}
+
+html.light-mode .my-courses-loading {
+    color: #686b74;
+}
+
+html.light-mode .my-courses-empty h3 {
+    color: #17171c;
+}
+
+html.light-mode .my-courses-empty p {
+    color: #686b74;
+}
+
+
+/* =========================================
+   ACCOUNT PAGE
+========================================= */
+
+html.light-mode .account-section {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fafaff
+        );
+
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .account-section-header h2 {
+    color: #17171c;
+}
+
+html.light-mode .account-section-header p {
+    color: #686b74;
+}
+
+html.light-mode .account-detail {
+    background: #ffffff;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .account-detail span {
+    color: #777a83;
+}
+
+html.light-mode .account-detail strong {
+    color: #17171c;
+}
+
+html.light-mode .account-stat {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f7f7fa
+        );
+
+    border-color: #e1e2e7;
+}
+
+html.light-mode .account-stat span {
+    color: #777a83;
+}
+
+html.light-mode .account-stat strong {
+    color: #17171c;
+}
+
+html.light-mode .account-stat p {
+    color: #686b74;
+}
+
+html.light-mode .account-action-button {
+    background: #ffffff;
+    color: #30313a;
+    border-color: #d9dae0;
+}
+
+html.light-mode .account-action-button:hover {
+    background: #f5f4ff;
+    color: #4f49c7;
+    border-color: #6c63ff;
+}
+
+
+/* =========================================
+   PASSWORD MODAL
+========================================= */
+
+html.light-mode .password-modal {
+    background: rgba(20, 22, 30, 0.38);
+}
+
+html.light-mode .password-modal-content {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f7f7fa
+        );
+
+    border-color: #d9dae0;
+
+    box-shadow:
+        0 25px 70px rgba(30, 35, 50, 0.20);
+}
+
+html.light-mode .password-modal-content h2 {
+    color: #17171c;
+}
+
+html.light-mode .password-modal-description {
+    color: #686b74;
+}
+
+html.light-mode .password-modal-close {
+    background: #f1f1f5;
+    border-color: #d9dae0;
+    color: #686b74;
+}
+
+html.light-mode .password-modal-close:hover {
+    background: #e7e7ed;
+    color: #17171c;
+}
+
+html.light-mode .password-input-group label {
+    color: #555861;
+}
+
+html.light-mode .password-input-group input {
+    background: #ffffff;
+    color: #17171c;
+    border-color: #d9dae0;
+}
+
+html.light-mode .password-input-group input::placeholder {
+    color: #999da6;
+}
+
+
+/* =========================================
+   REVIEWS PAGE
+========================================= */
+
+html.light-mode .reviews-intro h2 {
+    color: #17171c;
+}
+
+html.light-mode .reviews-intro p {
+    color: #686b74;
+}
+
+html.light-mode .review-card {
+    background: #ffffff;
+    border-color: #e1e2e7;
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .review-card h3 {
+    color: #17171c;
+}
+
+html.light-mode .review-description {
+    color: #686b74;
+}
+
+html.light-mode .rating-section label,
+html.light-mode .review-input-section label {
+    color: #30313a;
+}
+
+html.light-mode .rating-text {
+    color: #686b74;
+}
+
+html.light-mode .review-input-section textarea {
+    background: #ffffff;
+    color: #17171c;
+    border-color: #d9dae0;
+}
+
+html.light-mode .review-input-section textarea::placeholder {
+    color: #999da6;
+}
+
+html.light-mode .character-count {
+    color: #777a83;
+}
+
+html.light-mode .review-message {
+    color: #6c63ff;
+}
+
+html.light-mode .previous-review-content {
+    background: #f7f7fa;
+    border-color: rgba(224, 184, 79, 0.25);
+}
+
+html.light-mode .previous-review-text {
+    color: #30313a;
+}
+
+html.light-mode .no-review-message {
+    color: #686b74;
+}
+
+
+/* =========================================
+   APPROVED REVIEWS
+========================================= */
+
+html.light-mode .reviews-display {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fafaff
+        );
+
+    border-color: rgba(108, 99, 255, 0.18);
+
+    box-shadow:
+        0 10px 30px rgba(30, 35, 50, 0.06);
+}
+
+html.light-mode .reviews-display h2 {
+    color: #17171c;
+}
+
+html.light-mode .approved-review {
+    background: #f7f7fa;
+    border-color: #e1e2e7;
+}
+
+html.light-mode .approved-review:hover {
+    background: #f2f1ff;
+    border-color: rgba(224, 184, 79, 0.30);
+}
+
+html.light-mode .review-header strong {
+    color: #17171c;
+}
+
+html.light-mode .approved-review p {
+    color: #555861;
+}
+
+
+/* =========================================
+   CUSTOMER PAGE BACKGROUND FIX
+========================================= */
+
+/* Remove the dark radial background from customer pages
+   when Light Mode is active */
+
+html.light-mode .customer-sidebar ~ * {
+    background: #f4f5f8;
+}
+
+html.light-mode .customer-main {
+    background: #f4f5f8 !important;
+}
+
+
+/* =========================================
+   THEME TOGGLE ICON
+========================================= */
+
+html.light-mode .theme-toggle {
+    background: #ffffff;
+    color: #30313a;
+    border-color: #d9dae0;
+}
+
+html.light-mode .theme-toggle .theme-icon svg {
+    stroke: #6c63ff;
+}
+
+/* =========================================
+   FINAL GLOBAL LIGHT MODE OVERRIDES
+   ========================================= */
+
+html.light-mode,
+html.light-mode body {
+    background: #f4f5f8 !important;
+    color: #17171c !important;
+}
+
+html.light-mode body.customer-page {
+    background: #f4f5f8 !important;
+}
+
+html.light-mode .customer-dashboard {
+    background: #f4f5f8 !important;
+}
+
+html.light-mode .customer-main {
+    background: #f4f5f8 !important;
+}
+
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+html.light-mode .customer-sidebar {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .customer-sidebar nav a {
+    color: #5f626b !important;
+}
+
+html.light-mode .customer-sidebar nav a:hover {
+    background: #f3f2ff !important;
+    color: #4f49c7 !important;
+}
+
+html.light-mode .customer-sidebar nav a.active {
+    color: #5c55d9 !important;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-text {
+    color: #5c55d9 !important;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-icon svg {
+    stroke: #6c63ff !important;
+}
+
+html.light-mode .sidebar-toggle {
+    background: #ffffff !important;
+    border-color: #d9dae0 !important;
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+html.light-mode .customer-header {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+    box-shadow: 0 10px 30px rgba(30, 35, 50, 0.06) !important;
+}
+
+html.light-mode .customer-header h1 {
+    color: #17171c !important;
+}
+
+html.light-mode .customer-header p {
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   COMMON CARDS / SECTIONS
+   ========================================= */
+
+html.light-mode .course-card,
+html.light-mode .learning-stat,
+html.light-mode .progress-stat,
+html.light-mode .progress-course-card,
+html.light-mode .my-course-card,
+html.light-mode .account-detail,
+html.light-mode .account-stat,
+html.light-mode .review-card,
+html.light-mode .course-lessons {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+    color: #17171c !important;
+}
+
+
+/* =========================================
+   COURSE / PROGRESS / MY COURSES SECTIONS
+   ========================================= */
+
+html.light-mode .progress-courses,
+html.light-mode .my-courses-section,
+html.light-mode .account-section,
+html.light-mode .reviews-display {
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #fafaff
+    ) !important;
+
+    border-color: #e1e2e7 !important;
+}
+
+
+/* =========================================
+   COURSE PAGE
+   ========================================= */
+
+html.light-mode .course-page-header {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .course-page-header h1,
+html.light-mode .course-page-header h2 {
+    color: #17171c !important;
+}
+
+html.light-mode .course-page-header p {
+    color: #686b74 !important;
+}
+
+html.light-mode .course-page-progress {
+    background: #f7f7fa !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .course-page-progress span {
+    color: #686b74 !important;
+}
+
+html.light-mode .course-page-progress strong {
+    color: #17171c !important;
+}
+
+
+/* =========================================
+   LESSON CARDS
+   ========================================= */
+
+html.light-mode .customer-lesson,
+html.light-mode .lesson-empty {
+    background: #f7f7fa !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .lesson-info h3,
+html.light-mode .lesson-empty h3 {
+    color: #17171c !important;
+}
+
+html.light-mode .lesson-info p,
+html.light-mode .lesson-empty p {
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   LESSON PAGE
+   ========================================= */
+
+html.light-mode .lesson-header h1 {
+    color: #17171c !important;
+}
+
+html.light-mode .lesson-header p {
+    color: #686b74 !important;
+}
+
+html.light-mode .lesson-label {
+    color: #6c63ff !important;
+}
+
+html.light-mode .lesson-back {
+    color: #686b74 !important;
+}
+
+html.light-mode .lesson-back:hover {
+    color: #17171c !important;
+}
+
+html.light-mode .lesson-video-container {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .no-video h3 {
+    color: #17171c !important;
+}
+
+html.light-mode .no-video p {
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   LESSON LIST
+   ========================================= */
+
+html.light-mode .lesson-list-section h2 {
+    color: #17171c !important;
+}
+
+html.light-mode .lesson-list-item {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+    color: #686b74 !important;
+}
+
+html.light-mode .lesson-list-item:hover {
+    background: #f3f2ff !important;
+    border-color: #cfcdf2 !important;
+}
+
+html.light-mode .lesson-list-item span {
+    color: #777a83 !important;
+}
+
+html.light-mode .lesson-list-item strong {
+    color: #30313a !important;
+}
+
+html.light-mode .lesson-list-item.active {
+    background: #f0efff !important;
+    border-color: #bdb9ef !important;
+}
+
+html.light-mode .lesson-list-item.active span,
+html.light-mode .lesson-list-item.active strong {
+    color: #4f49c7 !important;
+}
+
+
+/* =========================================
+   TEXT
+   ========================================= */
+
+html.light-mode .course-card h3,
+html.light-mode .my-course-content h3,
+html.light-mode .progress-course-top h3,
+html.light-mode .account-detail strong,
+html.light-mode .account-stat strong,
+html.light-mode .progress-stat strong,
+html.light-mode .progress-percentage strong,
+html.light-mode .my-course-progress-info strong {
+    color: #17171c !important;
+}
+
+html.light-mode .course-card p,
+html.light-mode .my-course-content > p,
+html.light-mode .progress-course-top p,
+html.light-mode .account-section-header p,
+html.light-mode .account-stat p,
+html.light-mode .progress-stat p,
+html.light-mode .my-courses-header p {
+    color: #686b74 !important;
+}
+
+
+/* =========================================
+   COURSE TOPICS
+   ========================================= */
+
+html.light-mode .course-topics span {
+    background: #f3f3f7 !important;
+    border-color: #e1e2e7 !important;
+    color: #555861 !important;
+}
+
+
+/* =========================================
+   COURSE IMAGES
+   ========================================= */
+
+html.light-mode .course-image,
+html.light-mode .my-course-image {
+    background: #f0f1f5 !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .course-image-placeholder,
+html.light-mode .my-course-image-placeholder {
+    color: #6c63ff !important;
+}
+
+
+/* =========================================
+   PROGRESS BARS
+   ========================================= */
+
+html.light-mode .progress-bar,
+html.light-mode .progress-track,
+html.light-mode .dashboard-progress-bar,
+html.light-mode .my-course-progress-bar {
+    background: #e5e6eb !important;
+    border-color: #d9dae0 !important;
+}
+
+
+/* =========================================
+   ACCOUNT BUTTONS
+   ========================================= */
+
+html.light-mode .account-action-button {
+    background: #ffffff !important;
+    color: #30313a !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .account-action-button:hover {
+    background: #f3f2ff !important;
+    color: #4f49c7 !important;
+}
+
+
+/* =========================================
+   PASSWORD MODAL
+   ========================================= */
+
+html.light-mode .password-modal-content {
+    background: #ffffff !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .password-modal-content h2 {
+    color: #17171c !important;
+}
+
+html.light-mode .password-modal-description {
+    color: #686b74 !important;
+}
+
+html.light-mode .password-modal-close {
+    background: #f1f1f5 !important;
+    color: #686b74 !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .password-input-group label {
+    color: #555861 !important;
+}
+
+html.light-mode .password-input-group input {
+    background: #ffffff !important;
+    color: #17171c !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .password-input-group input::placeholder {
+    color: #999da6 !important;
+}
+
+
+/* =========================================
+   REVIEWS
+   ========================================= */
+
+html.light-mode .review-description,
+html.light-mode .rating-text,
+html.light-mode .no-review-message {
+    color: #686b74 !important;
+}
+
+html.light-mode .review-input-section textarea {
+    background: #ffffff !important;
+    color: #17171c !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .previous-review-content {
+    background: #f7f7fa !important;
+}
+
+html.light-mode .previous-review-text {
+    color: #30313a !important;
+}
+
+html.light-mode .approved-review {
+    background: #f7f7fa !important;
+    border-color: #e1e2e7 !important;
+}
+
+html.light-mode .review-header strong {
+    color: #17171c !important;
+}
+
+html.light-mode .approved-review p {
+    color: #555861 !important;
+}
+
+
+/* =========================================
+   THEME BUTTON
+   ========================================= */
+
+html.light-mode .theme-toggle {
+    background: #ffffff !important;
+    color: #30313a !important;
+    border-color: #d9dae0 !important;
+}
+
+html.light-mode .theme-toggle:hover {
+    background: #f5f5f8 !important;
+}
+
+html.light-mode .theme-toggle .theme-icon svg {
+    stroke: #6c63ff !important;
+}
+
+
+/* =========================================
+   REMOVE DARK CUSTOMER BACKGROUND
+   ========================================= */
+
+html.light-mode .customer-sidebar ~ * {
+    background: #f4f5f8 !important;
+}
+
+/* =========================================
+   FINAL LIGHT MODE - MISSING CUSTOMER ELEMENTS
+========================================= */
+
+/* General customer page sections */
+html.light-mode .customer-main > section,
+html.light-mode .customer-main > div {
+    color: #17171c;
+}
+
+/* Generic headings */
+html.light-mode .customer-main h1,
+html.light-mode .customer-main h2,
+html.light-mode .customer-main h3,
+html.light-mode .customer-main h4 {
+    color: #17171c;
+}
+
+/* Generic paragraphs */
+html.light-mode .customer-main p {
+    color: #686b74;
+}
+
+/* My Courses */
+html.light-mode .my-courses-page,
+html.light-mode .my-courses-container {
+    background: #f4f5f8 !important;
+}
+
+/* Progress page */
+html.light-mode .progress-page,
+html.light-mode .progress-container {
+    background: #f4f5f8 !important;
+}
+
+/* Account page */
+html.light-mode .account-page,
+html.light-mode .account-container {
+    background: #f4f5f8 !important;
+}
+
+/* Reviews page */
+html.light-mode .reviews-page,
+html.light-mode .reviews-container {
+    background: #f4f5f8 !important;
+}
+
+/* Course page */
+html.light-mode .course-page,
+html.light-mode .course-container {
+    background: #f4f5f8 !important;
+}
+
+/* Lesson page */
+html.light-mode .lesson-page,
+html.light-mode .lesson-container {
+    background: #f4f5f8 !important;
+}
+
+/* Inputs and textareas */
+html.light-mode input,
+html.light-mode textarea,
+html.light-mode select {
+    background: #ffffff !important;
+    color: #17171c !important;
+    border-color: #d9dae0 !important;
+}
+
+/* Placeholder text */
+html.light-mode input::placeholder,
+html.light-mode textarea::placeholder {
+    color: #999da6 !important;
+}
+
+/* Generic dark containers */
+html.light-mode .card,
+html.light-mode .section,
+html.light-mode .content-card {
+    background: #ffffff !important;
+    border-color: #e1e2e7 !important;
+    color: #17171c !important;
+}
+
+/* Prevent dark backgrounds from leaking through */
+html.light-mode .customer-main * {
+    --light-page-bg: #f4f5f8;
+}
+
+/* Theme button */
+html.light-mode .theme-toggle {
+    background: #ffffff !important;
+    color: #30313a !important;
+    border: 1px solid #d9dae0 !important;
+}
+
+/* Sidebar logo area */
+html.light-mode .customer-logo {
+    background: #ffffff !important;
+}
+
+/* Sidebar icons */
+html.light-mode .customer-sidebar .nav-icon {
+    color: #686b74;
+}
+
+/* Sidebar active icon */
+html.light-mode .customer-sidebar nav a.active .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(108, 99, 255, 0.12),
+            rgba(224, 184, 79, 0.10)
+        ) !important;
+}
+
+/* Sidebar hover icon */
+html.light-mode .customer-sidebar nav a:hover .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(108, 99, 255, 0.12),
+            rgba(139, 92, 246, 0.08)
+        ) !important;
+}
+
+/* Sidebar SVG colours */
+html.light-mode .customer-sidebar nav a:hover .nav-icon svg {
+    stroke: #6c63ff !important;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-icon svg {
+    stroke: #6c63ff !important;
 }

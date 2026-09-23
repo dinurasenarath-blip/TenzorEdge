@@ -345,6 +345,222 @@
     opacity: 0.8;
 
 }
+
+/* ==========================================
+   PAYMENT DETAILS
+========================================== */
+
+.payment-course {
+
+    padding: 20px 0;
+
+    border-bottom:
+        1px solid rgba(128, 128, 128, 0.2);
+
+}
+
+.payment-course:last-child {
+    border-bottom: none;
+}
+
+
+.payment-course-title {
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    margin-bottom: 18px;
+
+}
+
+
+.payment-field {
+
+    margin-bottom: 15px;
+
+}
+
+
+.payment-field label {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 7px;
+
+    opacity: 0.75;
+
+}
+
+
+.payment-field input {
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    border:
+        1px solid rgba(128, 128, 128, 0.3);
+
+    background: #0F151C;
+
+    color: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+
+}
+
+
+.payment-field input:focus {
+
+    border-color: var(--accent-color);
+
+    box-shadow:
+        0 0 0 3px rgba(108, 99, 255, 0.12);
+
+}
+
+
+.payment-remaining {
+
+    padding: 14px;
+
+    margin: 5px 0 15px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(108, 99, 255, 0.08);
+
+    border:
+        1px solid rgba(108, 99, 255, 0.2);
+
+}
+
+
+.payment-remaining-label {
+
+    display: block;
+
+    font-size: 12px;
+
+    opacity: 0.65;
+
+    margin-bottom: 4px;
+
+}
+
+
+.payment-remaining-amount {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+}
+
+
+.payment-progress {
+
+    margin-top: 15px;
+
+}
+
+
+.payment-progress-bar {
+
+    width: 100%;
+
+    height: 8px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    background:
+        rgba(128, 128, 128, 0.2);
+
+}
+
+
+.payment-progress-fill {
+
+    height: 100%;
+
+    border-radius: 10px;
+
+    background: var(--accent-color);
+
+    transition: width 0.3s ease;
+
+}
+
+
+.payment-progress-text {
+
+    margin-top: 6px;
+
+    font-size: 12px;
+
+    opacity: 0.65;
+
+}
+
+
+.save-payment-button {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--accent-color);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+.save-payment-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.12);
+
+}
+
+
+.payment-message {
+
+    margin-top: 10px;
+
+    font-size: 13px;
+
+    opacity: 0.8;
+
+}
     </style>
 </head>
 
@@ -430,7 +646,6 @@
         Loading courses...
     </div>
 
-
     <!-- Assign Course -->
 
     <div class="assign-course">
@@ -455,56 +670,26 @@
 
 </section>
 
-</section>
+<!-- ==========================================
+     PAYMENT DETAILS
+========================================== -->
 
-                    <div class="course-item">
+<section class="user-section">
 
-                        <div class="course-top">
-                            <span class="course-name">
-                                Technical Analysis
-                            </span>
+    <h2>💳 Payment Details</h2>
 
-                            <span>52%</span>
-                        </div>
+    <p style="opacity: 0.65;">
+        Manage the customer's payment information
+        for each enrolled course.
+    </p>
 
-                        <div class="progress-bar">
-                            <div
-                                class="progress-fill"
-                                style="width: 52%;">
-                            </div>
-                        </div>
+    <div id="paymentList">
 
-                        <div class="course-progress">
-                            13 / 25 lessons completed
-                        </div>
+        Loading payment details...
 
-                    </div>
+    </div>
 
-
-                    <div class="course-item">
-
-                        <div class="course-top">
-                            <span class="course-name">
-                                Risk Management
-                            </span>
-
-                            <span>90%</span>
-                        </div>
-
-                        <div class="progress-bar">
-                            <div
-                                class="progress-fill"
-                                style="width: 90%;">
-                            </div>
-                        </div>
-
-                        <div class="course-progress">
-                            18 / 20 lessons completed
-                        </div>
-
-                    </div>
-
-                </section>
+</section>                 
 
 
                 <!-- Activity -->
@@ -568,34 +753,41 @@
             </div>
 
 
-            <!-- RIGHT COLUMN -->
+            <section class="user-section">
 
-            <div>
+    <h2>⚙️ Account</h2>
 
-                <!-- Account -->
+    <button
+        class="account-button"
+        id="editUserButton">
+        ✏️ Edit User Details
+    </button>
 
-                <section class="user-section">
+    <button
+        class="account-button"
+        id="changePasswordButton">
+        🔑 Change Password
+    </button>
 
-                    <h2>⚙️ Account</h2>
+    <button
+        class="account-button"
+        id="resetProgressButton">
+        🔄 Reset Course Progress
+    </button>
 
-                    <button class="account-button">
-                        ✏️ Edit User Details
-                    </button>
+    <button
+        class="account-button"
+        id="suspendUserButton">
+        🚫 Suspend Account
+    </button>
 
-                    <button class="account-button">
-                        🔑 Change Password
-                    </button>
+    <button
+        class="account-button delete-button"
+        id="deleteUserButton">
+        🗑️ Delete Account
+    </button>
 
-                    <button class="account-button">
-                        🔄 Reset Course Progress
-                    </button>
-
-                    <button class="account-button danger-button">
-                        🚫 Suspend Account
-                    </button>
-
-                </section>
-
+</section>
 
                 <!-- User Information -->
 
@@ -1044,6 +1236,718 @@ document.getElementById("assignCourseButton")
       loadUser();
       loadAvailableCourses();
 
+// ==========================================
+// USER ACTION BUTTONS
+// ==========================================
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const userId =
+    params.get("id");
+
+
+// ==========================================
+// EDIT USER
+// ==========================================
+
+document.getElementById("editUserButton")
+    .addEventListener("click", async function () {
+
+        const currentUsername =
+            document.querySelector(
+                ".user-header h1"
+            ).textContent;
+
+        const newUsername =
+            prompt(
+                "Enter the new username:",
+                currentUsername
+            );
+
+        if (
+            newUsername === null ||
+            !newUsername.trim()
+        ) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/admin/users/${userId}`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            username:
+                                newUsername.trim()
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not update user."
+                );
+
+                return;
+            }
+
+            alert(
+                "User details updated successfully."
+            );
+
+            loadUser();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not connect to the server."
+            );
+
+        }
+
+    });
+
+
+// ==========================================
+// CHANGE PASSWORD
+// ==========================================
+
+document.getElementById("changePasswordButton")
+    .addEventListener("click", function () {
+
+        alert(
+            "Password changes are handled through the password request system."
+        );
+
+    });
+
+
+// ==========================================
+// RESET COURSE PROGRESS
+// ==========================================
+
+document.getElementById("resetProgressButton")
+    .addEventListener("click", async function () {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to reset this user's course progress?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/admin/users/${userId}/progress`,
+                    {
+                        method: "PUT"
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not reset progress."
+                );
+
+                return;
+            }
+
+            alert(
+                "Course progress has been reset."
+            );
+
+            loadUser();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not connect to the server."
+            );
+
+        }
+
+    });
+
+
+// ==========================================
+// SUSPEND / REACTIVATE
+// ==========================================
+
+document.getElementById("suspendUserButton")
+    .addEventListener("click", async function () {
+
+        const isSuspended =
+            this.textContent.includes(
+                "Reactivate"
+            );
+
+        const action =
+            isSuspended
+                ? "reactivate"
+                : "suspend";
+
+        const confirmed =
+            confirm(
+                `Are you sure you want to ${action} this account?`
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/admin/users/${userId}/status`,
+                    {
+                        method: "PUT"
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not update account."
+                );
+
+                return;
+            }
+
+            loadUser();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not connect to the server."
+            );
+
+        }
+
+    });
+
+
+// ==========================================
+// DELETE ACCOUNT
+// ==========================================
+
+document.getElementById("deleteUserButton")
+    .addEventListener("click", async function () {
+
+        const confirmed =
+            confirm(
+                "⚠️ DELETE ACCOUNT\n\n" +
+                "This will permanently delete this customer, " +
+                "their course assignments, progress and password requests.\n\n" +
+                "This cannot be undone.\n\n" +
+                "Are you sure?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/admin/users/${userId}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                alert(
+                    data.message ||
+                    "Could not delete account."
+                );
+
+                return;
+            }
+
+            alert(
+                "Customer account deleted successfully."
+            );
+
+            window.location.href =
+                "index.html";
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not connect to the server."
+            );
+
+        }
+
+    });
+
+    // ==========================================
+// LOAD PAYMENT DETAILS
+// ==========================================
+
+async function loadPaymentDetails() {
+
+    const paymentList =
+        document.getElementById("paymentList");
+
+    paymentList.innerHTML =
+        "Loading payment details...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${userId}/payments`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            paymentList.innerHTML =
+                data.message ||
+                "Could not load payment details.";
+
+            return;
+
+        }
+
+
+        const payments =
+            data.payments;
+
+
+        if (!payments || payments.length === 0) {
+
+            paymentList.innerHTML = `
+                <p style="opacity: 0.6;">
+                    This customer is not enrolled
+                    in any courses yet.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        paymentList.innerHTML = "";
+
+
+        payments.forEach(payment => {
+
+            const paymentCourse =
+                document.createElement("div");
+
+
+            paymentCourse.className =
+                "payment-course";
+
+
+            paymentCourse.innerHTML = `
+
+                <div class="payment-course-title">
+
+                    ${payment.course_title}
+
+                </div>
+
+
+                <div class="payment-field">
+
+                    <label>
+                        Total Course Fee (LKR)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="payment-total"
+                        min="0"
+                        step="1"
+                        value="${payment.total_fee}"
+                    >
+
+                </div>
+
+
+                <div class="payment-field">
+
+                    <label>
+                        Amount Paid (LKR)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="payment-paid"
+                        min="0"
+                        step="1"
+                        value="${payment.amount_paid}"
+                    >
+
+                </div>
+
+
+                <div class="payment-remaining">
+
+                    <span class="payment-remaining-label">
+                        Remaining Balance
+                    </span>
+
+                    <span class="payment-remaining-amount">
+                        LKR ${formatCurrency(payment.remaining)}
+                    </span>
+
+                </div>
+
+
+                <div class="payment-progress">
+
+                    <div class="payment-progress-bar">
+
+                        <div
+                            class="payment-progress-fill"
+                            style="width: ${payment.percentage}%;">
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-progress-text">
+
+                        ${payment.percentage}% paid
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="save-payment-button"
+                    type="button"
+                >
+
+                    💾 Save Payment Details
+
+                </button>
+
+
+                <p class="payment-message"></p>
+
+            `;
+
+
+            paymentList.appendChild(
+                paymentCourse
+            );
+
+
+            // ==========================================
+            // GET INPUTS
+            // ==========================================
+
+            const totalInput =
+                paymentCourse.querySelector(
+                    ".payment-total"
+                );
+
+
+            const paidInput =
+                paymentCourse.querySelector(
+                    ".payment-paid"
+                );
+
+
+            const remainingAmount =
+                paymentCourse.querySelector(
+                    ".payment-remaining-amount"
+                );
+
+
+            const progressFill =
+                paymentCourse.querySelector(
+                    ".payment-progress-fill"
+                );
+
+
+            const progressText =
+                paymentCourse.querySelector(
+                    ".payment-progress-text"
+                );
+
+
+            // ==========================================
+            // LIVE CALCULATION
+            // ==========================================
+
+            function updatePaymentDisplay() {
+
+                const total =
+                    Number(totalInput.value) || 0;
+
+                const paid =
+                    Number(paidInput.value) || 0;
+
+
+                const remaining =
+                    Math.max(
+                        total - paid,
+                        0
+                    );
+
+
+                let percentage = 0;
+
+
+                if (total > 0) {
+
+                    percentage =
+                        Math.min(
+                            Math.round(
+                                (paid / total) * 100
+                            ),
+                            100
+                        );
+
+                }
+
+
+                remainingAmount.textContent =
+                    `LKR ${formatCurrency(remaining)}`;
+
+
+                progressFill.style.width =
+                    `${percentage}%`;
+
+
+                progressText.textContent =
+                    `${percentage}% paid`;
+
+            }
+
+
+            totalInput.addEventListener(
+                "input",
+                updatePaymentDisplay
+            );
+
+
+            paidInput.addEventListener(
+                "input",
+                updatePaymentDisplay
+            );
+
+
+            // ==========================================
+            // SAVE PAYMENT
+            // ==========================================
+
+            const saveButton =
+                paymentCourse.querySelector(
+                    ".save-payment-button"
+                );
+
+
+            const message =
+                paymentCourse.querySelector(
+                    ".payment-message"
+                );
+
+
+            saveButton.addEventListener(
+                "click",
+                async function () {
+
+                    const totalFee =
+                        Number(totalInput.value);
+
+
+                    const amountPaid =
+                        Number(paidInput.value);
+
+
+                    if (
+                        !Number.isFinite(totalFee) ||
+                        totalFee < 0
+                    ) {
+
+                        message.textContent =
+                            "Please enter a valid total fee.";
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !Number.isFinite(amountPaid) ||
+                        amountPaid < 0
+                    ) {
+
+                        message.textContent =
+                            "Please enter a valid amount paid.";
+
+                        return;
+
+                    }
+
+
+                    if (
+                        amountPaid > totalFee
+                    ) {
+
+                        message.textContent =
+                            "Amount paid cannot be greater than the total fee.";
+
+                        return;
+
+                    }
+
+
+                    message.textContent =
+                        "Saving payment details...";
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                `/api/admin/users/${userId}/payments`,
+                                {
+
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body: JSON.stringify({
+
+                                        course_id:
+                                            payment.course_id,
+
+                                        total_fee:
+                                            totalFee,
+
+                                        amount_paid:
+                                            amountPaid
+
+                                    })
+
+                                }
+                            );
+
+
+                        const result =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            message.textContent =
+                                result.message ||
+                                "Could not save payment details.";
+
+                            return;
+
+                        }
+
+
+                        message.textContent =
+                            "✓ Payment details saved successfully.";
+
+                        loadPaymentDetails();
+
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        message.textContent =
+                            "Could not connect to the server.";
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        paymentList.innerHTML =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+
+function formatCurrency(amount) {
+
+    return Number(amount || 0)
+        .toLocaleString("en-LK");
+
+}
+
+
+// ==========================================
+// START PAYMENT DETAILS
+// ==========================================
+
+loadPaymentDetails();
+
+</script>
 </script>
 </body>
 </html>

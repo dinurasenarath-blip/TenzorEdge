@@ -9,6 +9,8 @@
     <title>Course Overview | TenzorEdge</title>
 
     <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/lucide@latest"></script>
+
 
 </head>
 
@@ -21,39 +23,74 @@
 
         <!-- SIDEBAR -->
 
-        <aside class="customer-sidebar">
+<!-- SIDEBAR -->
 
-            <div class="customer-logo">
+<aside class="customer-sidebar">
 
-                <img
-                    src="final logo.jpeg"
-                    alt="TenzorEdge"
-                >
+    <div class="customer-logo">
 
-            </div>
+        <img
+            src="final logo.jpeg"
+            alt="TenzorEdge"
+        >
+
+    </div>
+
+             <nav>
+
+    <a href="customer-dashboard.html" class="active">
+        <span class="nav-icon">
+            <i data-lucide="house"></i>
+        </span>
+        <span class="nav-text">Dashboard</span>
+    </a>
 
 
-            <nav>
+    <a href="my-courses.html" >
+        <span class="nav-icon">
+            <i data-lucide="book-open"></i>
+        </span>
+        <span class="nav-text">My Courses</span>
+    </a>
 
-                <a href="customer-dashboard.html">
-                    Dashboard
-                </a>
 
-                <a href="#">
-                    My Courses
-                </a>
+    <a href="progress.html" >
+        <span class="nav-icon">
+            <i data-lucide="chart-no-axes-column-increasing"></i>
+        </span>
+        <span class="nav-text">Progress</span>
+    </a>
 
-                <a href="#">
-                    Progress
-                </a>
 
-                <a href="#">
-                    Account
-                </a>
+    <a href="account.html" >
+        <span class="nav-icon">
+            <i data-lucide="user-round"></i>
+        </span>
+        <span class="nav-text">Account</span>
+    </a>
 
-            </nav>
 
-        </aside>
+    <a href="reviews.html">
+        <span class="nav-icon">
+            <i data-lucide="star"></i>
+        </span>
+        <span class="nav-text">Reviews</span>
+    </a>
+
+</nav>
+
+
+
+    <!-- SIDEBAR TOGGLE -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+    >
+        ◀
+    </button>
+
+</aside>
 
 
 
@@ -249,15 +286,12 @@
 
 
         if (!course) {
-
-            document.getElementById(
-                "courseTitle"
-            ).textContent =
-                "Course not found";
-
-            return;
-
-        }
+    document.getElementById("courseTitle").textContent = "Course not found";
+    document.getElementById("courseDescription").textContent =
+        "This course could not be found.";
+    document.getElementById("courseOverview").textContent =
+        "This course could not be found.";
+} else {
 
 
         document.getElementById(
@@ -327,7 +361,7 @@
 
         `;
 
-
+        }
 
         // ==========================================
         // ENROLMENT
@@ -346,8 +380,73 @@
 
         }
 
-    </script>
+        // ==========================================
+// COLLAPSIBLE SIDEBAR
+// ==========================================
 
+const sidebar =
+    document.querySelector(".customer-sidebar");
+
+const sidebarToggle =
+    document.getElementById("sidebarToggle");
+
+
+if (sidebar && sidebarToggle) {
+
+    // Remember sidebar state
+
+    const sidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
+
+
+    if (sidebarCollapsed) {
+
+        sidebar.classList.add("collapsed");
+
+        sidebarToggle.textContent = "▶";
+
+    } else {
+
+        sidebarToggle.textContent = "◀";
+
+    }
+
+
+    // Toggle sidebar
+
+    sidebarToggle.addEventListener("click", () => {
+
+        sidebar.classList.toggle("collapsed");
+
+
+        const isCollapsed =
+            sidebar.classList.contains("collapsed");
+
+
+        localStorage.setItem(
+            "sidebarCollapsed",
+            isCollapsed
+        );
+
+
+        sidebarToggle.textContent =
+            isCollapsed ? "▶" : "◀";
+
+    });
+
+}
+
+// ==========================================
+// INITIALIZE SIDEBAR ICONS
+// ==========================================
+
+lucide.createIcons();
+
+    lucide.createIcons();
+
+</script>
+
+<script src="theme.js"></script>
 
 </body>
 

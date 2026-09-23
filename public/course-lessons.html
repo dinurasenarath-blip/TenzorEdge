@@ -308,6 +308,58 @@
 
         }
 
+        .lesson-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.edit-button {
+
+    background: #6c63ff;
+
+}
+
+
+.edit-button:hover {
+
+    background: #7c74ff;
+
+}
+
+
+.delete-button {
+
+    background: #b83b3b;
+
+}
+
+
+.delete-button:hover {
+
+    background: #d14a4a;
+
+}
+
+
+.cancel-button {
+
+    background: #292934;
+
+}
+
+
+.cancel-button:hover {
+
+    background: #383846;
+
+}
+
 
     </style>
 
@@ -590,6 +642,24 @@ async function loadLessons() {
                         : ""
                     }
 
+                    <div class="lesson-actions">
+
+                        <button
+                            class="edit-button"
+                            onclick="editLesson(${lesson.id})"
+                        >
+                            ✏️ Edit
+                        </button>
+
+                        <button
+                            class="delete-button"
+                            onclick="deleteLesson(${lesson.id})"
+                        >
+                            🗑️ Delete
+                        </button>
+
+                    </div>
+
                 `;
 
 
@@ -610,9 +680,111 @@ async function loadLessons() {
 
 }
 
+// ==========================================
+// EDIT LESSON
+// ==========================================
+
+async function editLesson(lessonId) {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/courses/${courseId}/lessons`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not load lesson."
+            );
+
+            return;
+
+        }
+
+
+        const lesson =
+            data.lessons.find(
+                lesson =>
+                    lesson.id === lessonId
+            );
+
+
+        if (!lesson) {
+
+            alert("Lesson not found.");
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "lessonTitle"
+        ).value =
+            lesson.title || "";
+
+
+        document.getElementById(
+            "lessonDescription"
+        ).value =
+            lesson.description || "";
+
+
+        document.getElementById(
+            "lessonVideo"
+        ).value =
+            lesson.video_url || "";
+
+
+        const form =
+            document.getElementById(
+                "lessonForm"
+            );
+
+
+        form.dataset.editingId =
+            lessonId;
+
+
+        form.querySelector(
+            "button[type='submit']"
+        ).textContent =
+            "Save Changes";
+
+
+        document.getElementById(
+            "lessonMessage"
+        ).textContent =
+            "Editing lesson. Make your changes and click Save Changes.";
+
+
+        form.scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
 
 // ==========================================
-// CREATE LESSON
+// CREATE / EDIT LESSON
 // ==========================================
 
 document.getElementById(
@@ -622,6 +794,13 @@ document.getElementById(
     async function (event) {
 
         event.preventDefault();
+
+
+        const form = this;
+
+
+        const editingId =
+            form.dataset.editingId;
 
 
         const title =
@@ -649,17 +828,31 @@ document.getElementById(
 
 
         message.textContent =
-            "Adding lesson...";
+            editingId
+                ? "Saving changes..."
+                : "Adding lesson...";
 
 
         try {
 
+            const url =
+                editingId
+                    ? `/api/admin/lessons/${editingId}`
+                    : "/api/admin/lessons";
+
+
+            const method =
+                editingId
+                    ? "PUT"
+                    : "POST";
+
+
             const response =
                 await fetch(
-                    "/api/admin/lessons",
+                    url,
                     {
 
-                        method: "POST",
+                        method: method,
 
                         headers: {
                             "Content-Type":
@@ -693,12 +886,21 @@ document.getElementById(
             if (response.ok) {
 
                 message.textContent =
-                    "Lesson added successfully!";
+                    editingId
+                        ? "Lesson updated successfully!"
+                        : "Lesson added successfully!";
 
 
-                document.getElementById(
-                    "lessonForm"
-                ).reset();
+                form.reset();
+
+
+                delete form.dataset.editingId;
+
+
+                form.querySelector(
+                    "button[type='submit']"
+                ).textContent =
+                    "Add Lesson";
 
 
                 loadLessons();
@@ -708,7 +910,7 @@ document.getElementById(
 
                 message.textContent =
                     data.message ||
-                    "Could not add lesson.";
+                    "Could not save lesson.";
 
             }
 
@@ -725,6 +927,71 @@ document.getElementById(
     }
 );
 
+// ==========================================
+// DELETE LESSON
+// ==========================================
+
+async function deleteLesson(lessonId) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this lesson? This cannot be undone."
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/lessons/${lessonId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not delete lesson."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Lesson deleted successfully."
+        );
+
+
+        loadLessons();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
 
 // ==========================================
 // START
@@ -733,6 +1000,8 @@ document.getElementById(
 loadCourse();
 
 loadLessons();
+
+
 
 
 </script>

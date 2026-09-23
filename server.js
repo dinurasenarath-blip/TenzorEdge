@@ -214,6 +214,32 @@ db.all(
 
 });
 
+// ==========================================
+// ADD NAME AND EMAIL COLUMNS TO USERS
+// ==========================================
+
+db.run(`
+    ALTER TABLE users
+    ADD COLUMN name TEXT DEFAULT NULL
+`, (err) => {
+
+    if (err && !err.message.includes("duplicate column name")) {
+        console.error("Could not add name column:", err);
+    }
+
+});
+
+db.run(`
+    ALTER TABLE users
+    ADD COLUMN email TEXT DEFAULT NULL
+`, (err) => {
+
+    if (err && !err.message.includes("duplicate column name")) {
+        console.error("Could not add email column:", err);
+    }
+
+});
+
     db.run(`
         CREATE TABLE IF NOT EXISTS user_courses (
 
@@ -227,6 +253,34 @@ db.all(
 
         )
     `);
+
+// ==========================================
+// ENROLMENT REQUESTS TABLE
+// ==========================================
+
+db.run(`
+    CREATE TABLE IF NOT EXISTS enrollment_requests (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        user_id INTEGER NOT NULL,
+
+        course_id INTEGER NOT NULL,
+
+        status TEXT NOT NULL DEFAULT 'pending',
+
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (user_id)
+            REFERENCES users(id)
+            ON DELETE CASCADE,
+
+        FOREIGN KEY (course_id)
+            REFERENCES courses(id)
+            ON DELETE CASCADE
+
+    )
+`);
 
    // ==========================================
 // LESSONS TABLE
@@ -276,6 +330,48 @@ db.run(`
 
         FOREIGN KEY (lesson_id)
             REFERENCES lessons(id)
+            ON DELETE CASCADE
+
+    )
+`);
+
+// ==========================================
+// COURSE PAYMENTS
+// ==========================================
+
+db.run(`
+    CREATE TABLE IF NOT EXISTS course_payments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        course_id INTEGER NOT NULL,
+        total_fee INTEGER DEFAULT 0,
+        amount_paid INTEGER DEFAULT 0,
+        UNIQUE(user_id, course_id)
+    )
+`);
+
+// ==========================================
+// REVIEWS TABLE
+// ==========================================
+
+db.run(`
+    CREATE TABLE IF NOT EXISTS reviews (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        user_id INTEGER NOT NULL UNIQUE,
+
+        rating INTEGER NOT NULL
+            CHECK (rating BETWEEN 1 AND 5),
+
+        review TEXT NOT NULL,
+
+        status TEXT NOT NULL DEFAULT 'pending',
+
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (user_id)
+            REFERENCES users(id)
             ON DELETE CASCADE
 
     )
@@ -485,22 +581,24 @@ app.post("/api/admin/create-customer", async (req, res) => {
     }
 
 
-    const {
-        username,
-        password,
-        package: customerPackage
-    } = req.body;
+ const {
+    name,
+    email,
+    username,
+    password,
+    package: customerPackage
+} = req.body;
 
 
     // Check required information
 
-    if (!username || !password) {
+    if (!name || !email || !username || !password) {
 
-        return res.status(400).json({
-            message: "Username and password are required."
-        });
+    return res.status(400).json({
+        message: "Name, email, username and password are required."
+    });
 
-    }
+}
 
 
     // Allowed packages
@@ -537,14 +635,16 @@ app.post("/api/admin/create-customer", async (req, res) => {
         db.run(
             `
             INSERT INTO users
-            (username, password, role, package, active)
-            VALUES (?, ?, 'customer', ?, 1)
+(name, email, username, password, role, package, active)
+VALUES (?, ?, ?, ?, 'customer', ?, 1)
             `,
             [
-                username,
-                hashedPassword,
-                customerPackage
-            ],
+    name.trim(),
+    email.trim(),
+    username.trim(),
+    hashedPassword,
+    customerPackage
+],
 
             function (err) {
 
@@ -743,6 +843,417 @@ app.get("/api/me", (req, res) => {
 
 });
 
+// ==========================================
+// GET CUSTOMER ACCOUNT DETAILS
+// ==========================================
+
+app.get("/api/customer/account", (req, res) => {
+
+    // Make sure a customer is logged in
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "customer"
+    ) {
+
+        return res.status(403).json({
+            message: "Customer access required."
+        });
+
+    }
+
+    db.get(
+        `
+        SELECT
+            id,
+            name,
+            email,
+            username,
+            role,
+            package
+        FROM users
+        WHERE id = ?
+        `,
+        [req.session.userId],
+
+        (err, user) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not retrieve account details."
+                });
+
+            }
+
+            if (!user) {
+
+                return res.status(404).json({
+                    message:
+                        "User account not found."
+                });
+
+            }
+
+            res.json({
+
+                success: true,
+
+                user: user
+
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
+// GET CUSTOMER REVIEW
+// ==========================================
+
+app.get("/api/customer/review", (req, res) => {
+
+    // Make sure a customer is logged in
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "customer"
+    ) {
+
+        return res.status(403).json({
+            message: "Customer access required."
+        });
+
+    }
+
+
+    db.get(
+        `
+        SELECT
+            id,
+            rating,
+            review,
+            status,
+            created_at
+        FROM reviews
+        WHERE user_id = ?
+        `,
+        [req.session.userId],
+
+        (err, review) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not retrieve your review."
+                });
+
+            }
+
+
+            res.json({
+
+                success: true,
+
+                review: review || null
+
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
+// GET APPROVED REVIEWS
+// ==========================================
+
+app.get("/api/customer/approved-reviews", (req, res) => {
+
+    db.all(`
+        SELECT
+            reviews.id,
+            reviews.rating,
+            reviews.review,
+            reviews.created_at,
+            users.username,
+            users.name
+        FROM reviews
+        JOIN users ON reviews.user_id = users.id
+        WHERE reviews.status = 'approved'
+        ORDER BY reviews.created_at DESC
+    `, [], (err, reviews) => {
+
+        if (err) {
+            console.error(err);
+
+            return res.status(500).json({
+                message: "Could not retrieve approved reviews."
+            });
+        }
+
+        res.json({
+            success: true,
+            reviews: reviews
+        });
+
+    });
+
+});
+
+// ==========================================
+// SUBMIT / UPDATE CUSTOMER REVIEW
+// ==========================================
+
+app.post("/api/customer/review", (req, res) => {
+
+    // Make sure a customer is logged in
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "customer"
+    ) {
+
+        return res.status(403).json({
+            message: "Customer access required."
+        });
+
+    }
+
+
+    const userId =
+        req.session.userId;
+
+    const rating =
+        Number(req.body.rating);
+
+    const review =
+        req.body.review?.trim();
+
+
+    // Validate rating
+
+    if (
+        !Number.isInteger(rating) ||
+        rating < 1 ||
+        rating > 5
+    ) {
+
+        return res.status(400).json({
+            message:
+                "Please select a rating between 1 and 5 stars."
+        });
+
+    }
+
+
+    // Validate review text
+
+    if (!review) {
+
+        return res.status(400).json({
+            message:
+                "Please write a review."
+        });
+
+    }
+
+
+    if (review.length > 1000) {
+
+        return res.status(400).json({
+            message:
+                "Your review cannot exceed 1000 characters."
+        });
+
+    }
+
+
+    // Check whether this customer
+    // already has a review
+
+    db.get(
+        `
+        SELECT id
+        FROM reviews
+        WHERE user_id = ?
+        `,
+        [userId],
+
+        (err, existingReview) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not check your existing review."
+                });
+
+            }
+
+
+            // ------------------------------------------
+            // UPDATE EXISTING REVIEW
+            // ------------------------------------------
+
+            if (existingReview) {
+
+                db.run(
+                    `
+                    UPDATE reviews
+
+                    SET
+                        rating = ?,
+                        review = ?,
+                        status = 'pending',
+                        created_at = CURRENT_TIMESTAMP
+
+                    WHERE user_id = ?
+                    `,
+                    [
+                        rating,
+                        review,
+                        userId
+                    ],
+
+                    function (err) {
+
+                        if (err) {
+
+                            console.error(err);
+
+                            return res.status(500).json({
+                                message:
+                                    "Could not update your review."
+                            });
+
+                        }
+
+
+                        return res.json({
+
+                            success: true,
+
+                            message:
+                                "Your review has been updated and sent for approval."
+
+                        });
+
+                    }
+                );
+
+                return;
+            }
+
+
+            // ------------------------------------------
+            // CREATE NEW REVIEW
+            // ------------------------------------------
+
+            db.run(
+                `
+                INSERT INTO reviews
+                (
+                    user_id,
+                    rating,
+                    review,
+                    status
+                )
+
+                VALUES (?, ?, ?, 'pending')
+                `,
+                [
+                    userId,
+                    rating,
+                    review
+                ],
+
+                function (err) {
+
+                    if (err) {
+
+                        console.error(err);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not save your review."
+                        });
+
+                    }
+
+
+                    res.json({
+
+                        success: true,
+
+                        message:
+                            "Your review has been submitted for approval.",
+
+                        reviewId:
+                            this.lastID
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+});
+
+// ==========================================
+// DELETE CUSTOMER'S OWN REVIEW
+// ==========================================
+
+app.delete("/api/customer/review", (req, res) => {
+
+    if (!req.session.userId) {
+        return res.status(401).json({
+            message: "You must be logged in."
+        });
+    }
+
+    db.run(
+        `
+        DELETE FROM reviews
+        WHERE user_id = ?
+        `,
+        [req.session.userId],
+        function (err) {
+
+            if (err) {
+                console.error(err);
+
+                return res.status(500).json({
+                    message: "Could not delete review."
+                });
+            }
+
+            if (this.changes === 0) {
+                return res.status(404).json({
+                    message: "No review found."
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "Your review has been deleted."
+            });
+
+        }
+    );
+
+});
 
 // ==========================================
 // GET USER DETAILS - ADMIN ONLY
@@ -857,6 +1368,251 @@ app.get("/api/admin/users/:id", (req, res) => {
 });
 
 // ==========================================
+// ADMIN - GET CUSTOMER PAYMENT DETAILS
+// ==========================================
+
+app.get("/api/admin/users/:id/payments", (req, res) => {
+
+    if (!req.session.userId || req.session.role !== "admin") {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const userId = req.params.id;
+
+    const sql = `
+        SELECT
+            c.id AS course_id,
+            c.title AS course_title,
+            COALESCE(cp.total_fee, 0) AS total_fee,
+            COALESCE(cp.amount_paid, 0) AS amount_paid
+        FROM user_courses uc
+        JOIN courses c
+            ON c.id = uc.course_id
+        LEFT JOIN course_payments cp
+            ON cp.user_id = uc.user_id
+            AND cp.course_id = uc.course_id
+        WHERE uc.user_id = ?
+        ORDER BY c.id
+    `;
+
+    db.all(sql, [userId], (err, payments) => {
+
+        if (err) {
+
+            console.error(err);
+
+            return res.status(500).json({
+                message: "Could not load payment details."
+            });
+
+        }
+
+        const result = payments.map(payment => {
+
+            const totalFee =
+                Number(payment.total_fee) || 0;
+
+            const amountPaid =
+                Number(payment.amount_paid) || 0;
+
+            const remaining =
+                Math.max(totalFee - amountPaid, 0);
+
+            const percentage =
+                totalFee > 0
+                    ? Math.min(
+                        Math.round(
+                            (amountPaid / totalFee) * 100
+                        ),
+                        100
+                    )
+                    : 0;
+
+            return {
+                course_id: payment.course_id,
+                course_title: payment.course_title,
+                total_fee: totalFee,
+                amount_paid: amountPaid,
+                remaining: remaining,
+                percentage: percentage
+            };
+
+        });
+
+        res.json({
+            payments: result
+        });
+
+    });
+
+});
+
+
+// ==========================================
+// ADMIN - SAVE CUSTOMER PAYMENT DETAILS
+// ==========================================
+
+app.post("/api/admin/users/:id/payments", (req, res) => {
+
+    if (!req.session.userId || req.session.role !== "admin") {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const userId =
+        req.params.id;
+
+    const {
+        course_id,
+        total_fee,
+        amount_paid
+    } = req.body;
+
+    const courseId =
+        Number(course_id);
+
+    const totalFee =
+        Number(total_fee);
+
+    const amountPaid =
+        Number(amount_paid);
+
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if (!courseId) {
+
+        return res.status(400).json({
+            message: "Please select a course."
+        });
+
+    }
+
+    if (
+        !Number.isFinite(totalFee) ||
+        totalFee < 0
+    ) {
+
+        return res.status(400).json({
+            message: "Total course fee must be a valid amount."
+        });
+
+    }
+
+    if (
+        !Number.isFinite(amountPaid) ||
+        amountPaid < 0
+    ) {
+
+        return res.status(400).json({
+            message: "Amount paid must be a valid amount."
+        });
+
+    }
+
+    if (amountPaid > totalFee) {
+
+        return res.status(400).json({
+            message:
+                "Amount paid cannot be greater than the total course fee."
+        });
+
+    }
+
+
+    // ==========================================
+    // MAKE SURE CUSTOMER HAS THIS COURSE
+    // ==========================================
+
+    db.get(
+        `
+        SELECT *
+        FROM user_courses
+        WHERE user_id = ?
+        AND course_id = ?
+        `,
+        [userId, courseId],
+        (err, enrollment) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message: "Database error."
+                });
+
+            }
+
+            if (!enrollment) {
+
+                return res.status(400).json({
+                    message:
+                        "This customer is not assigned to that course."
+                });
+
+            }
+
+
+            // ==========================================
+            // SAVE PAYMENT
+            // ==========================================
+
+            db.run(
+                `
+                INSERT INTO course_payments
+                    (user_id, course_id, total_fee, amount_paid)
+
+                VALUES
+                    (?, ?, ?, ?)
+
+                ON CONFLICT(user_id, course_id)
+                DO UPDATE SET
+                    total_fee = excluded.total_fee,
+                    amount_paid = excluded.amount_paid
+                `,
+                [
+                    userId,
+                    courseId,
+                    totalFee,
+                    amountPaid
+                ],
+                function (err) {
+
+                    if (err) {
+
+                        console.error(err);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not save payment details."
+                        });
+
+                    }
+
+                    res.json({
+                        message:
+                            "Payment details saved successfully.",
+                        total_fee: totalFee,
+                        amount_paid: amountPaid,
+                        remaining:
+                            totalFee - amountPaid
+                    });
+
+                }
+            );
+
+        }
+    );
+
+});
+
+// ==========================================
 // GET ALL CUSTOMERS - ADMIN ONLY
 // ==========================================
 
@@ -916,6 +1672,439 @@ app.get("/api/admin/customers", (req, res) => {
     );
 
 });
+
+// ==========================================
+// EDIT USER - ADMIN ONLY
+// ==========================================
+
+app.put("/api/admin/users/:id", (req, res) => {
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+
+    }
+
+    const userId = req.params.id;
+    const username = req.body.username;
+
+    if (!username || !username.trim()) {
+
+        return res.status(400).json({
+            message: "Username is required."
+        });
+
+    }
+
+    db.run(
+        `
+        UPDATE users
+        SET username = ?
+        WHERE id = ?
+        AND role = 'customer'
+        `,
+        [
+            username.trim(),
+            userId
+        ],
+
+        function (err) {
+
+            if (err) {
+
+                if (
+                    err.message.includes(
+                        "UNIQUE constraint failed"
+                    )
+                ) {
+
+                    return res.status(409).json({
+                        message:
+                            "That username is already being used."
+                    });
+
+                }
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not update user."
+                });
+
+            }
+
+            if (this.changes === 0) {
+
+                return res.status(404).json({
+                    message:
+                        "Customer not found."
+                });
+
+            }
+
+            res.json({
+
+                success: true,
+
+                message:
+                    "User details updated successfully."
+
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
+// SUSPEND / REACTIVATE USER - ADMIN ONLY
+// ==========================================
+
+app.put("/api/admin/users/:id/status", (req, res) => {
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+
+    }
+
+    const userId = req.params.id;
+
+    db.get(
+        `
+        SELECT id, active
+        FROM users
+        WHERE id = ?
+        AND role = 'customer'
+        `,
+        [userId],
+
+        (err, user) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not retrieve user."
+                });
+
+            }
+
+            if (!user) {
+
+                return res.status(404).json({
+                    message:
+                        "Customer not found."
+                });
+
+            }
+
+            const newStatus =
+                user.active ? 0 : 1;
+
+            db.run(
+                `
+                UPDATE users
+                SET active = ?
+                WHERE id = ?
+                `,
+                [
+                    newStatus,
+                    userId
+                ],
+
+                function (err) {
+
+                    if (err) {
+
+                        console.error(err);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not update account status."
+                        });
+
+                    }
+
+                    res.json({
+
+                        success: true,
+
+                        active: newStatus,
+
+                        message:
+                            newStatus
+                                ? "Account reactivated."
+                                : "Account suspended."
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+});
+
+// ==========================================
+// DELETE CUSTOMER ACCOUNT - ADMIN ONLY
+// ==========================================
+
+app.delete("/api/admin/users/:id", (req, res) => {
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+
+    }
+
+    const userId = req.params.id;
+
+    // Make sure this is a customer account
+
+    db.get(
+        `
+        SELECT id, username
+        FROM users
+        WHERE id = ?
+        AND role = 'customer'
+        `,
+        [userId],
+
+        (err, user) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not find customer."
+                });
+
+            }
+
+            if (!user) {
+
+                return res.status(404).json({
+                    message:
+                        "Customer not found."
+                });
+
+            }
+
+            // Delete related data first
+
+            db.run(
+                `
+                DELETE FROM user_lesson_progress
+                WHERE user_id = ?
+                `,
+                [userId],
+
+                (err) => {
+
+                    if (err) {
+
+                        console.error(err);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not remove lesson progress."
+                        });
+
+                    }
+
+                    db.run(
+                        `
+                        DELETE FROM user_courses
+                        WHERE user_id = ?
+                        `,
+                        [userId],
+
+                        (err) => {
+
+                            if (err) {
+
+                                console.error(err);
+
+                                return res.status(500).json({
+                                    message:
+                                        "Could not remove course assignments."
+                                });
+
+                            }
+
+                            db.run(
+                                `
+                                DELETE FROM password_requests
+                                WHERE user_id = ?
+                                `,
+                                [userId],
+
+                                (err) => {
+
+                                    if (err) {
+
+                                        console.error(err);
+
+                                        return res.status(500).json({
+                                            message:
+                                                "Could not remove password requests."
+                                        });
+
+                                    }
+
+                                    // Finally delete the user
+
+                                    db.run(
+                                        `
+                                        DELETE FROM users
+                                        WHERE id = ?
+                                        AND role = 'customer'
+                                        `,
+                                        [userId],
+
+                                        function (err) {
+
+                                            if (err) {
+
+                                                console.error(err);
+
+                                                return res.status(500).json({
+                                                    message:
+                                                        "Could not delete customer."
+                                                });
+
+                                            }
+
+                                            res.json({
+
+                                                success: true,
+
+                                                message:
+                                                    "Customer account deleted successfully."
+
+                                            });
+
+                                        }
+                                    );
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+});
+
+// ==========================================
+// RESET USER COURSE PROGRESS - ADMIN ONLY
+// ==========================================
+
+app.put(
+    "/api/admin/users/:id/progress",
+    (req, res) => {
+
+        if (
+            !req.session.userId ||
+            req.session.role !== "admin"
+        ) {
+
+            return res.status(403).json({
+                message: "Admin access required."
+            });
+
+        }
+
+        const userId =
+            req.params.id;
+
+        db.run(
+            `
+            UPDATE user_courses
+            SET progress = 0
+            WHERE user_id = ?
+            `,
+            [userId],
+
+            function (err) {
+
+                if (err) {
+
+                    console.error(err);
+
+                    return res.status(500).json({
+                        message:
+                            "Could not reset course progress."
+                    });
+
+                }
+
+                // Reset individual lesson progress too
+
+                db.run(
+                    `
+                    DELETE FROM user_lesson_progress
+                    WHERE user_id = ?
+                    `,
+                    [userId],
+
+                    function (err) {
+
+                        if (err) {
+
+                            console.error(err);
+
+                            return res.status(500).json({
+                                message:
+                                    "Course progress was reset, but lesson progress could not be cleared."
+                            });
+
+                        }
+
+                        res.json({
+
+                            success: true,
+
+                            message:
+                                "Course progress reset successfully."
+
+                        });
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
 
 // ==========================================
 // GET ALL COURSES - ADMIN ONLY
@@ -1282,6 +2471,7 @@ app.post("/api/admin/lessons", (req, res) => {
     const {
         course_id,
         title,
+        description,
         video_url,
         lesson_order
     } = req.body;
@@ -1304,12 +2494,19 @@ app.post("/api/admin/lessons", (req, res) => {
     db.run(
         `
         INSERT INTO lessons
-        (course_id, title, video_url, lesson_order)
-        VALUES (?, ?, ?, ?)
+        (
+            course_id,
+            title,
+            description,
+            video_url,
+            lesson_order
+        )
+        VALUES (?, ?, ?, ?, ?)
         `,
         [
             course_id,
             title,
+            description || null,
             video_url || null,
             lesson_order || 0
         ],
@@ -1342,6 +2539,161 @@ app.post("/api/admin/lessons", (req, res) => {
 
         }
 
+    );
+
+});
+
+// ==========================================
+// EDIT LESSON
+// ==========================================
+
+app.put("/api/admin/lessons/:id", (req, res) => {
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const lessonId = req.params.id;
+
+    const {
+        title,
+        description,
+        video_url,
+        lesson_order
+    } = req.body;
+
+    if (!title) {
+        return res.status(400).json({
+            message: "Lesson title is required."
+        });
+    }
+
+    db.run(
+        `
+        UPDATE lessons
+        SET
+            title = ?,
+            description = ?,
+            video_url = ?,
+            lesson_order = ?
+        WHERE id = ?
+        `,
+        [
+            title,
+            description || null,
+            video_url || null,
+            lesson_order || 0,
+            lessonId
+        ],
+        function (err) {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message: "Could not update lesson."
+                });
+
+            }
+
+            if (this.changes === 0) {
+
+                return res.status(404).json({
+                    message: "Lesson not found."
+                });
+
+            }
+
+            res.json({
+                success: true,
+                message: "Lesson updated successfully."
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
+// DELETE LESSON
+// ==========================================
+
+app.delete("/api/admin/lessons/:id", (req, res) => {
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const lessonId = req.params.id;
+
+    db.run(
+        `
+        DELETE FROM user_lesson_progress
+        WHERE lesson_id = ?
+        `,
+        [lessonId],
+        function (progressErr) {
+
+            if (progressErr) {
+
+                console.error(progressErr);
+
+                return res.status(500).json({
+                    message:
+                        "Could not remove lesson progress."
+                });
+
+            }
+
+            db.run(
+                `
+                DELETE FROM lessons
+                WHERE id = ?
+                `,
+                [lessonId],
+                function (lessonErr) {
+
+                    if (lessonErr) {
+
+                        console.error(lessonErr);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not delete lesson."
+                        });
+
+                    }
+
+                    if (this.changes === 0) {
+
+                        return res.status(404).json({
+                            message:
+                                "Lesson not found."
+                        });
+
+                    }
+
+                    res.json({
+                        success: true,
+                        message:
+                            "Lesson deleted successfully."
+                    });
+
+                }
+            );
+
+        }
     );
 
 });
@@ -2118,6 +3470,118 @@ app.post(
 );
 
 // ==========================================
+// CUSTOMER PAYMENT DETAILS
+// ==========================================
+
+app.get("/api/customer/payments", (req, res) => {
+
+    if (!req.session.userId) {
+        return res.status(401).json({
+            message: "Not logged in."
+        });
+    }
+
+    const userId = req.session.userId;
+
+    db.all(
+        `
+        SELECT
+            c.id AS course_id,
+            c.title AS course_title,
+
+            COALESCE(cp.total_fee, 0) AS total_fee,
+            COALESCE(cp.amount_paid, 0) AS amount_paid
+
+        FROM user_courses uc
+
+        JOIN courses c
+            ON c.id = uc.course_id
+
+        LEFT JOIN course_payments cp
+            ON cp.user_id = uc.user_id
+            AND cp.course_id = uc.course_id
+
+        WHERE uc.user_id = ?
+
+        ORDER BY c.id
+        `,
+        [userId],
+        (err, rows) => {
+
+            if (err) {
+
+                console.error(
+                    "Customer payment error:",
+                    err
+                );
+
+                return res.status(500).json({
+                    message:
+                        "Could not load payment details."
+                });
+
+            }
+
+            const payments = rows.map(payment => {
+
+                const totalFee =
+                    Number(payment.total_fee) || 0;
+
+                const amountPaid =
+                    Number(payment.amount_paid) || 0;
+
+                const remaining =
+                    Math.max(
+                        totalFee - amountPaid,
+                        0
+                    );
+
+                let percentage = 0;
+
+                if (totalFee > 0) {
+
+                    percentage =
+                        Math.min(
+                            Math.round(
+                                (amountPaid / totalFee) * 100
+                            ),
+                            100
+                        );
+
+                }
+
+                return {
+                    course_id:
+                        payment.course_id,
+
+                    course_title:
+                        payment.course_title,
+
+                    total_fee:
+                        totalFee,
+
+                    amount_paid:
+                        amountPaid,
+
+                    remaining:
+                        remaining,
+
+                    percentage:
+                        percentage
+                };
+
+            });
+
+            res.json({
+                payments
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
 // REQUEST PASSWORD CHANGE - CUSTOMER
 // ==========================================
 
@@ -2338,6 +3802,313 @@ VALUES (?, ?, 'pending', ?)
 
     }
 );
+
+// ==========================================
+// FORGOT PASSWORD - PUBLIC
+// ==========================================
+
+app.post("/api/forgot-password", (req, res) => {
+
+    const username =
+        req.body.username
+            ?.trim();
+
+
+    if (!username) {
+
+        return res.status(400).json({
+            message:
+                "Please enter your username."
+        });
+
+    }
+
+
+    // Find the customer
+
+    db.get(
+        `
+        SELECT id, username
+        FROM users
+        WHERE username = ?
+        AND role = 'customer'
+        `,
+        [username],
+
+        (err, user) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not process password request."
+                });
+
+            }
+
+
+            if (!user) {
+
+                return res.status(404).json({
+                    message:
+                        "No customer account was found with that username."
+                });
+
+            }
+
+
+            // Check for an existing pending request
+
+            db.get(
+                `
+                SELECT id
+                FROM password_requests
+                WHERE user_id = ?
+                AND status = 'pending'
+                `,
+                [user.id],
+
+                (err, existingRequest) => {
+
+                    if (err) {
+
+                        console.error(err);
+
+                        return res.status(500).json({
+                            message:
+                                "Could not check password requests."
+                        });
+
+                    }
+
+
+                    if (existingRequest) {
+
+                        return res.status(409).json({
+                            message:
+                                "A password request is already pending for this account."
+                        });
+
+                    }
+
+
+                    // Create the request
+
+                    db.run(
+                        `
+                        INSERT INTO password_requests
+                        (
+                            user_id,
+                            message,
+                            status,
+                            created_at
+                        )
+                        VALUES (?, ?, 'pending', ?)
+                        `,
+                        [
+                            user.id,
+                            "Password reset requested from login page.",
+                            new Date().toISOString()
+                        ],
+
+                        function (err) {
+
+                            if (err) {
+
+                                console.error(err);
+
+                                return res.status(500).json({
+                                    message:
+                                        "Could not send password request."
+                                });
+
+                            }
+
+
+                            res.json({
+
+                                success: true,
+
+                                message:
+                                    "Your password request has been sent to the administrator."
+
+                            });
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+});
+
+// ==========================================
+// GET REVIEWS - ADMIN ONLY
+// ==========================================
+
+app.get("/api/admin/reviews", (req, res) => {
+
+    // Make sure the person viewing reviews is an admin
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+
+    }
+
+
+    // Get all reviews with customer information
+
+    db.all(
+        `
+        SELECT
+            reviews.id,
+            reviews.user_id,
+            reviews.rating,
+            reviews.review,
+            reviews.status,
+            reviews.created_at,
+
+            users.username,
+            users.name,
+            users.email
+
+        FROM reviews
+
+        JOIN users
+            ON reviews.user_id = users.id
+
+        ORDER BY
+            reviews.created_at DESC
+        `,
+
+        [],
+
+        (err, reviews) => {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not retrieve reviews."
+                });
+
+            }
+
+
+            res.json({
+
+                success: true,
+
+                reviews: reviews
+
+            });
+
+        }
+    );
+
+});
+
+// ==========================================
+// UPDATE REVIEW STATUS - ADMIN ONLY
+// ==========================================
+
+app.put("/api/admin/reviews/:id/status", (req, res) => {
+
+    // Make sure the person is an admin
+
+    if (
+        !req.session.userId ||
+        req.session.role !== "admin"
+    ) {
+
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+
+    }
+
+
+    const reviewId = req.params.id;
+    const { status } = req.body;
+
+
+    // Only allow these two statuses
+
+    if (
+        status !== "approved" &&
+        status !== "rejected"
+    ) {
+
+        return res.status(400).json({
+            message: "Invalid review status."
+        });
+
+    }
+
+
+    // Update the review
+
+    db.run(
+        `
+        UPDATE reviews
+
+        SET status = ?
+
+        WHERE id = ?
+        `,
+
+        [status, reviewId],
+
+        function (err) {
+
+            if (err) {
+
+                console.error(err);
+
+                return res.status(500).json({
+                    message:
+                        "Could not update review."
+                });
+
+            }
+
+
+            if (this.changes === 0) {
+
+                return res.status(404).json({
+                    message:
+                        "Review not found."
+                });
+
+            }
+
+
+            res.json({
+
+                success: true,
+
+                message:
+                    `Review ${status} successfully.`
+
+            });
+
+        }
+    );
+
+});
 
 // ==========================================
 // GET PASSWORD REQUESTS - ADMIN ONLY

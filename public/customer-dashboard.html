@@ -7,6 +7,291 @@
     <title>Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+ /* ==========================================
+   DASHBOARD TOP GRID
+========================================== */
+
+.dashboard-top-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(300px, 0.8fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+
+/* ==========================================
+   PAYMENT STATUS
+========================================== */
+
+.payment-status-section {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(46, 204, 113, 0.07),
+            rgba(21, 21, 28, 0.96) 50%,
+            rgba(46, 204, 113, 0.035)
+        );
+
+    border: 1px solid rgba(46, 204, 113, 0.16);
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+}
+
+
+.payment-status-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.payment-status-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(224, 184, 79, 0.12);
+
+    color: var(--accent-color);
+
+}
+
+
+.payment-status-icon svg {
+
+    width: 20px;
+
+    height: 20px;
+
+}
+
+
+.payment-status-heading h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+}
+
+
+.payment-status-heading p {
+
+    margin: 3px 0 0;
+
+    font-size: 12px;
+
+    opacity: 0.55;
+
+}
+
+
+/* ==========================================
+   PAYMENT CARD
+========================================== */
+
+.payment-status-card {
+
+    width: 100%;
+
+}
+
+
+.payment-status-course {
+
+    padding: 0;
+
+}
+
+
+.payment-status-course-title {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    margin-bottom: 16px;
+
+    line-height: 1.4;
+
+}
+
+
+/* ==========================================
+   PAYMENT INFORMATION
+========================================== */
+
+.payment-info-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+
+}
+
+
+.payment-info-item {
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    background: rgba(128, 128, 128, 0.07);
+
+}
+
+
+.payment-info-label {
+
+    display: block;
+
+    font-size: 11px;
+
+    opacity: 0.55;
+
+    margin-bottom: 3px;
+
+}
+
+
+.payment-info-value {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.payment-remaining-value {
+
+    color: var(--accent-color);
+
+}
+
+
+/* ==========================================
+   PAYMENT PROGRESS
+========================================== */
+
+.customer-payment-progress {
+
+    margin-top: 16px;
+
+}
+
+
+.customer-payment-progress-bar {
+
+    width: 100%;
+
+    height: 8px;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    background: rgba(128, 128, 128, 0.18);
+
+}
+
+
+.customer-payment-progress-fill {
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #229954,
+        #2ecc71
+    );
+
+    box-shadow:
+        0 0 8px rgba(46, 204, 113, 0.25);
+
+    transition: width 0.5s ease;
+
+}
+
+
+.customer-payment-progress-text {
+
+    margin-top: 6px;
+
+    font-size: 11px;
+
+    opacity: 0.6;
+
+}
+
+
+.payment-complete {
+
+    margin-top: 10px;
+
+    padding: 8px 10px;
+
+    border-radius: 8px;
+
+    background: rgba(46, 204, 113, 0.10);
+
+    color: #27ae60;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+/* ==========================================
+   PAYMENT MOBILE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .dashboard-top-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+    </style>
+
 </head>
 
 <body class="customer-page">
@@ -20,23 +305,52 @@
                 <img src="final logo.jpeg" alt="Logo">
             </div>
 
+            <button class="sidebar-toggle" id="sidebarToggle">◀</button>
+
             <nav>
-                <a href="customer-dashboard.html">
-    Dashboard
-</a>
 
-<a href="my-courses.html">
-    My Courses
-</a>
+    <a href="customer-dashboard.html" class="active">
+        <span class="nav-icon">
+            <i data-lucide="house"></i>
+        </span>
+        <span class="nav-text">Dashboard</span>
+    </a>
 
-<a href="progress.html">
-    Progress
-</a>
 
-<a href="account.html">
-    Account
-</a>
-            </nav>
+    <a href="my-courses.html">
+        <span class="nav-icon">
+            <i data-lucide="book-open"></i>
+        </span>
+        <span class="nav-text">My Courses</span>
+    </a>
+
+
+    <a href="progress.html" >
+        <span class="nav-icon">
+            <i data-lucide="chart-no-axes-column-increasing"></i>
+        </span>
+        <span class="nav-text">Progress</span>
+    </a>
+
+
+    <a href="account.html">
+        <span class="nav-icon">
+            <i data-lucide="user-round"></i>
+        </span>
+        <span class="nav-text">Account</span>
+    </a>
+
+
+    <a href="reviews.html">
+        <span class="nav-icon">
+            <i data-lucide="star"></i>
+        </span>
+        <span class="nav-text">Reviews</span>
+    </a>
+
+</nav>
+
+
 
         </aside>
 
@@ -46,12 +360,19 @@
 
             <header class="customer-header">
 
-                <div>
-                    <h1>Welcome back!</h1>
-                    <p>Continue learning and keep building your trading knowledge.</p>
-                </div>
+    <div>
+        <h1>Welcome back!</h1>
+        <p>Continue learning and keep building your trading knowledge.</p>
+    </div>
 
-            </header>
+    <button id="themeToggle" class="theme-toggle">
+    <span class="theme-icon">
+        <i data-lucide="sun"></i>
+    </span>
+    <span class="theme-text">Light Mode</span>
+</button>
+
+</header>
 
             <!-- ==========================================
      LEARNING SUMMARY
@@ -100,81 +421,128 @@
 </section>
 
 
-
 <!-- ==========================================
-     CONTINUE LEARNING
+     DASHBOARD TOP GRID
 ========================================== -->
 
-<section
-    class="continue-learning"
-    id="continueLearning"
->
+<div class="dashboard-top-grid">
 
-    <div class="continue-learning-header">
+    <!-- ==========================================
+         CONTINUE LEARNING
+    ========================================== -->
 
-        <div>
+    <section
+        class="continue-learning"
+        id="continueLearning"
+    >
 
-            <span class="course-label">
-                CONTINUE LEARNING
-            </span>
+        <div class="continue-learning-header">
 
-            <h2 id="continueCourseTitle">
-                Loading...
-            </h2>
+            <div>
 
-            <p id="continueLessonTitle">
-                Finding your next lesson...
-            </p>
+                <span class="course-label">
+                    CONTINUE LEARNING
+                </span>
+
+                <h2 id="continueCourseTitle">
+                    Loading...
+                </h2>
+
+                <p id="continueLessonTitle">
+                    Finding your next lesson...
+                </p>
+
+            </div>
+
+
+            <button
+                id="continueLearningButton"
+                class="course-button"
+            >
+                Continue Learning →
+            </button>
 
         </div>
 
 
-        <button
-            id="continueLearningButton"
-            class="course-button"
+        <div class="continue-progress">
+
+            <div class="continue-progress-info">
+
+                <span>
+                    Course Progress
+                </span>
+
+                <strong id="continueProgress">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    id="continueProgressFill"
+                    class="progress-fill"
+                    style="width: 0%"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         PAYMENT STATUS
+    ========================================== -->
+
+    <section class="payment-status-section">
+
+        <div class="payment-status-heading">
+
+            <div class="payment-status-icon">
+                <i data-lucide="credit-card"></i>
+            </div>
+
+            <div>
+
+                <h2>Payment Status</h2>
+
+                <p>
+                    Your course payments
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="customerPaymentList"
+            class="payment-status-card"
         >
-            Continue Learning →
-        </button>
 
-    </div>
-
-
-    <div class="continue-progress">
-
-        <div class="continue-progress-info">
-
-            <span>
-                Course Progress
-            </span>
-
-            <strong id="continueProgress">
-                0%
-            </strong>
+            Loading payment details...
 
         </div>
 
+    </section>
 
-        <div class="progress-bar">
-
-            <div
-                id="continueProgressFill"
-                class="progress-fill"
-                style="width: 0%"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 
-            <!-- Courses -->
-            <section class="customer-courses">
+<!-- ==========================================
+     COURSES
+========================================== -->
 
-                <h2>My Courses</h2>
+<section class="customer-courses">
 
-                <div class="course-grid" id="courseGrid">
+    <h2>Available courses</h2>
+
+    <div class="course-grid" id="courseGrid">
 
     <!-- BASIC -->
 
@@ -429,30 +797,36 @@ async function loadCustomerCourses() {
 
                 if (!course) {
 
-                    button.textContent =
-                        "View Course →";
+    button.textContent =
+        "View Course →";
 
+    button.classList.remove(
+        "assigned-course-button"
+    );
 
-                    button.onclick =
-                        function () {
+    button.onclick =
+        function () {
 
-                            window.location.href =
-                                `course-overview.html?course=${key}`;
+            window.location.href =
+                `course-overview.html?course=${key}`;
 
-                        };
+        };
 
+    return;
 
-                    return;
-
-                }
+}
 
 
                 // ==========================================
-                // ASSIGNED
-                // ==========================================
+// ASSIGNED
+// ==========================================
 
-                const progress =
-                    Number(course.progress) || 0;
+button.classList.add(
+    "assigned-course-button"
+);
+
+const progress =
+    Number(course.progress) || 0;
 
 
                 totalProgress +=
@@ -774,6 +1148,46 @@ let totalCompletedLessons = 0;
 
 }
 
+/* =========================================
+   COLLAPSIBLE SIDEBAR
+========================================= */
+
+const sidebar = document.querySelector(".customer-sidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+
+if (sidebar && sidebarToggle) {
+
+    // Remember sidebar state
+    const sidebarCollapsed =
+        localStorage.getItem("sidebarCollapsed") === "true";
+
+    if (sidebarCollapsed) {
+        sidebar.classList.add("collapsed");
+        sidebarToggle.textContent = "▶";
+    } else {
+        sidebarToggle.textContent = "◀";
+    }
+
+
+    // Toggle sidebar
+    sidebarToggle.addEventListener("click", () => {
+
+        sidebar.classList.toggle("collapsed");
+
+        const isCollapsed =
+            sidebar.classList.contains("collapsed");
+
+        localStorage.setItem(
+            "sidebarCollapsed",
+            isCollapsed
+        );
+
+        sidebarToggle.textContent =
+            isCollapsed ? "▶" : "◀";
+    });
+
+}
+
 
 
 // ==========================================
@@ -781,8 +1195,222 @@ let totalCompletedLessons = 0;
 // ==========================================
 
 loadCustomerCourses();
+loadCustomerPayments();
 
+// ==========================================
+// INITIALIZE SIDEBAR ICONS
+// ==========================================
+
+lucide.createIcons();
+
+// ==========================================
+// LOAD CUSTOMER PAYMENT DETAILS
+// ==========================================
+
+async function loadCustomerPayments() {
+
+    const paymentList =
+        document.getElementById(
+            "customerPaymentList"
+        );
+
+    if (!paymentList) {
+        return;
+    }
+
+    paymentList.innerHTML =
+        "Loading payment details...";
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/customer/payments"
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            paymentList.innerHTML =
+                data.message ||
+                "Could not load payment details.";
+
+            return;
+
+        }
+
+        const payments =
+            data.payments;
+
+        if (
+            !payments ||
+            payments.length === 0
+        ) {
+
+            paymentList.innerHTML = `
+                <p style="opacity: 0.6;">
+                    No course payment information
+                    is available yet.
+                </p>
+            `;
+
+            return;
+
+        }
+
+        paymentList.innerHTML = "";
+
+        payments.forEach(payment => {
+
+            const course =
+                document.createElement("div");
+
+            course.className =
+                "payment-status-course";
+
+            const totalFee =
+    Number(payment.total_fee) || 0;
+
+const amountPaid =
+    Number(payment.amount_paid) || 0;
+
+const remaining =
+    Math.max(totalFee - amountPaid, 0);
+
+let percentage = 0;
+
+if (totalFee > 0) {
+
+    percentage =
+        Math.min(
+            Math.round(
+                (amountPaid / totalFee) * 100
+            ),
+            100
+        );
+
+}
+
+console.log(
+    "PAYMENT DEBUG:",
+    {
+        course: payment.course_title,
+        totalFee: totalFee,
+        amountPaid: amountPaid,
+        remaining: remaining,
+        percentage: percentage
+    }
+);
+
+            course.innerHTML = `
+
+                <div class="payment-status-course-title">
+                    ${payment.course_title}
+                </div>
+
+                <div class="payment-info-grid">
+
+                    <div class="payment-info-item">
+
+                        <span class="payment-info-label">
+                            Total Course Fee
+                        </span>
+
+                        <span class="payment-info-value">
+                            LKR ${formatPaymentCurrency(totalFee)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="payment-info-item">
+
+                        <span class="payment-info-label">
+                            Amount Paid
+                        </span>
+
+                        <span class="payment-info-value">
+                            LKR ${formatPaymentCurrency(amountPaid)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="payment-info-item">
+
+                        <span class="payment-info-label">
+                            Remaining Balance
+                        </span>
+
+                        <span class="payment-info-value payment-remaining-value">
+                            LKR ${formatPaymentCurrency(remaining)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="customer-payment-progress">
+
+                    <div class="customer-payment-progress-bar">
+
+                        <div
+                            class="customer-payment-progress-fill"
+                            style="width: ${percentage}%;">
+                        </div>
+
+                    </div>
+
+                    <div class="customer-payment-progress-text">
+                        ${percentage}% paid
+                    </div>
+
+                </div>
+
+                ${
+                    percentage >= 100
+                        ? `
+                            <div class="payment-complete">
+                                ✓ Course fully paid
+                            </div>
+                          `
+                        : ""
+                }
+
+            `;
+
+            paymentList.appendChild(course);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        paymentList.innerHTML =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+
+// ==========================================
+// FORMAT PAYMENT CURRENCY
+// ==========================================
+
+function formatPaymentCurrency(amount) {
+
+    return Number(amount || 0)
+        .toLocaleString("en-LK");
+
+}
 </script>
+
+<script src="theme.js"></script>
 
 </body>
 </html>
