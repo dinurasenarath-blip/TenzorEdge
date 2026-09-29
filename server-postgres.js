@@ -286,10 +286,17 @@ app.post("/api/login", (req, res) => {
 
 
             const passwordCorrect =
-                await bcrypt.compare(
-                    password,
-                    user.password
-                );
+    await bcrypt.compare(
+        password,
+        user.password
+    );
+
+console.log("LOGIN DEBUG:", {
+    username: user.username,
+    hashLength: user.password?.length,
+    passwordLength: password?.length,
+    passwordCorrect
+});
 
 
             if (!passwordCorrect) {
