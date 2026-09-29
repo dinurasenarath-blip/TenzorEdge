@@ -220,6 +220,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/login", (req, res) => {
+    console.log("🔥 POSTGRES LOGIN ROUTE HIT");
 
     const {
         username,
