@@ -284,12 +284,20 @@ app.post("/api/login", (req, res) => {
 
             }
 
+            console.log("=== LOGIN DEBUG START ===");
+console.log("Username:", user.username);
+console.log("Hash length:", user.password?.length);
+console.log("Password length:", password?.length);
+
 
             const passwordCorrect =
     await bcrypt.compare(
         password,
         user.password
     );
+
+    console.log("Password correct:", passwordCorrect);
+console.log("=== LOGIN DEBUG END ===");
 
 console.log("LOGIN DEBUG:", {
     username: user.username,
