@@ -454,9 +454,10 @@ app.post("/api/login", (req, res) => {
     }
 
 
-    db.get(
+    console.log("LOGIN ATTEMPT:", username);
 
-        "SELECT * FROM users WHERE username = ?",
+db.get(
+    "SELECT * FROM users WHERE username = ?",
 
         [username],
 
@@ -478,7 +479,9 @@ app.post("/api/login", (req, res) => {
 
             if (!user) {
 
-                return res.status(401).json({
+    console.log("LOGIN USER NOT FOUND:", username);
+
+    return res.status(401).json({
 
                     message:
                         "Invalid username or password."
@@ -509,7 +512,9 @@ app.post("/api/login", (req, res) => {
 
             if (!passwordCorrect) {
 
-                return res.status(401).json({
+    console.log("LOGIN PASSWORD INCORRECT:", username);
+
+    return res.status(401).json({
 
                     message:
                         "Invalid username or password."
