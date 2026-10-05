@@ -449,6 +449,32 @@ app.get("/api/debug-db", (req, res) => {
     );
 });
 
+app.get("/api/debug-db-info", (req, res) => {
+    const url = process.env.DATABASE_URL;
+
+    if (!url) {
+        return res.json({
+            databaseUrlSet: false
+        });
+    }
+
+    try {
+        const parsed = new URL(url);
+
+        res.json({
+            databaseUrlSet: true,
+            host: parsed.hostname,
+            database: parsed.pathname.replace("/", ""),
+            ssl: parsed.searchParams.get("sslmode")
+        });
+    } catch (err) {
+        res.status(500).json({
+            databaseUrlSet: true,
+            error: "DATABASE_URL could not be parsed"
+        });
+    }
+});
+
 // ==========================================
 // LOGIN
 // ==========================================
