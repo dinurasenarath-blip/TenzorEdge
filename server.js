@@ -430,6 +430,25 @@ app.use(
 );
 
 
+app.get("/api/debug-db", (req, res) => {
+    db.all(
+        "SELECT id, username, role, active FROM users ORDER BY id",
+        [],
+        (err, rows) => {
+            if (err) {
+                console.error("DEBUG DB ERROR:", err);
+                return res.status(500).json({
+                    error: "Database query failed"
+                });
+            }
+
+            console.log("DEBUG DB USERS:", rows);
+
+            res.json(rows);
+        }
+    );
+});
+
 // ==========================================
 // LOGIN
 // ==========================================
