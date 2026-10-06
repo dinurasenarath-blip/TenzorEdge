@@ -4288,3 +4288,5 @@ app.listen(PORT, "0.0.0.0", () => {
         `Website running on port ${PORT}`
     );
 });
+
+module.exports = db;
