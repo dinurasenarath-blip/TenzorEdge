@@ -6309,3 +6309,1272 @@ html.light-mode .customer-sidebar nav a:hover .nav-icon svg {
 html.light-mode .customer-sidebar nav a.active .nav-icon svg {
     stroke: #6c63ff !important;
 }
+
+/* =========================================================
+   TENZOREDGE VIBRANT PREMIUM DARK THEME
+   ========================================================= */
+
+:root {
+    --te-gold: #e0b84f;
+    --te-gold-bright: #f2cf68;
+
+    --te-blue: #2563eb;
+    --te-blue-light: #3b82f6;
+
+    --te-violet: #7c3aed;
+    --te-cyan: #06b6d4;
+
+    --te-bg: #070910;
+    --te-panel: #111522;
+    --te-panel-light: #151a2a;
+
+    --te-border: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   MAIN DARK BACKGROUND
+   ========================================================= */
+
+html:not(.light-mode),
+html:not(.light-mode) body,
+body.customer-page {
+    background:
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(37, 99, 235, 0.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 92% 8%,
+            rgba(124, 58, 237, 0.16),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 82% 82%,
+            rgba(6, 182, 212, 0.11),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 18% 88%,
+            rgba(224, 184, 79, 0.07),
+            transparent 25%
+        ),
+        #070910;
+
+    background-attachment: fixed;
+}
+
+
+/* =========================================================
+   CUSTOMER DASHBOARD
+   ========================================================= */
+
+.customer-dashboard {
+    background:
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(37, 99, 235, 0.14),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(124, 58, 237, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 75% 90%,
+            rgba(6, 182, 212, 0.08),
+            transparent 30%
+        ),
+        #070910;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.customer-sidebar {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(17, 21, 34, 0.98),
+            rgba(10, 13, 22, 0.98)
+        );
+
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        10px 0 40px rgba(0, 0, 0, 0.18);
+}
+
+
+/* Sidebar links */
+
+.customer-sidebar nav a {
+    color: #9298aa;
+
+    border: 1px solid transparent;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Sidebar hover */
+
+.customer-sidebar nav a:hover {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.12),
+            rgba(124, 58, 237, 0.10)
+        );
+
+    color: white;
+
+    border-color:
+        rgba(59, 130, 246, 0.16);
+
+    transform: translateX(2px);
+}
+
+
+/* Sidebar active */
+
+.customer-sidebar nav a.active {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.22),
+            rgba(124, 58, 237, 0.17)
+        );
+
+    color: white;
+
+    border-color:
+        rgba(224, 184, 79, 0.25);
+
+    box-shadow:
+        inset 3px 0 0 var(--te-gold),
+        0 6px 20px rgba(37, 99, 235, 0.10);
+}
+
+
+/* Active icon */
+
+.customer-sidebar nav a.active .nav-icon {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.18),
+            rgba(37, 99, 235, 0.18)
+        );
+
+    box-shadow:
+        0 0 15px rgba(224, 184, 79, 0.08);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.customer-header {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(21, 26, 42, 0.96),
+            rgba(15, 19, 31, 0.96)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        0 0 50px rgba(37, 99, 235, 0.05);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Gold accent line */
+
+.customer-header::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--te-gold),
+            var(--te-blue-light),
+            transparent
+        );
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   LEARNING / CONTINUE CARDS
+   ========================================================= */
+
+.dashboard-learning,
+.continue-learning {
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.18),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(124, 58, 237, 0.13),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(18, 23, 38, 0.98),
+            rgba(13, 16, 27, 0.98)
+        );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35),
+        0 0 45px rgba(37, 99, 235, 0.06);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Decorative glow */
+
+.dashboard-learning::after,
+.continue-learning::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -90px;
+    top: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(224, 184, 79, 0.10),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Learning label */
+
+.learning-label {
+    color: var(--te-gold);
+}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.learning-stat,
+.progress-stat {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(21, 27, 44, 0.96),
+            rgba(14, 18, 29, 0.98)
+        );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.28);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.learning-stat:hover,
+.progress-stat:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(224, 184, 79, 0.25);
+
+    box-shadow:
+        0 16px 35px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(37, 99, 235, 0.07);
+}
+
+
+.learning-stat-label,
+.progress-stat-label {
+    color: #aab1c2;
+}
+
+
+.learning-stat strong,
+.progress-stat strong {
+    color: white;
+}
+
+
+/* =========================================================
+   COURSE CARDS
+   ========================================================= */
+
+.course-card,
+.progress-course-card,
+.my-course-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19, 24, 39, 0.96),
+            rgba(12, 15, 25, 0.98)
+        );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.28);
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* Subtle coloured top glow */
+
+.course-card::before,
+.progress-course-card::before,
+.my-course-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--te-blue),
+            var(--te-violet),
+            var(--te-gold)
+        );
+
+    opacity: 0.45;
+
+    transition: opacity 0.25s ease;
+}
+
+
+.course-card:hover,
+.progress-course-card:hover,
+.my-course-card:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(59, 130, 246, 0.28);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.38),
+        0 0 30px rgba(37, 99, 235, 0.08);
+}
+
+
+.course-card:hover::before,
+.progress-course-card:hover::before,
+.my-course-card:hover::before {
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   COURSE IMAGE / PLACEHOLDER
+   ========================================================= */
+
+.course-image,
+.my-course-image {
+    background:
+        radial-gradient(
+            circle at 30% 20%,
+            rgba(37, 99, 235, 0.20),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(124, 58, 237, 0.16),
+            transparent 45%
+        ),
+        #0d111d;
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.course-image-placeholder,
+.my-course-image-placeholder {
+    color: var(--te-gold);
+
+    text-shadow:
+        0 0 20px rgba(224, 184, 79, 0.20);
+}
+
+
+/* =========================================================
+   COURSE TOPICS
+   ========================================================= */
+
+.course-topics span {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.10),
+            rgba(124, 58, 237, 0.08)
+        );
+
+    border-color:
+        rgba(59, 130, 246, 0.15);
+
+    color: #b5bdce;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.course-topics span:hover {
+    background:
+        rgba(224, 184, 79, 0.10);
+
+    border-color:
+        rgba(224, 184, 79, 0.25);
+
+    color: var(--te-gold-bright);
+}
+
+
+/* =========================================================
+   PROGRESS BARS
+   ========================================================= */
+
+.progress-bar,
+.dashboard-progress-bar,
+.progress-track,
+.continue-progress .progress-bar {
+    background:
+        linear-gradient(
+            90deg,
+            #080b12,
+            #0d1220
+        );
+
+    border-color:
+        rgba(255, 255, 255, 0.09);
+}
+
+
+.progress-fill,
+.dashboard-progress-fill,
+.progress-track .progress-fill,
+.continue-progress .progress-fill {
+    background:
+        linear-gradient(
+            90deg,
+            var(--te-blue),
+            var(--te-violet),
+            var(--te-gold)
+        );
+
+    box-shadow:
+        0 0 16px rgba(37, 99, 235, 0.40),
+        0 0 24px rgba(224, 184, 79, 0.15);
+}
+
+
+/* =========================================================
+   MAIN BUTTONS
+   ========================================================= */
+
+.course-button,
+.continue-course-button,
+.continue-learning-button,
+.lesson-button:not(.secondary) {
+    background:
+        linear-gradient(
+            135deg,
+            #d5aa3f,
+            var(--te-gold),
+            #f0cc65
+        );
+
+    color: #111217;
+
+    box-shadow:
+        0 8px 24px rgba(224, 184, 79, 0.18);
+
+    font-weight: 700;
+}
+
+
+.course-button:hover,
+.continue-course-button:hover,
+.continue-learning-button:hover,
+.lesson-button:not(.secondary):hover {
+    background:
+        linear-gradient(
+            135deg,
+            #e3b84d,
+            #f3d16d,
+            #ffffff
+        );
+
+    color: #0b0c10;
+
+    box-shadow:
+        0 12px 30px rgba(224, 184, 79, 0.30),
+        0 0 25px rgba(224, 184, 79, 0.10);
+}
+
+
+/* =========================================================
+   ASSIGNED COURSE BUTTON
+   ========================================================= */
+
+.course-button.assigned-course-button {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.12),
+            rgba(37, 99, 235, 0.10)
+        );
+
+    color: var(--te-gold-bright);
+
+    border-color:
+        rgba(224, 184, 79, 0.30);
+
+    box-shadow:
+        0 5px 20px rgba(224, 184, 79, 0.07);
+}
+
+
+.course-button.assigned-course-button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.22),
+            rgba(37, 99, 235, 0.16)
+        );
+
+    border-color:
+        rgba(224, 184, 79, 0.50);
+
+    color: #f5d675;
+}
+
+
+/* =========================================================
+   LESSON CARDS
+   ========================================================= */
+
+.customer-lesson,
+.lesson-list-item {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(17, 22, 35, 0.96),
+            rgba(11, 15, 25, 0.98)
+        );
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.customer-lesson:hover,
+.lesson-list-item:hover {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25, 34, 55, 0.98),
+            rgba(15, 20, 33, 0.98)
+        );
+
+    border-color:
+        rgba(59, 130, 246, 0.25);
+}
+
+
+/* Lesson number */
+
+.lesson-number {
+    background:
+        linear-gradient(
+            135deg,
+            var(--te-blue),
+            var(--te-violet)
+        );
+
+    box-shadow:
+        0 6px 18px rgba(37, 99, 235, 0.22);
+}
+
+
+/* Watch lesson */
+
+.lesson-button {
+    background:
+        linear-gradient(
+            135deg,
+            var(--te-gold),
+            #f1cf6c
+        );
+
+    color: #101116;
+
+    box-shadow:
+        0 6px 18px rgba(224, 184, 79, 0.14);
+}
+
+
+/* =========================================================
+   COURSE / PROGRESS SECTIONS
+   ========================================================= */
+
+.course-page-header,
+.course-lessons,
+.progress-courses,
+.my-courses-section,
+.my-courses-summary {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 23, 38, 0.96),
+            rgba(12, 16, 27, 0.98)
+        );
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================================
+   SMALL GOLD DETAILS
+   ========================================================= */
+
+.course-label,
+.learning-label {
+    color: var(--te-gold);
+}
+
+
+.progress-percentage strong {
+    color: var(--te-gold-bright);
+}
+
+
+.review-stars {
+    color: var(--te-gold);
+}
+
+
+/* =========================================================
+   THEME TOGGLE
+   ========================================================= */
+
+.theme-toggle {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.12),
+            rgba(124, 58, 237, 0.10)
+        );
+
+    border-color:
+        rgba(59, 130, 246, 0.18);
+}
+
+
+.theme-toggle:hover {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.20),
+            rgba(224, 184, 79, 0.12)
+        );
+
+    border-color:
+        rgba(224, 184, 79, 0.30);
+}
+
+
+/* =========================================================
+   LESSON VIDEO
+   ========================================================= */
+
+.lesson-video-container {
+    background:
+        linear-gradient(
+            145deg,
+            #0e1420,
+            #080b12
+        );
+
+    border-color:
+        rgba(59, 130, 246, 0.12);
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.38),
+        0 0 35px rgba(37, 99, 235, 0.05);
+}
+
+
+/* =========================================================
+   SUBTLE GOLD SECTION DIVIDERS
+   ========================================================= */
+
+.dashboard-course-progress,
+.continue-progress {
+    border-top-color:
+        rgba(224, 184, 79, 0.12);
+}
+
+
+/* =========================================================
+   LIGHT MODE — KEEP IT CLEAN
+   ========================================================= */
+
+html.light-mode,
+html.light-mode body,
+html.light-mode .customer-dashboard,
+html.light-mode .customer-main {
+    background: #f4f5f8 !important;
+}
+
+
+/* Don't carry dark gradients into light mode */
+
+html.light-mode .customer-header,
+html.light-mode .dashboard-learning,
+html.light-mode .continue-learning,
+html.light-mode .course-card,
+html.light-mode .progress-stat,
+html.light-mode .learning-stat,
+html.light-mode .progress-course-card,
+html.light-mode .my-course-card,
+html.light-mode .course-page-header,
+html.light-mode .course-lessons,
+html.light-mode .progress-courses,
+html.light-mode .my-courses-section,
+html.light-mode .my-courses-summary {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fafaff
+        ) !important;
+}
+
+
+/* Light mode gold buttons remain gold */
+
+html.light-mode .course-button,
+html.light-mode .continue-course-button,
+html.light-mode .continue-learning-button,
+html.light-mode .lesson-button:not(.secondary) {
+    background:
+        linear-gradient(
+            135deg,
+            #d6aa3d,
+            #e0b84f,
+            #f1cc67
+        ) !important;
+
+    color: #17171c !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .customer-dashboard {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(37, 99, 235, 0.14),
+                transparent 35%
+            ),
+            #070910;
+    }
+
+}
+
+/* =========================================
+   TENZOREDGE — PREMIUM NAVY / PURPLE THEME
+   ========================================= */
+
+html {
+    background: #0b0a18 !important;
+}
+
+body,
+.customer-dashboard,
+.customer-main {
+    background:
+        radial-gradient(
+            ellipse 70% 60% at 10% 5%,
+            rgba(55, 35, 110, 0.20),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 60% 55% at 95% 10%,
+            rgba(35, 55, 120, 0.16),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 60% 50% at 90% 95%,
+            rgba(25, 75, 100, 0.12),
+            transparent 70%
+        ),
+        #0b0a18 !important;
+
+    background-attachment: fixed;
+}
+
+
+/* =========================================
+   DASHBOARD PANELS
+   ========================================= */
+
+.dashboard-learning,
+.continue-learning {
+    background:
+        radial-gradient(
+            circle at 15% 50%,
+            rgba(76, 36, 117, 0.45),
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(37, 70, 140, 0.28),
+            transparent 55%
+        ),
+        linear-gradient(
+            135deg,
+            #21133d,
+            #28164b 45%,
+            #18234b
+        ) !important;
+
+    border: 1px solid rgba(224, 184, 79, 0.12);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================
+   DARK COLOURED CARDS
+   ========================================= */
+
+.course-card,
+.progress-course-card,
+.my-course-card,
+.learning-stat,
+.progress-stat {
+    background:
+        linear-gradient(
+            145deg,
+            #1b1430,
+            #131126
+        ) !important;
+
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================
+   COURSE CARD HOVER
+   ========================================= */
+
+.course-card:hover,
+.progress-course-card:hover,
+.my-course-card:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #21183a,
+            #17142c
+        ) !important;
+
+    border-color: rgba(224, 184, 79, 0.22);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.38),
+        0 0 25px rgba(76, 36, 117, 0.12);
+}
+
+
+/* =========================================
+   GOLD PRIMARY BUTTONS
+   ========================================= */
+
+.course-button,
+.continue-course-button,
+.continue-learning-button,
+.lesson-button:not(.secondary) {
+    background:
+        linear-gradient(
+            135deg,
+            #d5aa3f,
+            #e0b84f,
+            #f0cc65
+        ) !important;
+
+    color: #111217 !important;
+
+    box-shadow:
+        0 8px 24px rgba(224, 184, 79, 0.18);
+}
+
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+.customer-sidebar {
+    background:
+        linear-gradient(
+            180deg,
+            #100b20,
+            #0d0a1b 50%,
+            #090815
+        ) !important;
+
+    border-right-color: rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================
+   GOLD ACTIVE SIDEBAR
+   ========================================= */
+
+.customer-sidebar nav a.active {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.18),
+            rgba(224, 184, 79, 0.07)
+        );
+
+    border-color: rgba(224, 184, 79, 0.55);
+}
+
+
+/* =========================================
+   LIGHT MODE
+   ========================================= */
+
+html.light-mode,
+html.light-mode body,
+html.light-mode .customer-dashboard,
+html.light-mode .customer-main {
+    background: #f4f5f8 !important;
+}
+
+/* =========================================
+   TENZOREDGE — PREMIUM DASHBOARD CARDS
+   ========================================= */
+
+.dashboard-learning,
+.continue-learning {
+    background:
+        radial-gradient(
+            circle at 12% 50%,
+            rgba(76, 36, 117, 0.48),
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at 88% 15%,
+            rgba(37, 70, 140, 0.30),
+            transparent 55%
+        ),
+        linear-gradient(
+            135deg,
+            #21133d,
+            #28164b 45%,
+            #18234b
+        ) !important;
+
+    border: 1px solid rgba(224, 184, 79, 0.14);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================
+   COURSE / STAT CARDS
+   ========================================= */
+
+.course-card,
+.progress-course-card,
+.my-course-card,
+.learning-stat,
+.progress-stat {
+    background:
+        linear-gradient(
+            145deg,
+            #1b1430,
+            #131126
+        ) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================
+   CARD HOVER
+   ========================================= */
+
+.course-card:hover,
+.progress-course-card:hover,
+.my-course-card:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #241943,
+            #17142d
+        ) !important;
+
+    border-color:
+        rgba(224, 184, 79, 0.22);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(76, 36, 117, 0.12);
+}
+
+
+/* =========================================
+   GOLD ACCENTS
+   ========================================= */
+
+.course-card .course-icon,
+.progress-course-card .course-icon,
+.my-course-card .course-icon {
+    color: #e0b84f;
+}
+
+
+/* =========================================
+   PREMIUM GOLD BUTTONS
+   ========================================= */
+
+.course-button,
+.continue-course-button,
+.continue-learning-button,
+.lesson-button:not(.secondary) {
+    background:
+        linear-gradient(
+            135deg,
+            #d5aa3f,
+            #e0b84f,
+            #f0cc65
+        ) !important;
+
+    color: #111217 !important;
+
+    border: none;
+
+    box-shadow:
+        0 8px 24px rgba(224, 184, 79, 0.18);
+}
+
+.course-button:hover,
+.continue-course-button:hover,
+.continue-learning-button:hover,
+.lesson-button:not(.secondary):hover {
+    box-shadow:
+        0 10px 28px rgba(224, 184, 79, 0.28);
+}
+
+/* =========================================
+   TENZOREDGE — PREMIUM SIDEBAR
+   ========================================= */
+
+.customer-sidebar {
+    background:
+        linear-gradient(
+            180deg,
+            #100b20 0%,
+            #0d0a1b 55%,
+            #090815 100%
+        ) !important;
+
+    border-right:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    box-shadow:
+        8px 0 30px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================
+   SIDEBAR LINKS
+   ========================================= */
+
+.customer-sidebar nav a {
+    color: rgba(255, 255, 255, 0.68);
+
+    border: 1px solid transparent;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================
+   SIDEBAR HOVER
+   ========================================= */
+
+.customer-sidebar nav a:hover {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(76, 36, 117, 0.24),
+            rgba(37, 70, 140, 0.12)
+        );
+
+    border-color:
+        rgba(255, 255, 255, 0.07);
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================
+   ACTIVE SIDEBAR ITEM
+   ========================================= */
+
+.customer-sidebar nav a.active {
+    color: #e0b84f !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 184, 79, 0.17),
+            rgba(224, 184, 79, 0.055)
+        ) !important;
+
+    border:
+        1px solid rgba(224, 184, 79, 0.38);
+
+    box-shadow:
+        inset 3px 0 0 #e0b84f,
+        0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+
+/* =========================================
+   ACTIVE ICON
+   ========================================= */
+
+.customer-sidebar nav a.active svg,
+.customer-sidebar nav a.active i {
+    color: #e0b84f !important;
+}
+
+
+/* =========================================
+   SIDEBAR ICONS
+   ========================================= */
+
+.customer-sidebar nav a svg,
+.customer-sidebar nav a i {
+    color: rgba(255, 255, 255, 0.55);
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.customer-sidebar nav a:hover svg,
+.customer-sidebar nav a:hover i {
+    color: #ffffff;
+}
+
+.customer-sidebar nav a:hover svg,
+.customer-sidebar nav a:hover i {
+    transform: scale(1.05);
+}
+
+
+/* =========================================
+   SIDEBAR LOGO AREA
+   ========================================= */
+
+.customer-sidebar .sidebar-logo,
+.customer-sidebar .logo {
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
+}
