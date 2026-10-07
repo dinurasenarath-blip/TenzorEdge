@@ -117,6 +117,7 @@ const db = {
 
             const result = await pool.query(pgSql, params);
 
+
             if (callback) {
 
                 callback.call(
@@ -3119,12 +3120,9 @@ app.post(
 
                                 db.get(
                                     `
-                                    SELECT
-                                        COUNT(*) AS totalLessons
-
-                                    FROM lessons
-
-                                    WHERE course_id = ?
+                                   SELECT COUNT(*) AS total_lessons
+FROM lessons
+WHERE course_id = ?
                                     `,
                                     [lesson.course_id],
 
@@ -3146,18 +3144,14 @@ app.post(
 
                                         db.get(
                                             `
-                                            SELECT
-                                                COUNT(*) AS completedLessons
-
-                                            FROM user_lesson_progress
-
-                                            JOIN lessons
-                                                ON user_lesson_progress.lesson_id = lessons.id
-
-                                            WHERE
-                                                user_lesson_progress.user_id = ?
-                                                AND lessons.course_id = ?
-                                                AND user_lesson_progress.completed = 1
+                                           SELECT COUNT(*) AS completed_lessons
+FROM user_lesson_progress
+JOIN lessons
+    ON user_lesson_progress.lesson_id = lessons.id
+WHERE
+    user_lesson_progress.user_id = ?
+    AND lessons.course_id = ?
+    AND user_lesson_progress.completed = 1
                                             `,
                                             [
                                                 userId,
@@ -3178,11 +3172,12 @@ app.post(
                                                 }
 
 
-                                                const totalLessons =
-                                                    totals.totalLessons;
+                                               const totalLessons =
+    Number(totals.total_lessons);
 
                                                 const completedLessons =
-                                                    completed.completedLessons;
+    Number(completed.completed_lessons);
+                                               
 
 
                                                 let progress = 0;
