@@ -1925,11 +1925,15 @@ app.get("/api/admin/courses", (req, res) => {
     db.all(
         `
         SELECT
-            id,
-            title,
-            description
-        FROM courses
-        ORDER BY title ASC
+            c.id,
+            c.title,
+            c.description,
+            cd.discount_type,
+            cd.discount_value
+        FROM courses c
+        LEFT JOIN course_discounts cd
+            ON cd.course_id = c.id
+        ORDER BY c.title ASC
         `,
         [],
         (err, courses) => {
@@ -1956,6 +1960,111 @@ app.get("/api/admin/courses", (req, res) => {
 
 });
 
+
+
+// ==========================================
+// SAVE COURSE DISCOUNT - ADMIN ONLY
+// ==========================================
+
+app.post("/api/admin/courses/:id/discount", (req, res) => {
+
+    if (!req.session.userId || req.session.role !== "admin") {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const courseId = Number(req.params.id);
+    const discountType = req.body.discount_type;
+    const discountValue = Number(req.body.discount_value);
+
+    if (!Number.isInteger(courseId) || courseId < 1) {
+        return res.status(400).json({ message: "Invalid course." });
+    }
+
+    if (!["percentage", "fixed"].includes(discountType)) {
+        return res.status(400).json({
+            message: "Choose a percentage or fixed LKR discount."
+        });
+    }
+
+    if (!Number.isFinite(discountValue) || discountValue <= 0) {
+        return res.status(400).json({
+            message: "Enter a discount value greater than zero."
+        });
+    }
+
+    if (discountType === "percentage" && discountValue > 100) {
+        return res.status(400).json({
+            message: "Percentage discounts cannot exceed 100%."
+        });
+    }
+
+    db.run(
+        `
+        INSERT INTO course_discounts
+            (course_id, discount_type, discount_value, updated_at)
+        VALUES (?, ?, ?, NOW())
+        ON CONFLICT (course_id)
+        DO UPDATE SET
+            discount_type = EXCLUDED.discount_type,
+            discount_value = EXCLUDED.discount_value,
+            updated_at = NOW()
+        `,
+        [courseId, discountType, discountValue],
+        (err) => {
+            if (err) {
+                console.error("Save course discount error:", err);
+                return res.status(500).json({
+                    message: "Could not save this discount."
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "Course discount saved."
+            });
+        }
+    );
+});
+
+
+// ==========================================
+// REMOVE COURSE DISCOUNT - ADMIN ONLY
+// ==========================================
+
+app.delete("/api/admin/courses/:id/discount", (req, res) => {
+
+    if (!req.session.userId || req.session.role !== "admin") {
+        return res.status(403).json({
+            message: "Admin access required."
+        });
+    }
+
+    const courseId = Number(req.params.id);
+
+    if (!Number.isInteger(courseId) || courseId < 1) {
+        return res.status(400).json({ message: "Invalid course." });
+    }
+
+    db.run(
+        "DELETE FROM course_discounts WHERE course_id = ?",
+        [courseId],
+        (err) => {
+            if (err) {
+                console.error("Remove course discount error:", err);
+                return res.status(500).json({
+                    message: "Could not remove this discount."
+                });
+            }
+
+            res.json({
+                success: true,
+                message: "Course discount removed."
+            });
+        }
+    );
+});
 
 
 // ==========================================
@@ -3283,8 +3392,10 @@ app.get("/api/customer/payments", (req, res) => {
             c.id AS course_id,
             c.title AS course_title,
 
-            COALESCE(cp.total_fee, 0) AS total_fee,
-            COALESCE(cp.amount_paid, 0) AS amount_paid
+            COALESCE(cp.total_fee, 0) AS original_fee,
+            COALESCE(cp.amount_paid, 0) AS amount_paid,
+            cd.discount_type,
+            cd.discount_value
 
         FROM user_courses uc
 
@@ -3294,6 +3405,9 @@ app.get("/api/customer/payments", (req, res) => {
         LEFT JOIN course_payments cp
             ON cp.user_id = uc.user_id
             AND cp.course_id = uc.course_id
+
+        LEFT JOIN course_discounts cd
+            ON cd.course_id = c.id
 
         WHERE uc.user_id = ?
 
@@ -3318,50 +3432,51 @@ app.get("/api/customer/payments", (req, res) => {
 
             const payments = rows.map(payment => {
 
-                const totalFee =
-                    Number(payment.total_fee) || 0;
+                const originalFee =
+                    Number(payment.original_fee) || 0;
 
                 const amountPaid =
                     Number(payment.amount_paid) || 0;
 
-                const remaining =
-                    Math.max(
-                        totalFee - amountPaid,
-                        0
-                    );
+                const discountValue =
+                    Number(payment.discount_value) || 0;
 
-                let percentage = 0;
+                const hasDiscount =
+                    Boolean(payment.discount_type) &&
+                    discountValue > 0 &&
+                    originalFee > 0;
 
-                if (totalFee > 0) {
+                let discountAmount = 0;
 
-                    percentage =
-                        Math.min(
-                            Math.round(
-                                (amountPaid / totalFee) * 100
-                            ),
-                            100
-                        );
-
+                if (hasDiscount) {
+                    discountAmount = payment.discount_type === "percentage"
+                        ? originalFee * (discountValue / 100)
+                        : Math.min(discountValue, originalFee);
                 }
 
+                const totalFee =
+                    Math.max(originalFee - discountAmount, 0);
+
+                const remaining =
+                    Math.max(totalFee - amountPaid, 0);
+
+                const percentage =
+                    totalFee > 0
+                        ? Math.min(Math.round((amountPaid / totalFee) * 100), 100)
+                        : (amountPaid > 0 || (hasDiscount && originalFee > 0) ? 100 : 0);
+
                 return {
-                    course_id:
-                        payment.course_id,
-
-                    course_title:
-                        payment.course_title,
-
-                    total_fee:
-                        totalFee,
-
-                    amount_paid:
-                        amountPaid,
-
-                    remaining:
-                        remaining,
-
-                    percentage:
-                        percentage
+                    course_id: payment.course_id,
+                    course_title: payment.course_title,
+                    original_fee: originalFee,
+                    total_fee: totalFee,
+                    amount_paid: amountPaid,
+                    remaining: remaining,
+                    percentage: percentage,
+                    has_discount: hasDiscount,
+                    discount_type: hasDiscount ? payment.discount_type : null,
+                    discount_value: hasDiscount ? discountValue : 0,
+                    discount_amount: discountAmount
                 };
 
             });

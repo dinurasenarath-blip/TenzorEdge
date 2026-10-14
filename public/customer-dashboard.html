@@ -290,7 +290,39 @@
     }
 
 }
-    </style>
+    
+/* ==========================================
+   DISCOUNT PRICE DISPLAY
+========================================== */
+.discount-price-original {
+    display: inline-block;
+    margin-right: 7px;
+    color: #9292a3;
+    font-size: 12px;
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+}
+.discount-price-badge {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(46, 204, 113, 0.13);
+    border: 1px solid rgba(46, 204, 113, 0.28);
+    color: #35c879;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+}
+.discounted-course-price {
+    display: block;
+    margin-top: 5px;
+    color: #e0b84f;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+</style>
 
 </head>
 
@@ -1270,39 +1302,50 @@ async function loadCustomerPayments() {
             course.className =
                 "payment-status-course";
 
+            const originalFee =
+                Number(payment.original_fee ?? payment.total_fee) || 0;
+
             const totalFee =
-    Number(payment.total_fee) || 0;
+                Number(payment.total_fee) || 0;
 
-const amountPaid =
-    Number(payment.amount_paid) || 0;
+            const amountPaid =
+                Number(payment.amount_paid) || 0;
 
-const remaining =
-    Math.max(totalFee - amountPaid, 0);
+            const remaining =
+                Math.max(totalFee - amountPaid, 0);
 
-let percentage = 0;
+            const hasDiscount =
+                Boolean(payment.has_discount) &&
+                originalFee > totalFee;
 
-if (totalFee > 0) {
+            let percentage = 0;
 
-    percentage =
-        Math.min(
-            Math.round(
-                (amountPaid / totalFee) * 100
-            ),
-            100
-        );
+            if (totalFee > 0) {
+                percentage = Math.min(
+                    Math.round((amountPaid / totalFee) * 100),
+                    100
+                );
+            } else if (amountPaid > 0) {
+                percentage = 100;
+            }
 
-}
+            let discountLabel = "";
 
-console.log(
-    "PAYMENT DEBUG:",
-    {
-        course: payment.course_title,
-        totalFee: totalFee,
-        amountPaid: amountPaid,
-        remaining: remaining,
-        percentage: percentage
-    }
-);
+            if (hasDiscount) {
+                discountLabel = payment.discount_type === "percentage"
+                    ? `${Number(payment.discount_value)}% OFF`
+                    : `LKR ${formatPaymentCurrency(payment.discount_amount)} OFF`;
+            }
+
+            console.log("PAYMENT DEBUG:", {
+                course: payment.course_title,
+                originalFee,
+                totalFee,
+                amountPaid,
+                remaining,
+                percentage,
+                hasDiscount
+            });
 
             course.innerHTML = `
 
@@ -1318,9 +1361,23 @@ console.log(
                             Total Course Fee
                         </span>
 
-                        <span class="payment-info-value">
-                            LKR ${formatPaymentCurrency(totalFee)}
-                        </span>
+                        ${hasDiscount ? `
+                            <div>
+                                <span class="discount-price-original">
+                                    LKR ${formatPaymentCurrency(originalFee)}
+                                </span>
+                                <span class="discount-price-badge">
+                                    ${discountLabel}
+                                </span>
+                            </div>
+                            <span class="discounted-course-price">
+                                LKR ${formatPaymentCurrency(totalFee)}
+                            </span>
+                        ` : `
+                            <span class="payment-info-value">
+                                LKR ${formatPaymentCurrency(totalFee)}
+                            </span>
+                        `}
 
                     </div>
 

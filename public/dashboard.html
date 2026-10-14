@@ -1218,7 +1218,83 @@ body {
 
 }
 
-    </style>
+    
+/* ==========================================
+   COURSE DISCOUNT CONTROLS
+========================================== */
+.course-discount-panel {
+    margin-top: 18px;
+    padding: 16px;
+    border: 1px solid rgba(224, 184, 79, 0.22);
+    border-radius: 12px;
+    background: rgba(224, 184, 79, 0.045);
+}
+.course-discount-panel h5 {
+    margin: 0 0 10px;
+    color: #e0b84f;
+    font-size: 14px;
+}
+.course-discount-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+}
+.course-discount-panel label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+.course-discount-panel select,
+.course-discount-panel input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid rgba(150, 150, 180, 0.28);
+    border-radius: 8px;
+    background: rgba(10, 10, 22, 0.8);
+    color: inherit;
+}
+.course-discount-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+.course-discount-save,
+.course-discount-remove {
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.course-discount-save {
+    background: linear-gradient(135deg, #e0b84f, #f5d77c);
+    color: #17130a;
+}
+.course-discount-remove {
+    background: rgba(220, 80, 80, 0.12);
+    border: 1px solid rgba(220, 80, 80, 0.3);
+    color: #e58b8b;
+}
+.course-discount-current {
+    margin: 0 0 12px;
+    font-size: 12px;
+    opacity: 0.85;
+}
+.course-discount-message {
+    min-height: 16px;
+    margin-top: 9px;
+    font-size: 12px;
+}
+@media (max-width: 520px) {
+    .course-discount-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
 
 </head>
 
@@ -2547,6 +2623,16 @@ async function loadCourseManagement() {
                 "course-management-item";
 
 
+            const hasDiscount =
+                Boolean(course.discount_type) &&
+                Number(course.discount_value) > 0;
+
+            const discountDescription = !hasDiscount
+                ? "No discount currently set."
+                : course.discount_type === "percentage"
+                    ? `${Number(course.discount_value)}% discount`
+                    : `LKR ${Number(course.discount_value).toLocaleString("en-LK")} off`;
+
             courseItem.innerHTML = `
 
                 <h4>
@@ -2567,6 +2653,51 @@ async function loadCourseManagement() {
                     Manage Lessons →
                 </button>
 
+                <div class="course-discount-panel">
+                    <h5>Course Discount</h5>
+                    <p class="course-discount-current">
+                        Current offer: ${discountDescription}
+                    </p>
+
+                    <div class="course-discount-fields">
+                        <div>
+                            <label for="discount-type-${course.id}">Discount type</label>
+                            <select id="discount-type-${course.id}">
+                                <option value="percentage" ${course.discount_type === "percentage" ? "selected" : ""}>Percentage (%)</option>
+                                <option value="fixed" ${course.discount_type === "fixed" ? "selected" : ""}>Fixed amount (LKR)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="discount-value-${course.id}">Discount value</label>
+                            <input
+                                id="discount-value-${course.id}"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                max="${course.discount_type === "percentage" ? "100" : ""}"
+                                value="${hasDiscount ? Number(course.discount_value) : ""}"
+                                placeholder="${course.discount_type === "fixed" ? "e.g. 5000" : "e.g. 20"}"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="course-discount-actions">
+                        <button
+                            type="button"
+                            class="course-discount-save"
+                            onclick="saveCourseDiscount(${course.id})"
+                        >Save Discount</button>
+                        ${hasDiscount ? `
+                            <button
+                                type="button"
+                                class="course-discount-remove"
+                                onclick="removeCourseDiscount(${course.id})"
+                            >Remove Discount</button>
+                        ` : ""}
+                    </div>
+                    <div id="discount-message-${course.id}" class="course-discount-message"></div>
+                </div>
+
             `;
 
 
@@ -2586,6 +2717,82 @@ async function loadCourseManagement() {
 
     }
 
+}
+
+
+// ==========================================
+// SAVE COURSE DISCOUNT
+// ==========================================
+
+async function saveCourseDiscount(courseId) {
+    const typeInput = document.getElementById(`discount-type-${courseId}`);
+    const valueInput = document.getElementById(`discount-value-${courseId}`);
+    const message = document.getElementById(`discount-message-${courseId}`);
+
+    const discountType = typeInput.value;
+    const discountValue = Number(valueInput.value);
+
+    if (!Number.isFinite(discountValue) || discountValue <= 0) {
+        message.textContent = "Enter a discount value greater than zero.";
+        return;
+    }
+
+    if (discountType === "percentage" && discountValue > 100) {
+        message.textContent = "Percentage discounts cannot exceed 100%.";
+        return;
+    }
+
+    message.textContent = "Saving discount...";
+
+    try {
+        const response = await fetch(`/api/admin/courses/${courseId}/discount`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                discount_type: discountType,
+                discount_value: discountValue
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            message.textContent = data.message || "Could not save discount.";
+            return;
+        }
+
+        await loadCourseManagement();
+    } catch (error) {
+        console.error("Save course discount error:", error);
+        message.textContent = "Could not connect to the server.";
+    }
+}
+
+
+// ==========================================
+// REMOVE COURSE DISCOUNT
+// ==========================================
+
+async function removeCourseDiscount(courseId) {
+    if (!confirm("Remove the discount for this course?")) return;
+
+    try {
+        const response = await fetch(`/api/admin/courses/${courseId}/discount`, {
+            method: "DELETE"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Could not remove discount.");
+            return;
+        }
+
+        await loadCourseManagement();
+    } catch (error) {
+        console.error("Remove course discount error:", error);
+        alert("Could not connect to the server.");
+    }
 }
 
 
