@@ -4947,6 +4947,25 @@ html.light-mode .sidebar-toggle {
 }
 
 
+/* Fix sidebar icon visibility in light mode */
+html.light-mode .customer-sidebar nav a .nav-icon svg {
+    display: block;
+    width: 25px;
+    height: 25px;
+    stroke: currentColor;
+    opacity: 1;
+    visibility: visible;
+}
+
+html.light-mode .customer-sidebar nav a:hover .nav-icon svg {
+    stroke: #4f49c7;
+}
+
+html.light-mode .customer-sidebar nav a.active .nav-icon svg {
+    stroke: #6c63ff;
+}
+
+
 /* =========================================
    HEADER
 ========================================= */
@@ -7577,4 +7596,25 @@ html.light-mode .customer-main {
 .customer-sidebar .logo {
     border-bottom:
         1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+/* Fix all sidebar navigation icons in light mode */
+html.light-mode .customer-sidebar nav a .nav-icon svg {
+    stroke: #6862d9 !important;
+    color: #6862d9 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Hovered navigation icons */
+html.light-mode .customer-sidebar nav a:hover .nav-icon svg {
+    stroke: #4f49c7 !important;
+    color: #4f49c7 !important;
+}
+
+/* Active navigation icon */
+html.light-mode .customer-sidebar nav a.active .nav-icon svg {
+    stroke: #6c63ff !important;
+    color: #6c63ff !important;
 }

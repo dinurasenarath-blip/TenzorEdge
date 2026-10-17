@@ -322,6 +322,77 @@
     font-weight: 800;
 }
 
+
+/* ==========================================
+   PAYMENT STATUS — LIGHT MODE FIX
+========================================== */
+
+html.light-mode .payment-status-section {
+    background: linear-gradient(
+        135deg,
+        rgba(46, 204, 113, 0.07),
+        #ffffff 50%,
+        rgba(46, 204, 113, 0.035)
+    );
+
+    border: 1px solid rgba(46, 204, 113, 0.22);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    color: #171923;
+}
+
+html.light-mode .payment-status-heading h2,
+html.light-mode .payment-status-course-title,
+html.light-mode .payment-info-value {
+    color: #171923;
+}
+
+html.light-mode .payment-status-heading p {
+    color: #5f6472;
+    opacity: 1;
+}
+
+html.light-mode .payment-info-item {
+    background: rgba(30, 41, 59, 0.045);
+}
+
+html.light-mode .payment-info-label {
+    color: #606575;
+    opacity: 1;
+}
+
+html.light-mode .payment-remaining-value {
+    color: #167647;
+}
+
+html.light-mode .customer-payment-progress-text {
+    color: #606575;
+    opacity: 1;
+}
+
+html.light-mode .discount-price-original {
+    color: #777d8c;
+}
+
+html.light-mode .discount-price-badge {
+    color: #167647;
+    background: rgba(46, 204, 113, 0.12);
+    border-color: rgba(22, 118, 71, 0.25);
+}
+
+html.light-mode .discounted-course-price {
+    color: #986d08;
+}
+
+html.light-mode .payment-complete {
+    color: #167647;
+    background: rgba(46, 204, 113, 0.10);
+}
+
+
 </style>
 
 </head>
